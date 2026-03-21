@@ -98,9 +98,18 @@ import { ref } from 'vue'
 import logo from './assets/Creatices lines.png'
 import hero from './assets/Creatuives logo.png'
 import './App.css'
-
 const currentSection = ref(null)
 </script>
+
+<!-- <script setup>
+import CampusDevelopers from './CampusDevelopers.vue'
+</script>
+
+<template>
+  <div>
+    <CampusDevelopers />
+  </div>
+</template> -->
 
 <style>
 /* styles remain in App.css */
