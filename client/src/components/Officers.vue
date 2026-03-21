@@ -1,16 +1,8 @@
 <template>
-  <div class="page">
-    <!-- Navigation -->
-    <nav class="navbar">
-      <div class="logo.svg">CREATIVE</div>
-      <div class="nav-links">
-        <a href="#" v-for="link in navLinks" :key="link">{{ link }}</a>
-      </div>
-    </nav>
-
-    <!-- the Main Content -->
+  <div class="officers-page">
+    <!-- Main Content (without navbar) -->
     <main>
-       <!-- ato ang History --> 
+      <!-- History -->
       <section class="history-section">
         <h2 class="section-title">[Our History]</h2>
         <p class="section-desc">
@@ -19,7 +11,7 @@
         </p>
       </section>
 
-      <!-- atong Founder -->
+      <!-- Founder -->
       <section class="founder-section">
         <div class="founder-text">
           <h2 class="section-title left-aligned">[Our Founder]</h2>
@@ -29,22 +21,21 @@
             technology.
           </p>
         </div>
-        <div class="Sheenle'.png founder-images">
+        <div class="founder-images">
           <div class="founder-photo">
-            <img src="/images/sheele'.png" alt="Founder" />
           </div>
           <div class="founder-placeholder"></div>
         </div>
       </section>
 
-      <!--  Journey nato -->
+      <!-- Journey -->
       <section class="journey-section">
         <h2 class="section-title">[ Our Journey]</h2>
         <p class="journey-subtitle">
           The Campus Developers Organization is a community of passionate students.
         </p>
 
-        <!-- Timeline ni -->
+        <!-- Timeline -->
         <div class="timeline">
           <div class="timeline-line"></div>
 
@@ -53,7 +44,7 @@
             :key="index"
             class="timeline-row"
           >
-            <!-- Year marker nato -->
+            <!-- Year marker -->
             <div class="year-marker">
               <div class="year-line top"></div>
               <span class="year-label">{{ item.year }}</span>
@@ -71,14 +62,7 @@
                   </svg>
                   <span>Project</span>
                 </div>
-                <div class="card-images">
-                  <div
-                    v-for="(img, i) in item.images"
-                    :key="i"
-                    class="card-img"
-                    :style="{ background: img.gradient }"
-                  ></div>
-                </div>
+                <div class="card-image-placeholder"></div>
               </div>
             </div>
 
@@ -93,14 +77,7 @@
                   </svg>
                   <span>Project</span>
                 </div>
-                <div class="card-images">
-                  <div
-                    v-for="(img, i) in item.images"
-                    :key="i"
-                    class="card-img"
-                    :style="{ background: img.gradient }"
-                  ></div>
-                </div>
+                <div class="card-image-placeholder"></div>
               </div>
             </div>
           </div>
@@ -110,7 +87,7 @@
         </div>
       </section>
 
-      <!-- Content Footer nato -->
+      <!-- Content Footer with Table -->
       <section class="content-footer">
         <h2 class="section-title white">[Content]</h2>
         <p class="footer-desc">
@@ -118,65 +95,51 @@
           enthusiasts who share a common goal of developing skills and creating impactful
           digital solutions.
         </p>
+
+        <div class="footer-grid">
+          <div v-for="item in contentItems" :key="item.title" class="footer-item">
+            <h3 class="footer-item-title">{{ item.title }}</h3>
+            <p class="footer-item-desc">{{ item.description }}</p>
+          </div>
+        </div>
       </section>
     </main>
   </div>
 </template>
 
 <script setup>
-const navLinks = ['Vision', 'Mission', 'Officers', 'Achievements']
-
 const timelineItems = [
   {
     year: '2020',
     side: 'left',
     context:
       'The Campus Developers Organization was founded in 2019 as a group of passionate students dedicated to learning, programming, technology, and innovation. The goal is to create a supportive platform that enables our students to meet their learning development needs.',
-    images: [
-      { gradient: 'linear-gradient(135deg, #d1d5db, #e5e7eb)' },
-      { gradient: 'linear-gradient(135deg, #818cf8, #a855f7)' },
-      { gradient: 'linear-gradient(135deg, #9ca3af, #d1d5db)' },
-    ],
   },
   {
     year: '2021',
     side: 'right',
     context:
       'The Campus Developers Organization was founded in 2019 as a group of passionate students dedicated to learning, programming, technology, and innovation. The goal is to create a supportive platform that enables our students to meet their learning development needs.',
-    images: [
-      { gradient: 'linear-gradient(135deg, #7c3aed, #4f46e5)' },
-      { gradient: 'linear-gradient(135deg, #c084fc, #f472b6)' },
-      { gradient: 'linear-gradient(135deg, #9ca3af, #d1d5db)' },
-    ],
   },
   {
     year: '2022',
     side: 'left',
     context:
       'The Campus Developers Organization was founded in 2019 as a group of passionate students dedicated to learning, programming, technology, and innovation. The goal is to create a supportive platform that enables our students to meet their learning development needs.',
-    images: [
-      { gradient: 'linear-gradient(135deg, #d1d5db, #e5e7eb)' },
-      { gradient: 'linear-gradient(135deg, #9ca3af, #d1d5db)' },
-      { gradient: 'linear-gradient(135deg, #d1d5db, #e5e7eb)' },
-    ],
   },
   {
     year: '2023',
     side: 'right',
     context:
       'The Campus Developers Organization was founded in 2019 as a group of passionate students dedicated to learning, programming, technology, and innovation. The goal is to create a supportive platform that enables our students to meet their learning development needs.',
-    images: [
-      { gradient: 'linear-gradient(135deg, #9ca3af, #d1d5db)' },
-      { gradient: 'linear-gradient(135deg, #d1d5db, #e5e7eb)' },
-      { gradient: 'linear-gradient(135deg, #9ca3af, #d1d5db)' },
-    ],
   },
 ]
+
 </script>
-<CampusDevelopers />
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap');
 
 * {
   box-sizing: border-box;
@@ -184,76 +147,50 @@ const timelineItems = [
   padding: 0;
 }
 
-.page {
-  font-family: 'Poppins', sans-serif;
+.officers-page {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   background: #ffffff;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;   /* adjust cell size as desired */
   min-height: 100vh;
   color: #111827;
 }
 
-/*  sa Navbar */
-.navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 100;
-  background: #ffffff;
-  border-bottom: 1px solid #f3f4f6;
-  padding: 12px 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+/* All headings use Unbounded */
+h1, h2, h3, h4, h5, h6,
+.section-title,
+.card-title,
+.footer-item-title {
+  font-family: 'Unbounded', sans-serif;
+  font-weight: 600;
 }
 
-.logo {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.18em;
-  color: #111827;
-  text-transform: uppercase;
-}
-
-.nav-links {
-  display: flex;
-  gap: 32px;
-}
-
-.nav-links a {
-  font-size: 12px;
-  font-weight: 400;
-  color: #6b7280;
-  text-decoration: none;
-  transition: color 0.2s;
-}
-
-.nav-links a:hover {
-  color: #111827;
-}
-
-/* sa Main */
-main {
-  padding-top: 56px;
-}
-
-/*  sa Section title */
+/* Section titles – larger */
 .section-title {
-  font-size: 22px;
+  font-size: 28px;       /* increased from 22px */
   font-weight: 700;
   color: #111827;
-  margin-bottom: 14px;
-}
-
-.section-title.left-aligned {
-  text-align: left;
+  margin-bottom: 18px;   /* slightly more space */
 }
 
 .section-title.white {
   color: #ffffff;
 }
 
+.section-title.left-aligned {
+  text-align: left;
+}
+
+/* Remove fixed navbar padding */
+main {
+  padding-top: 0;
+}
+
+/* Section descriptions – larger */
 .section-desc {
-  font-size: 13px;
+  font-size: 16px;       /* increased from 13px */
   font-weight: 400;
   color: #9ca3af;
   line-height: 1.7;
@@ -264,15 +201,13 @@ main {
   text-align: left;
 }
 
-/*  sa History */
 .history-section {
   padding: 64px 32px;
   text-align: center;
-  max-width: 520px;
+  max-width: 620px;      /* slightly wider to accommodate larger text */
   margin: 0 auto;
 }
 
-/*  sa Founder */
 .founder-section {
   padding: 40px 64px;
   max-width: 860px;
@@ -284,7 +219,7 @@ main {
 
 .founder-text {
   flex: 1;
-  max-width: 340px;
+  max-width: 380px;      /* slightly wider */
 }
 
 .founder-images {
@@ -315,7 +250,6 @@ main {
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
 }
 
-/* sa Journey */
 .journey-section {
   padding: 48px 32px;
 }
@@ -325,14 +259,14 @@ main {
 }
 
 .journey-subtitle {
-  font-size: 12px;
+  font-size: 14px;       /* increased from 12px */
   color: #f87171;
   text-align: center;
   margin-bottom: 48px;
   font-weight: 400;
+  font-family: 'Inter', sans-serif;
 }
 
-/*sa Timeline */
 .timeline {
   position: relative;
   max-width: 860px;
@@ -373,14 +307,14 @@ main {
 }
 
 .year-label {
-  font-size: 10px;
+  font-size: 12px;       /* increased from 10px */
   font-weight: 500;
   color: #9ca3af;
   background: #fff;
   border: 1px solid #e5e7eb;
   border-radius: 4px;
-  padding: 2px 6px;
-  font-family: 'Poppins', sans-serif;
+  padding: 4px 8px;      /* slightly larger */
+  font-family: 'Inter', sans-serif;
 }
 
 .timeline-half {
@@ -397,38 +331,37 @@ main {
   padding-left: 40px;
 }
 
-/* sa Timeline Card */
 .timeline-card {
   background: #ffffff;
   border: 1px solid #f3f4f6;
   border-radius: 14px;
-  padding: 16px;
+  padding: 20px;         /* increased padding */
   box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
 .card-title {
-  font-size: 13px;
+  font-size: 16px;       /* increased from 13px */
   font-weight: 600;
   color: #111827;
-  margin-bottom: 8px;
-  font-family: 'Poppins', sans-serif;
+  margin-bottom: 12px;
 }
 
 .card-text {
-  font-size: 11px;
+  font-size: 13px;       /* increased from 11px */
   font-weight: 400;
   color: #9ca3af;
   line-height: 1.65;
-  margin-bottom: 10px;
-  font-family: 'Poppins', sans-serif;
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
 }
 
 .card-project-label {
   display: flex;
   align-items: center;
   gap: 5px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   color: #6b7280;
+  font-family: 'Inter', sans-serif;
 }
 
 .card-project-label svg {
@@ -436,23 +369,18 @@ main {
 }
 
 .card-project-label span {
-  font-size: 11px;
+  font-size: 12px;       /* increased from 11px */
   font-weight: 500;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
 }
 
-.card-images {
-  display: flex;
-  gap: 8px;
-}
-
-.card-img {
-  flex: 1;
-  height: 60px;
+.card-image-placeholder {
+  width: 100%;
+  height: 100px;         /* increased height */
+  background: #e5e7eb;
   border-radius: 8px;
 }
 
-/* End dot */
 .timeline-end-dot {
   width: 12px;
   height: 12px;
@@ -465,20 +393,76 @@ main {
   z-index: 2;
 }
 
-/* Content Footer */
 .content-footer {
-  background: #111827;
   padding: 80px 32px;
   text-align: center;
+  color: black;
 }
 
 .footer-desc {
-  font-size: 13px;
+  font-size: 15px;       /* increased from 13px */
   font-weight: 400;
   color: #9ca3af;
   line-height: 1.7;
-  max-width: 420px;
+  max-width: 480px;      /* slightly wider */
+  margin: 0 auto 48px auto;
+  font-family: 'Inter', sans-serif;
+}
+
+.footer-grid {
+  max-width: 1000px;
   margin: 0 auto;
-  font-family: 'Poppins', sans-serif;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 32px;
+  text-align: left;
+}
+
+.footer-item {
+  background: #1f2937;
+  padding: 28px;         /* increased padding */
+  border-radius: 16px;
+  transition: transform 0.2s ease;
+}
+
+.footer-item:hover {
+  transform: translateY(-4px);
+}
+
+.footer-item-title {
+  font-size: 20px;       /* increased from 18px */
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 14px;
+  letter-spacing: -0.2px;
+}
+
+.footer-item-desc {
+  font-size: 14px;       /* increased from 13px */
+  line-height: 1.6;
+  color: #9ca3af;
+  font-weight: 400;
+  font-family: 'Inter', sans-serif;
+}
+
+@media (max-width: 768px) {
+  .founder-section {
+    flex-direction: column;
+    padding: 40px 20px;
+    align-items: center;
+  }
+  .founder-text {
+    max-width: 100%;
+  }
+  .timeline-half.left {
+    padding-right: 20px;
+  }
+  .timeline-half.right {
+    padding-left: 20px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
 }
 </style>
