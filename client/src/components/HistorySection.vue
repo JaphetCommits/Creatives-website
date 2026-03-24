@@ -141,19 +141,14 @@ const timelineItems = [
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap');
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
 .officers-page {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background: #ffffff;
   background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;   /* adjust cell size as desired */
+    opacity: 80%;
+  background-size: 24px 24px;   
   min-height: 100vh;
   color: #111827;
 }
@@ -169,10 +164,10 @@ h1, h2, h3, h4, h5, h6,
 
 /* Section titles – larger */
 .section-title {
-  font-size: 28px;       /* increased from 22px */
+  font-size: 28px;      
   font-weight: 700;
   color: #111827;
-  margin-bottom: 18px;   /* slightly more space */
+  margin-bottom: 18px;   
 }
 
 .section-title.white {
@@ -183,14 +178,14 @@ h1, h2, h3, h4, h5, h6,
   text-align: left;
 }
 
-/* Remove fixed navbar padding */
+
 main {
   padding-top: 0;
 }
 
-/* Section descriptions – larger */
+
 .section-desc {
-  font-size: 16px;       /* increased from 13px */
+  font-size: 16px;       
   font-weight: 400;
   color: #9ca3af;
   line-height: 1.7;

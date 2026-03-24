@@ -12,6 +12,7 @@
   --max: 1000px;
 }
 
+
 .badge--1,
 .badge--2,
 .badge--3 {
@@ -19,9 +20,8 @@
   width: 140px;            /* smaller width */
   height: 50px;
   text-align: center;
-  border: 0.5px solid rgb(68, 65, 65);
-  padding: 8px 6px;       /* tighter padding */
-  border-radius: 6px;     /* subtle rounding */
+  padding: 14px 6px;       /* tighter padding */
+  border-radius: 10px;
   background: white;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   position: absolute;
@@ -33,6 +33,7 @@ body {
   background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    opacity: 80%;
   background-size: 24px 24px;          /* adjust cell size if desired */
   color: var(--text);
   margin-left: 40px;
@@ -44,39 +45,59 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  padding: 1.5rem 1.5rem 2.5rem;
+  padding: 1.5rem 1.5rem 0;  /* no bottom padding */
 }
 
 .page {
   width: min(100%, var(--max));
+  margin-top: 80px;          /* height of navbar + some space */
+  /* remove any other padding that might cause issues */
 }
 
 
 .nav img {
-  height: 60px;
+  margin-top: 15px;
+  height: 40px;
   max-width: 260px;
   object-fit: contain;
 }
 
+.nav img {
+  height: 40px;                /* keep your logo height */
+  max-width: 260px;
+  object-fit: contain;
+  /* remove margin-top: 15px; */   /* delete this line */
+}
+
 .nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: var(--bg);
   display: flex;
-  align-items: center;
-  justify-content: space-between;  /* keeps logo left, links right */
-  margin-bottom: 7rem;
+  align-items: center;         /* already present, ensures vertical alignment */
+  justify-content: space-between;
+  padding: 1rem 40px;
+  margin: 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.05);
 }
 
 .nav nav {
   display: flex;
-  gap: 0;               /* no gap between links */
+  gap: 0;
   align-items: center;
+  line-height: normal;        /* optional: reset line height */
 }
 
 .nav a {
-  margin: 0 0.5rem;     /* small consistent spacing, adjust as desired */
+  margin: 0 0.5rem;
   font-weight: 600;
   color: var(--muted);
   text-decoration: none;
   transition: color 0.25s ease;
+  line-height: 1;             /* optional: ensure consistent height */
 }
 
 .nav a:hover {
@@ -85,7 +106,8 @@ body {
 
 
 .hero {
-  margin-top: 200px;
+  margin-top: 125px;
+  margin-bottom: 120px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
@@ -191,18 +213,18 @@ body {
 }
 
 .badge--1 {
-  top: 72px;
-  right: 250px;
+  top: 70px;
+  right: 275px;
 }
 
 .badge--2 {
-  top: -32px;
-  right: 95px;
+  top: -45px;
+  right: 150px;
 }
 
 .badge--3 {
-  top: 22px;
-  right: -105px;
+  top: -5px;
+  right: -150px;
 }
 
 .hero-badge {
@@ -248,4 +270,20 @@ body {
   gap: 2rem;
   padding: 2rem 0;
   margin: 0;
+}
+
+/* Fade transition */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
 }
