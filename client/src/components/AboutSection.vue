@@ -96,7 +96,7 @@
   background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 24px 24px;   
+  background-size: 48px 48px;   
   min-height: 100vh;
   color: #111827;
 }
@@ -227,6 +227,44 @@ main {
   }
   .values-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .two-columns {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 0 20px;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .history-section {
+    padding: 40px 20px;
+  }
+
+  .mission-vision-card {
+    padding: 20px;
+  }
+
+  .core-values-section {
+    padding: 0 20px;
+  }
+
+  .core-values-intro {
+    font-size: 14px;
+    margin-bottom: 32px;
+  }
+
+  .value-title {
+    font-size: 18px;
+  }
+
+  .value-desc {
+    font-size: 12px;
   }
 }
 </style>

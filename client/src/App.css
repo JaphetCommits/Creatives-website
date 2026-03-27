@@ -12,61 +12,129 @@
   --max: 1000px;
 }
 
+* {
+  cursor: default;
+}
+
+/* Desktop navigation – visible on larger screens */
+.desktop-nav {
+  display: flex;
+  gap: 0;
+  align-items: center;
+}
+
+/* Hamburger button – hidden on desktop */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 21px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 200;
+}
+
+.hamburger span {
+  width: 100%;
+  height: 3px;
+  background-color: var(--muted);
+  border-radius: 3px;
+  transition: all 0.3s ease;
+}
+
+.hamburger:hover span {
+  background-color: var(--text);
+}
+
+/* Mobile menu overlay */
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 150;
+  backdrop-filter: blur(4px);
+}
+
+.mobile-menu {
+  position: fixed;
+  top: 70px;
+  right: 20px;
+  background: var(--bg);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 150px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.mobile-menu a {
+  color: var(--muted);
+  text-decoration: none;
+  font-weight: 600;
+  padding: 0.5rem 0;
+  transition: color 0.2s ease;
+}
+
+.mobile-menu a:hover {
+  color: var(--text);
+}
 
 .badge--1,
 .badge--2,
 .badge--3 {
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  width: 140px;            /* smaller width */
+  width: 140px;
   height: 50px;
   text-align: center;
-  padding: 14px 6px;       /* tighter padding */
+  padding: 14px 6px;
   border-radius: 10px;
   background: white;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
   position: absolute;
 }
+
 body {
   margin: 0;
   font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  background-color: var(--bg);          /* keep your original background color */
+  background-color: var(--bg);
   background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-    opacity: 80%;
-  background-size: 24px 24px;          /* adjust cell size if desired */
+    linear-gradient(to right, rgba(0, 0, 0, 0.01) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.01) 1px, transparent 1px);
+  background-size: 48px 48px;
   color: var(--text);
-  margin-left: 40px;
-  margin-right: 40px;
 }
 
 #app {
-  min-height: 100vh;
+  width: 100%;
+  margin: 0;
+  padding: 0;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 1.5rem 1.5rem 0;  /* no bottom padding */
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .page {
-  width: min(100%, var(--max));
-  margin-top: 80px;          /* height of navbar + some space */
-  /* remove any other padding that might cause issues */
+  max-width: var(--max);
+  margin: 80px auto 0 auto;
+  padding: 0 40px;
+  width: 100%;
+  box-sizing: border-box;
+  flex: 1;
 }
 
-
 .nav img {
-  margin-top: 15px;
   height: 40px;
   max-width: 260px;
   object-fit: contain;
-}
-
-.nav img {
-  height: 40px;                /* keep your logo height */
-  max-width: 260px;
-  object-fit: contain;
-  /* remove margin-top: 15px; */   /* delete this line */
 }
 
 .nav {
@@ -77,18 +145,11 @@ body {
   z-index: 100;
   background: var(--bg);
   display: flex;
-  align-items: center;         /* already present, ensures vertical alignment */
+  align-items: center;
   justify-content: space-between;
   padding: 1rem 40px;
   margin: 0;
   box-shadow: 0 1px 0 rgba(0,0,0,0.05);
-}
-
-.nav nav {
-  display: flex;
-  gap: 0;
-  align-items: center;
-  line-height: normal;        /* optional: reset line height */
 }
 
 .nav a {
@@ -97,17 +158,15 @@ body {
   color: var(--muted);
   text-decoration: none;
   transition: color 0.25s ease;
-  line-height: 1;             /* optional: ensure consistent height */
+  line-height: 1;
 }
 
 .nav a:hover {
   color: var(--text);
 }
 
-
 .hero {
-  margin-top: 125px;
-  margin-bottom: 120px;
+  margin-top: 75px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
@@ -174,14 +233,14 @@ body {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(4px);
   padding: 1rem 2rem;
-  border-radius: 40px;           /* pill shape */
+  border-radius: 40px;
   box-shadow: var(--shadow);
   font-weight: 700;
   color: var(--text);
   border: 1px solid rgba(31, 41, 55, 0.1);
-  white-space: nowrap;            /* keeps text in one line */
+  white-space: nowrap;
   opacity: 0;
-  pointer-events: none;           /* prevents interfering with hover */
+  pointer-events: none;
   transition: opacity 0.3s ease;
 }
 
@@ -213,18 +272,18 @@ body {
 }
 
 .badge--1 {
-  top: 70px;
-  right: 275px;
+  top: 40px;
+  right: 190px;
 }
 
 .badge--2 {
   top: -45px;
-  right: 150px;
+  right: 120px;
 }
 
 .badge--3 {
   top: -5px;
-  right: -150px;
+  right: -145px;
 }
 
 .hero-badge {
@@ -286,4 +345,112 @@ body {
 .fade-leave-to {
   opacity: 0;
   transform: translateY(-8px);
+}
+
+/* Cards hover effect */
+.vision-card,
+.mission-vision-card,
+.value-card,
+.timeline-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.vision-card:hover,
+.mission-vision-card:hover,
+.value-card:hover,
+.timeline-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.nav a,
+.nav img,
+.powered-by {
+  cursor: pointer;
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  /* Hide desktop navigation, show hamburger */
+  .desktop-nav {
+    display: none;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  /* Adjust navbar padding */
+  .nav {
+    padding: 1rem 20px;
+  }
+
+  /* Content spacing */
+  .page {
+    padding: 0 20px;
+    margin-top: 70px;
+  }
+
+  /* Hero adjustments */
+  .hero {
+    margin-top: 0;
+    gap: 1.5rem;
+  }
+
+  .hero-text h1 {
+    font-size: clamp(2.5rem, 8vw, 3.5rem);
+  }
+
+  .hero-text p {
+    font-size: 1rem;
+    max-width: 100%;
+  }
+
+  .hero-image {
+    bottom: 0;
+    left: 0;
+  }
+
+  .hero-image img {
+    width: 100%;
+  }
+
+  .badges {
+    position: absolute;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    gap: 0.5rem;
+    width: auto;
+    white-space: nowrap;
+    right: auto; /* override previous right value */
+  }
+
+  .badge--1,
+  .badge--2,
+  .badge--3 {
+    width: auto;
+    height: auto;
+    padding: 10px 20px;
+    font-size: 25px;
+    margin: 0;
+  }
+
+  .badge--1 { top: 120px; right: 210px; }
+  .badge--2 { top: -20px; right: 70px; }
+  .badge--3 { top: 40px; right: -250px; }
+
+  .vision-card {
+    padding: 1.5rem;
+  }
+
+  .vision-card h2 {
+    font-size: 1.5rem;
+  }
+
+  .vision-card p {
+    font-size: 0.9rem;
+  }
+
 }

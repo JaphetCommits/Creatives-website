@@ -147,8 +147,7 @@ const timelineItems = [
   background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-    opacity: 80%;
-  background-size: 24px 24px;   
+  background-size: 48px 48px;   
   min-height: 100vh;
   color: #111827;
 }
@@ -455,6 +454,79 @@ main {
   .timeline-half.right {
     padding-left: 20px;
   }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .founder-section {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 40px 20px;
+  }
+
+  .founder-text {
+    max-width: 100%;
+    text-align: center;
+  }
+
+  .founder-text .section-title.left-aligned {
+    text-align: center;
+  }
+
+  .founder-text .section-desc.left-aligned {
+    text-align: center;
+  }
+
+  .founder-images {
+    justify-content: center;
+  }
+
+  .journey-section {
+    padding: 40px 20px;
+  }
+
+  .timeline-half.left,
+  .timeline-half.right {
+    width: 100%;
+    padding: 0;
+  }
+
+  .timeline-half.left {
+    padding-bottom: 40px;
+    padding-right: 0;
+  }
+
+  .timeline-half.right {
+    padding-bottom: 40px;
+    padding-left: 0;
+  }
+
+  .timeline-row {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .year-marker {
+    position: relative;
+    left: auto;
+    transform: none;
+    margin-bottom: 16px;
+    top: 0;
+  }
+
+  .timeline-line {
+    display: none;
+  }
+
+  .timeline-card {
+    padding: 16px;
+  }
+
   .footer-grid {
     grid-template-columns: 1fr;
     gap: 20px;
