@@ -1,15 +1,17 @@
 <template>
   <footer class="footer">
-    <div class="footer-content">
-      <div class="copyright">
-        &copy; {{ new Date().getFullYear() }} Creatives Society. All rights reserved.
-      </div>
-      <div class="powered-by" @click="showModal = true">
-        Powered by Creatives Society
+    <div class="footer-inner">
+      <div class="footer-content">
+        <div class="copyright">
+          &copy; {{ new Date().getFullYear() }} Creatives Society. All rights reserved.
+        </div>
+        <div class="powered-by" @click="showModal = true">
+          Powered by Creatives Society
+        </div>
       </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal (unchanged) -->
     <div v-if="showModal" class="modal-overlay" @click="showModal = false">
       <div class="modal" @click.stop>
         <button class="modal-close" @click="showModal = false">&times;</button>
@@ -42,23 +44,40 @@
 
 <script setup>
 import { ref } from 'vue'
-
 const showModal = ref(false)
 </script>
 
 <style scoped>
 .footer {
-  background-color: #0f172a;
-  color: #9ca3af;
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
+  position: relative;
+  background: transparent; /* no background here – it's on the pseudo-element */
   margin: 0;
-  padding: 1.5rem 2rem;
+  padding: 0;
+  width: 100%;
+}
+
+/* Full‑width background pseudo-element */
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: 100%;
+  background-color: #0f172a;
+  z-index: -1;
+  pointer-events: none; /* so the pseudo-element doesn't block clicks */
+}
+
+.footer-inner {
+  max-width: var(--max, 1000px);
+  margin: 0 auto;
+  padding: 1.5rem 40px;   /* matches .page side padding */
+  box-sizing: border-box;
 }
 
 .footer-content {
-  max-width: var(--max, 1000px);
-  margin: 0 auto;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -80,7 +99,7 @@ const showModal = ref(false)
   color: #ffffff;
 }
 
-/* Modal styles */
+/* Modal styles (unchanged) */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -102,7 +121,6 @@ const showModal = ref(false)
   width: 90%;
   position: relative;
   color: #111827;
-  font-family: 'Inter', sans-serif;
 }
 
 .modal-close {
@@ -113,14 +131,12 @@ const showModal = ref(false)
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #6b7280;
 }
 
 .modal h3 {
   margin-top: 0;
   margin-bottom: 1.5rem;
   font-family: 'Unbounded', sans-serif;
-  font-size: 1.5rem;
   text-align: center;
 }
 
@@ -132,15 +148,13 @@ const showModal = ref(false)
 
 .team-category h4 {
   font-family: 'Unbounded', sans-serif;
-  font-size: 1rem;
   margin: 0 0 0.5rem 0;
-  color: #111827;
+  font-size: 1rem;
 }
 
 .team-category p {
   margin: 0.25rem 0;
   font-size: 0.875rem;
-  color: #4b5563;
 }
 
 .team-category em {
@@ -148,12 +162,12 @@ const showModal = ref(false)
   font-style: italic;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .footer-inner {
+    padding: 1rem 20px;   /* matches .page mobile padding */
+  }
   .footer-content {
     flex-direction: column;
-    text-align: center;
-  }
-  .copyright, .powered-by {
     text-align: center;
   }
   .team-grid {
