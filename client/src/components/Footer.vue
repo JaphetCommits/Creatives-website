@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-import { redf } from 'vue'
+import { ref } from 'vue'
 const showModal = ref(false)
 </script>
 
