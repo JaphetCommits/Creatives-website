@@ -135,6 +135,25 @@ const timelineItems = [
   },
 ]
 
+const contentItems = [
+  {
+    title: 'Community',
+    description: 'A vibrant community of developers and tech enthusiasts'
+  },
+  {
+    title: 'Learning',
+    description: 'Continuous learning and skill development opportunities'
+  },
+  {
+    title: 'Innovation',
+    description: 'Building innovative projects and solutions'
+  },
+  {
+    title: 'Collaboration',
+    description: 'Working together to achieve common goals'
+  },
+]
+
 </script>
 
 <style scoped>
