@@ -166,7 +166,8 @@ body {
 }
 
 .hero {
-  margin-top: 75px;
+  margin-top: 200px;
+  margin-bottom: 200px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 2.5rem;
