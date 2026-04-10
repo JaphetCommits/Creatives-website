@@ -69,8 +69,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import logo from './assets/Creatices lines.png'
-import hero from './assets/Creatuives logo.png'
+import logo from './assets/Creatices lines.png' // Is it "Creatices" or "Creatives"?
+import hero from './assets/Creatuives logo.png' // Is it "Creatuives" or "Creatives"?
 import History from './components/HistorySection.vue'
 import About from './components/AboutSection.vue'
 import Footer from './components/Footer.vue'
