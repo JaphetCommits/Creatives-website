@@ -1,14 +1,14 @@
 <template>
   <div id="app">
     <header class="nav">
-      <img :src="logo" alt="Creatives logo" @click="scrollToTop" style="cursor: pointer" />
+      <img :src="logo" alt="Creatices lines" @click="showSection('about')" style="cursor: pointer" />
 
       <!-- Desktop navigation -->
       <nav class="desktop-nav">
-        <a href="#about">About</a>
-        <a href="#history">History</a>
-        <a href="#members">Members</a>
-        <a href="#achievements">Achievements</a>
+        <a href="#about" @click.prevent="showSection('about')">About</a>
+        <a href="#history" @click.prevent="showSection('history')">History</a>
+        <a href="#members" @click.prevent="showSection('members')">Members</a>
+        <a href="#achievements" @click.prevent="showSection('achievements')">Achievements</a>
       </nav>
 
       <!-- Mobile hamburger button -->
@@ -21,45 +21,47 @@
       <!-- Mobile menu overlay -->
       <div v-if="isMenuOpen" class="mobile-menu-overlay" @click.self="closeMenu">
         <div class="mobile-menu">
-          <a href="#about" @click.prevent="closeMenu">About</a>
-          <a href="#history" @click.prevent="closeMenu">History</a>
-          <a href="#members" @click.prevent="closeMenu">Members</a>
-          <a href="#achievements" @click.prevent="closeMenu">Achievements</a>
+          <a href="#about" @click.prevent="showSection('about')">About</a>
+          <a href="#history" @click.prevent="showSection('history')">History</a>
+          <a href="#members" @click.prevent="showSection('members')">Members</a>
+          <a href="#achievements" @click.prevent="showSection('achievements')">Achievements</a>
         </div>
       </div>
     </header>
 
     <div class="page">
-      <!-- Hero section - always visible -->
-      <main class="hero">
-        <section class="hero-text">
-          <h1>Creatives<br />Society</h1>
-          <p>
-            Panthers College of computing studies Panthers College of computing
-            studies Panthers College of computing studies
-          </p>
-        </section>
-        <section class="hero-image">
-          <img :src="hero" alt="Creatives artwork" />
-          <div class="hero-overlay badges">
-            <span class="badge--1">Innovate</span>
-            <span class="badge--2">Debug</span>
-            <span class="badge--3">Develop</span>
-          </div>
-        </section>
-      </main>
+      <transition name="fade" mode="out-in">
+        <main v-if="currentSection === 'about'" key="hero" class="hero">
+          <section class="hero-text">
+            <h1>Creatives<br />Society</h1>
+            <p>
+              Panthers College of computing studies Panthers College of computing
+              studies Panthers College of computing studies
+            </p>
+          </section>
+          <section class="hero-image">
+            <img :src="hero" alt="Creatives artwork" />
+            <div class="hero-overlay badges">
+              <span class="badge--1">Innovate</span>
+              <span class="badge--2">Debug</span>
+              <span class="badge--3">Develop</span>
+            </div>
+          </section>
+        </main>
+      </transition>
 
-      <!-- All sections always visible below hero -->
       <div class="sections-container">
-        <About id="about" />
-        <History id="history" />
-        <Members id="members" />
-        <section id="achievements" class="vision">
-          <div class="vision-card">
-            <h2>Achievements</h2>
-            <p>This is the Achievements section. Content coming soon.</p>
-          </div>
-        </section>
+        <transition name="fade" mode="out-in">
+          <About v-if="currentSection === 'about'" key="about" id="about" />
+          <History v-else-if="currentSection === 'history'" key="history" id="history" />
+          <Members v-else-if="currentSection === 'members'" key="members" id="members" />
+          <section v-else-if="currentSection === 'achievements'" key="achievements" id="achievements" class="vision">
+            <div class="vision-card">
+              <h2>Achievements</h2>
+              <p>This is the Achievements section. Content coming soon.</p>
+            </div>
+          </section>
+        </transition>
       </div>
     </div>
 
@@ -68,7 +70,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { nextTick, ref } from 'vue'
 import logo from './assets/Creatices lines.png'
 import hero from './assets/Creatuives logo.png'
 import History from './components/HistorySection.vue'
@@ -78,9 +80,25 @@ import Members from './components/MemberSection.vue'
 import './App.css'
 
 const isMenuOpen = ref(false)
+const currentSection = ref('about')
 
 const scrollToTop = () => {
   window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const showSection = async (section) => {
+  if (currentSection.value === section) {
+    currentSection.value = null
+  } else {
+    currentSection.value = section
+  }
+
+  await nextTick()
+  if (currentSection.value === 'about') {
+    scrollToTop()
+  }
+
+  closeMenu()
 }
 
 const toggleMenu = () => {
@@ -135,6 +153,23 @@ html {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Responsive adjustments for mobile */
