@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <RouterView />
+    <transition name="route" mode="out-in">
+      <RouterView />
+    </transition>
   </div>
 </template>
 
@@ -27,5 +29,22 @@ html, body {
 
 html {
   scroll-behavior: smooth;
+}
+
+.route-enter-active,
+.route-leave-active {
+  transition: opacity 0.36s ease, transform 0.36s ease;
+}
+
+.route-enter-from,
+.route-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.route-enter-to,
+.route-leave-from {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>

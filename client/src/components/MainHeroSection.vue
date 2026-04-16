@@ -73,10 +73,10 @@
 import { nextTick, ref } from 'vue'
 import logo from '../assets/Creatices lines.png'
 import hero from '../assets/Creatuives logo.png'
-import History from '../components/HistorySection.vue'
-import About from '../components/AboutSection.vue'
-import Footer from '../components/Footer.vue'
-import Members from '../components/MemberSection.vue'
+import History from './HistorySection.vue'
+import About from './AboutSection.vue'
+import Footer from './Footer.vue'
+import Members from './MemberSection.vue'
 import '../App.css'
 
 const isMenuOpen = ref(false)
