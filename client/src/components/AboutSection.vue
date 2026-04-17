@@ -1,9 +1,9 @@
 <template>
-  <div class="officers-page">   <!-- same wrapper as HistorySection -->
+  <div class="officers-page">
     <main>
       <!-- About Us -->
       <section class="history-section">
-        <h2 class="section-title">About Us</h2>
+        <h2 class="section-title">[About Us]</h2>
         <p class="section-desc">
           The Campus Developers Organization is a community of passionate students
           dedicated to learning, building, and innovating through technology. Our
@@ -15,7 +15,7 @@
 
       <!-- Why We Exist -->
       <section class="history-section">
-        <h2 class="section-title">Why We Exist</h2>
+        <h2 class="section-title">[Why We Exist]</h2>
         <p class="section-desc">
           The Campus Developers Organization is a community of passionate students
           dedicated to learning, building, and innovating through technology. Our
@@ -26,18 +26,20 @@
       </section>
 
       <!-- Mission & Vision (side‑by‑side) -->
-      <div class="two-columns">
+      <div class="mission-vision-section">
         <div class="mission-vision-card">
-          <h2 class="section-title left-aligned">Our Mission</h2>
-          <p class="section-desc left-aligned">
+          <div class="card-icon">📋</div>
+          <h2 class="mission-vision-title">Our Mission</h2>
+          <p class="mission-vision-desc">
             Panthers College of computing studies Panthers College of computing
             studies Panthers College of computing studies College of computing
             studies
           </p>
         </div>
         <div class="mission-vision-card">
-          <h2 class="section-title left-aligned">Our Vision</h2>
-          <p class="section-desc left-aligned">
+          <div class="card-icon">🎯</div>
+          <h2 class="mission-vision-title">Our Vision</h2>
+          <p class="mission-vision-desc">
             Panthers College of computing studies Panthers College of computing
             studies Panthers College of computing studies College of Computing
             Studies
@@ -54,24 +56,28 @@
         </p>
         <div class="values-grid">
           <div class="value-card">
+            <div class="value-icon">⭐</div>
             <h3 class="value-title">Integrity</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
+            <div class="value-icon">💖</div>
             <h3 class="value-title">Resilience</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
+            <div class="value-icon">🎯</div>
             <h3 class="value-title">Excellence</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
+            <div class="value-icon">🤝</div>
             <h3 class="value-title">Altruism</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
@@ -93,11 +99,8 @@
 
 .officers-page {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-  background-size: 48px 48px;   
-  min-height: 100vh;
+  padding: 0;
+  margin: 0;
   color: #111827;
 }
 
@@ -114,12 +117,8 @@ h1, h2, h3, h4, h5, h6,
   font-size: 28px;      
   font-weight: 700;
   color: #000000;
-  margin-bottom: 18px;   
-  padding-left: 1rem;
-}
-
-.section-title.left-aligned {
-  text-align: left;
+  margin-bottom: 18px;
+  letter-spacing: 0.5px;
 }
 
 main {
@@ -134,47 +133,63 @@ main {
   text-align: center;
 }
 
-.section-desc.left-aligned {
-  text-align: left;
-}
-
 .history-section {
-  padding: 64px 32px;
+  padding: 60px 40px;
   text-align: center;
   max-width: 620px;
   margin: 0 auto;
 }
 
-.two-columns {
+/* Mission & Vision Section */
+.mission-vision-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 48px;
-  max-width: 860px;
+  gap: 32px;
+  max-width: 900px;
   margin: 40px auto;
-  padding: 0 32px;
+  padding: 60px 40px;
+  background: #1f2937;
+  border-radius: 8px;
 }
 
 .mission-vision-card {
-  background: #1f2937;
+  background: rgba(31, 41, 55, 0.5);
   border: 1px solid #374151;
-  border-radius: 14px;
-  padding: 24px;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
+  transition: transform 0.3s ease;
 }
 
-.mission-vision-card .section-title {
+.mission-vision-card:hover {
+  transform: translateY(-4px);
+}
+
+.card-icon {
+  font-size: 32px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.mission-vision-title {
+  font-size: 20px;
+  font-weight: 700;
   color: #ffffff;
-  border-left: 6px solid #ffffff;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
 }
 
-.mission-vision-card .section-desc {
+.mission-vision-desc {
+  font-size: 14px;
   color: #d1d5db;
+  line-height: 1.6;
+  font-family: 'Inter', sans-serif;
 }
 
 .core-values-section {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 0 32px;
+  max-width: 1100px;
+  margin: 60px auto;
+  padding: 0 40px;
   text-align: center;
 }
 
@@ -189,28 +204,35 @@ main {
 .values-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 32px;
+  gap: 24px;
 }
 
 .value-card {
-  background: #ffffff;
-  border: 1px solid #f3f4f6;
-  border-radius: 14px;
-  padding: 24px;
-  text-align: left;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 32px 24px;
+  text-align: center;
   transition: transform 0.2s ease;
-  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .value-card:hover {
   transform: translateY(-4px);
 }
 
+.value-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+  display: block;
+}
+
 .value-title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   color: #111827;
   margin-bottom: 12px;
+  letter-spacing: 0.3px;
 }
 
 .value-desc {
@@ -221,33 +243,20 @@ main {
 }
 
 @media (max-width: 768px) {
-  .two-columns {
-    grid-template-columns: 1fr;
-    gap: 32px;
-  }
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* Mobile view */
-@media (max-width: 768px) {
-  .two-columns {
+  .mission-vision-section {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 0 20px;
+    margin: 60px auto;
+    padding: 40px 20px;
   }
 
   .values-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
   }
 
   .history-section {
     padding: 40px 20px;
-  }
-
-  .mission-vision-card {
-    padding: 20px;
   }
 
   .core-values-section {
@@ -258,13 +267,22 @@ main {
     font-size: 14px;
     margin-bottom: 32px;
   }
-
-  .value-title {
-    font-size: 18px;
-  }
-
-  .value-desc {
-    font-size: 12px;
-  }
 }
-</style>
+
+@media (max-width: 480px) {
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .section-title {
+    font-size: 24px;
+  }
+
+  .mission-vision-card {
+    padding: 20px 16px;
+  }
+
+  .value-card {
+    padding: 20px 16px;
+  }
+} </style>
