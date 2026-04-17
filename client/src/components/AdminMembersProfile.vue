@@ -106,11 +106,11 @@ export default {
 .members-profile-container {
   width: 100%;
   padding: 40px 20px;
-  background: transparent;
-  background-image: 
-    linear-gradient(0deg, transparent 24%, rgba(0, 0, 0, 0.02) 25%, rgba(0, 0, 0, 0.02) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.02) 76%, transparent 77%, transparent),
-    linear-gradient(90deg, transparent 24%, rgba(0, 0, 0, 0.02) 25%, rgba(0, 0, 0, 0.02) 26%, transparent 27%, transparent 74%, rgba(0, 0, 0, 0.02) 75%, rgba(0, 0, 0, 0.02) 76%, transparent 77%, transparent);
-  background-size: 100px 100px;
+  background: #f5f5f5;
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent);
+  background-size: 80px 80px;
   min-height: 100vh;
 }
 

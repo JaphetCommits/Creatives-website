@@ -1,24 +1,5 @@
 <template>
   <div class="admin-dashboard-application">
-    <header class="app-header">
-      <div class="brand">
-      </div>
-
-      <button class="create-btn">
-        <span class="create-icon">+</span>
-        <span>CREATE APPLICATION</span>
-      </button>
-
-      <div class="header-actions">
-        <button class="icon-btn">🔔</button>
-        <button class="icon-btn">⚙️</button>
-        <div class="profile-pill">
-          <img src="https://via.placeholder.com/46?text=AD" alt="Admin" />
-          <span>ADMIN</span>
-        </div>
-      </div>
-    </header>
-
       <main class="dashboard-panel">
         <div class="dashboard-title">
           <h1>DASHBOARD</h1>
@@ -29,7 +10,7 @@
             <div class="stat-icon">📄</div>
             <div>
               <p class="stat-label">Application</p>
-              <p class="stat-value">64</p>
+              <p class="stat-value">N/A</p>
             </div>
           </article>
 
@@ -37,7 +18,7 @@
             <div class="stat-icon">⏱️</div>
             <div>
               <p class="stat-label">Pending</p>
-              <p class="stat-value">12</p>
+              <p class="stat-value">N/A</p>
             </div>
           </article>
 
@@ -45,7 +26,7 @@
             <div class="stat-icon">📦</div>
             <div>
               <p class="stat-label">Others</p>
-              <p class="stat-value">8</p>
+              <p class="stat-value">N/A</p>
             </div>
           </article>
 
@@ -53,7 +34,7 @@
             <div class="stat-icon">✕</div>
             <div>
               <p class="stat-label">Declined</p>
-              <p class="stat-value">10</p>
+              <p class="stat-value">N/A</p>
             </div>
           </article>
 
@@ -61,7 +42,7 @@
             <div class="stat-icon">👥</div>
             <div>
               <p class="stat-label">Members</p>
-              <p class="stat-value">9</p>
+              <p class="stat-value">N/A</p>
             </div>
           </article>
         </div>
@@ -80,8 +61,7 @@ const route = useRoute()
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 .admin-dashboard-application {
-  min-height: 100vh;
-  background: #f5f5f5;
+  background: transparent;
   font-family: 'Inter', sans-serif;
   color: #222;
 }
@@ -246,14 +226,13 @@ const route = useRoute()
 .dashboard-panel {
   flex: 1;
   min-height: 640px;
-  background: rgba(255, 255, 255, 0.92);
   border-radius: 30px;
   padding: 32px;
-  box-shadow: 0 24px 64px rgba(15, 23, 42, 0.08);
+  font-family: 'Inter', sans-serif;
   background-image:
-    linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent),
-    linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.02) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.02) 75%, rgba(0,0,0,0.02) 76%, transparent 77%, transparent);
-  background-size: 100px 100px;
+    linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent);
+  background-size: 80px 80px;
 }
 
 .dashboard-title {

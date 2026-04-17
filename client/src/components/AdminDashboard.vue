@@ -17,7 +17,7 @@
           <transition name="nav-list">
             <ul class="nav-list" v-if="expandedSections.dashboard">
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click.prevent="router.push({ name: 'AdminDashboardApplication' })">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click.prevent="setActive('application')">
                   <span>Application</span>
                 </a>
               </li>
@@ -43,7 +43,7 @@
           <transition name="nav-list">
             <ul class="nav-list" v-if="expandedSections.members">
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'profiles' }" @click="setActive('profiles')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'profiles' }" @click.prevent="setActive('profiles')">
                   <span>Members Profiles</span>
                 </a>
               </li>
@@ -93,7 +93,7 @@
     <div class="main-content">
       <!-- Top Header -->
       <header class="top-header">
-        <button class="add-members-btn">Add Members</button>
+        <button class="add-members-btn">{{ activeSection === 'application' ? 'CREATE APPLICATION' : 'Add Members' }}</button>
         <button class="back-btn" @click="goHome">← Back to Home</button>
         <div class="header-actions">
           <button class="icon-btn">🔔</button>
@@ -120,10 +120,7 @@
           <h2>Delete Member</h2>
           <p>Delete member functionality coming soon</p>
         </div>
-        <div v-else-if="activeSection === 'application'" class="placeholder">
-          <h2>Applications</h2>
-          <p>Applications list coming soon</p>
-        </div>
+        <AdminDashboardApplication v-else-if="activeSection === 'application'" />
         <div v-else-if="activeSection === 'pending'" class="placeholder">
           <h2>Pending</h2>
           <p>Pending applications coming soon</p>
@@ -141,6 +138,7 @@
 import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AdminMembersProfile from './AdminMembersProfile.vue'
+import AdminDashboardApplication from './AdminDashboardApplication.vue'
 import logo from '../assets/Creatices lines.png'
 
 const router = useRouter()
