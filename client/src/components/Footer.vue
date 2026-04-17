@@ -5,6 +5,7 @@
         <div class="copyright">
           &copy; {{ new Date().getFullYear() }} Creatives Society. All rights reserved.
         </div>
+        <button class="admin-btn" @click="goToAdminDashboard">Admin Dashboard</button>
         <div class="powered-by" @click="showModal = true">
           Powered by Creatives Society
         </div>
@@ -44,7 +45,14 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+
 const showModal = ref(false)
+const router = useRouter()
+
+const goToAdminDashboard = () => {
+  router.push({ name: 'AdminDashboard' })
+}
 </script>
 
 <style scoped>
@@ -97,6 +105,29 @@ const showModal = ref(false)
 
 .powered-by:hover {
   color: #ffffff;
+}
+
+.admin-btn {
+  background: linear-gradient(135deg, #8b7e9c 0%, #6d5e84 100%);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 126, 156, 0.3);
+}
+
+.admin-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 126, 156, 0.5);
+  background: linear-gradient(135deg, #9b8eac 0%, #7d6e94 100%);
+}
+
+.admin-btn:active {
+  transform: translateY(0);
 }
 
 /* Modal styles (unchanged) */
