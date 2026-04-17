@@ -134,7 +134,7 @@ body {
 .sections-container {
   max-width: var(--max);
   margin: 0 auto;
-  padding: 0 40px;
+  padding: 0 36px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -155,7 +155,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 1rem 40px;
+  padding: 1rem 36px;
   margin: 0;
   box-shadow: 0 1px 0 rgba(0,0,0,0.05);
 }
@@ -180,7 +180,7 @@ body {
   grid-template-columns: 1fr 1fr;
   gap: 2.5rem;
   align-items: center;
-  padding: 0 40px;
+  padding: 0 36px;
   width: 100%;
   max-width: 1400px;
   margin-left: auto;
@@ -371,7 +371,7 @@ body {
 
   /* Adjust navbar padding */
   .nav {
-    padding: 1rem 20px;
+    padding: 1rem 18px;
   }
 
   /* Content spacing */
@@ -384,7 +384,7 @@ body {
   .hero {
     margin-top: 0;
     gap: 1.5rem;
-    padding: 0 20px;
+    padding: 0 18px;
     width: 100%;
     height: auto;
     min-height: auto;
