@@ -104,8 +104,14 @@ export default {
 .members-profile-container {
   width: 100%;
   padding: 40px 20px;
-  background: linear-gradient(135deg, #f5f5f5 0%, #ffffff 100%);
-  min-height: 100vh;
+  background-image: 
+    linear-gradient(rgba(200, 200, 200, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 200, 200, 0.1) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-color: #ffffff;
+  background-attachment: fixed;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .profile-header {
