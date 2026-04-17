@@ -1,34 +1,46 @@
 <template>
   <div class="officers-page">
     <main>
-      <!-- About Us -->
-      <section class="history-section">
-        <h2 class="section-title">[About Us]</h2>
-        <p class="section-desc">
-          The Campus Developers Organization is a community of passionate students
-          dedicated to learning, building, and innovating through technology. Our
-          organization brings together aspiring programmers, designers, and tech
-          enthusiasts who share a common goal of developing skills and creating
-          impactful digital solutions.
-        </p>
+      <!-- About Us Hero Section -->
+      <section class="about-hero-section">
+        <div class="about-hero-content">
+          <h2 class="about-hero-title">[About Us]</h2>
+          <p class="about-hero-desc">
+            The Campus Developers Organization is a community of passionate students
+            dedicated to learning, building, and innovating through technology. Our
+            organization brings together aspiring programmers, designers, and tech
+            enthusiasts who share a common goal of developing skills and creating
+            impactful digital solutions.
+          </p>
+        </div>
+        <div class="about-hero-image">
+          <!-- Image placeholder - add your image here -->
+          <div class="image-placeholder"></div>
+        </div>
       </section>
 
-      <!-- Why We Exist -->
-      <section class="history-section">
-        <h2 class="section-title">[Why We Exist]</h2>
-        <p class="section-desc">
-          The Campus Developers Organization is a community of passionate students
-          dedicated to learning, building, and innovating through technology. Our
-          organization brings together aspiring programmers, designers, and tech
-          enthusiasts who share a common goal of developing skills and creating
-          impactful digital solutions.
-        </p>
+      <!-- Why We Exist Hero Section -->
+      <section class="about-hero-section alternate">
+        <div class="about-hero-image">
+          <!-- Image placeholder - add your image here -->
+          <div class="image-placeholder"></div>
+        </div>
+        <div class="about-hero-content">
+          <h2 class="about-hero-title">[Why We Exist]</h2>
+          <p class="about-hero-desc">
+            The Campus Developers Organization is a community of passionate students
+            dedicated to learning, building, and innovating through technology. Our
+            organization brings together aspiring programmers, designers, and tech
+            enthusiasts who share a common goal of developing skills and creating
+            impactful digital solutions.
+          </p>
+        </div>
       </section>
 
       <!-- Mission & Vision (side‑by‑side) -->
       <div class="mission-vision-section">
         <div class="mission-vision-card">
-          <div class="card-icon">📋</div>
+          <div class="card-icon-placeholder"></div>
           <h2 class="mission-vision-title">Our Mission</h2>
           <p class="mission-vision-desc">
             Panthers College of computing studies Panthers College of computing
@@ -37,7 +49,7 @@
           </p>
         </div>
         <div class="mission-vision-card">
-          <div class="card-icon">🎯</div>
+          <div class="card-icon-placeholder"></div>
           <h2 class="mission-vision-title">Our Vision</h2>
           <p class="mission-vision-desc">
             Panthers College of computing studies Panthers College of computing
@@ -56,28 +68,28 @@
         </p>
         <div class="values-grid">
           <div class="value-card">
-            <div class="value-icon">⭐</div>
+            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Integrity</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
-            <div class="value-icon">💖</div>
+            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Resilience</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
-            <div class="value-icon">🎯</div>
+            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Excellence</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
-            <div class="value-icon">🤝</div>
+            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Altruism</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
@@ -125,6 +137,76 @@ main {
   padding-top: 0;
 }
 
+/* About Hero Sections */
+.about-hero-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 80px 36px;
+  box-sizing: border-box;
+}
+
+.about-hero-section.alternate {
+  grid-template-columns: 1fr 1fr;
+}
+
+.about-hero-section.alternate .about-hero-image {
+  order: -1;
+}
+
+.about-hero-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.about-hero-title {
+  font-size: 42px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 24px;
+  letter-spacing: 0.5px;
+  font-family: 'Unbounded', sans-serif;
+}
+
+.about-hero-desc {
+  font-size: 16px;
+  font-weight: 400;
+  color: #9ca3af;
+  line-height: 1.8;
+  max-width: 520px;
+}
+
+.about-hero-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+}
+
+.image-placeholder {
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border-radius: 12px;
+  border: 2px dashed #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.image-placeholder::before {
+  content: "← Image placeholder - add your image here";
+}
+
 .section-desc {
   font-size: 16px;       
   font-weight: 400;
@@ -145,11 +227,13 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 32px;
-  max-width: 900px;
-  margin: 40px auto;
-  padding: 60px 40px;
-  background: #1f2937;
-  border-radius: 8px;
+  max-width: 1400px;
+  margin: 80px auto;
+  padding: 60px 36px;
+  background: #1a1f2e;
+  border-radius: 16px;
+  box-sizing: border-box;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .mission-vision-card {
@@ -165,10 +249,16 @@ main {
   transform: translateY(-4px);
 }
 
-.card-icon {
-  font-size: 32px;
-  margin-bottom: 16px;
-  display: block;
+.card-icon-placeholder {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
+  border-radius: 12px;
+  border: 2px dashed #4b5563;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .mission-vision-title {
@@ -187,10 +277,11 @@ main {
 }
 
 .core-values-section {
-  max-width: 1100px;
-  margin: 60px auto;
-  padding: 0 40px;
+  max-width: 1400px;
+  margin: 80px auto;
+  padding: 0 36px;
   text-align: center;
+  box-sizing: border-box;
 }
 
 .core-values-intro {
@@ -221,10 +312,16 @@ main {
   transform: translateY(-4px);
 }
 
-.value-icon {
-  font-size: 36px;
-  margin-bottom: 16px;
-  display: block;
+.value-icon-placeholder {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
+  border-radius: 12px;
+  border: 2px dashed #c4c8d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .value-title {
@@ -243,11 +340,33 @@ main {
 }
 
 @media (max-width: 768px) {
+  .about-hero-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 60px 18px;
+  }
+
+  .about-hero-section.alternate .about-hero-image {
+    order: 0;
+  }
+
+  .about-hero-title {
+    font-size: 32px;
+  }
+
+  .about-hero-desc {
+    font-size: 15px;
+  }
+
+  .image-placeholder {
+    min-height: 300px;
+  }
+
   .mission-vision-section {
     grid-template-columns: 1fr;
     gap: 24px;
     margin: 60px auto;
-    padding: 40px 20px;
+    padding: 40px 18px;
   }
 
   .values-grid {
@@ -256,11 +375,11 @@ main {
   }
 
   .history-section {
-    padding: 40px 20px;
+    padding: 40px 18px;
   }
 
   .core-values-section {
-    padding: 0 20px;
+    padding: 0 18px;
   }
 
   .core-values-intro {
@@ -270,6 +389,18 @@ main {
 }
 
 @media (max-width: 480px) {
+  .about-hero-section {
+    padding: 40px 18px;
+  }
+
+  .about-hero-title {
+    font-size: 26px;
+  }
+
+  .image-placeholder {
+    min-height: 250px;
+  }
+
   .values-grid {
     grid-template-columns: 1fr;
   }
