@@ -27,17 +27,17 @@
           </div>
           <div class="member-label">{{ founder.roleLabel }}</div>
         </div>
+
+        <div class="connectors">
+          <span class="connector vertical center"></span>
+        </div>
       </div>
 
-      <!-- Vertical connector line -->
-      <div class="connector-vertical"></div>
-
-      <!-- Mid-level members -->
-      <div class="chart-level level-mid">
-        <div class="level-row">
+      <!-- Upper diagonal mid members -->
+      <div class="chart-level level-split">
+        <div class="level-row split-row">
           <!-- Left member -->
-          <div class="member-node" v-if="midMembers[0]">
-            <div class="connector-horizontal"></div>
+          <div class="member-node side-node left" v-if="midMembers[0]">
             <div class="profile-wrapper" tabindex="0">
               <img :src="midMembers[0].image" :alt="midMembers[0].name" class="profile-pic" />
               <div class="hover-card">
@@ -55,29 +55,8 @@
             <div class="member-label">{{ midMembers[0].roleLabel }}</div>
           </div>
 
-          <!-- Center member -->
-          <div class="member-node" v-if="midMembers[1]">
-            <div class="connector-horizontal"></div>
-            <div class="profile-wrapper" tabindex="0">
-              <img :src="midMembers[1].image" :alt="midMembers[1].name" class="profile-pic" />
-              <div class="hover-card">
-                <div class="hover-header">
-                  <span class="hover-label">Profile</span>
-                </div>
-                <div class="hover-name">{{ midMembers[1].name }}</div>
-                <div class="hover-meta">{{ midMembers[1].role }}</div>
-                <p class="hover-description">{{ midMembers[1].description }}</p>
-                <div class="hover-tags">
-                  <span class="hover-tag" v-for="tag in midMembers[1].tags" :key="tag">{{ tag }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="member-label">{{ midMembers[1].roleLabel }}</div>
-          </div>
-
           <!-- Right member -->
-          <div class="member-node" v-if="midMembers[2]">
-            <div class="connector-horizontal"></div>
+          <div class="member-node side-node right" v-if="midMembers[2]">
             <div class="profile-wrapper" tabindex="0">
               <img :src="midMembers[2].image" :alt="midMembers[2].name" class="profile-pic" />
               <div class="hover-card">
@@ -97,6 +76,30 @@
         </div>
       </div>
 
+      <!-- Vertical branch to center mid member -->
+      <div class="connector-vertical center"></div>
+
+      <!-- Center mid member -->
+      <div class="chart-level level-center">
+        <div class="member-node center-node" v-if="midMembers[1]">
+          <div class="profile-wrapper" tabindex="0">
+            <img :src="midMembers[1].image" :alt="midMembers[1].name" class="profile-pic" />
+            <div class="hover-card">
+              <div class="hover-header">
+                <span class="hover-label">Profile</span>
+              </div>
+              <div class="hover-name">{{ midMembers[1].name }}</div>
+              <div class="hover-meta">{{ midMembers[1].role }}</div>
+              <p class="hover-description">{{ midMembers[1].description }}</p>
+              <div class="hover-tags">
+                <span class="hover-tag" v-for="tag in midMembers[1].tags" :key="tag">{{ tag }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="member-label">{{ midMembers[1].roleLabel }}</div>
+        </div>
+      </div>
+
       <!-- Vertical connector line -->
       <div class="connector-vertical"></div>
 
@@ -104,7 +107,6 @@
       <div class="chart-level level-bottom">
         <div class="level-row">
           <div class="member-node" v-for="member in bottomMembers" :key="member.id">
-            <div class="connector-horizontal"></div>
             <div class="profile-wrapper" tabindex="0">
               <img :src="member.image" :alt="member.name" class="profile-pic" />
               <div class="hover-card">
@@ -263,7 +265,7 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1400px;
+  max-width: 2600px;
   margin: 0 auto;
 }
 
@@ -277,14 +279,102 @@ export default {
 
 .level-founder {
   margin-bottom: 20px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
-.level-mid {
-  margin: 40px 0;
+.connectors {
+  position: absolute;
+  top: 155px;
+  left: 0;
+  width: 100%;
+  height: 260px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.connector {
+  position: absolute;
+  width: 3px;
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0.12));
+  border-radius: 2px;
+}
+
+.connector.vertical.center {
+  left: 50%;
+  top: 0;
+  height: 140px;
+  transform: translateX(-50%);
+}
+
+.side-node {
+  position: relative;
+  z-index: 2;
+}
+
+.side-node::before {
+  content: '';
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 3px;
+  height: 180px;
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0.12));
+  transform-origin: bottom center;
+  transform: translateX(-50%) rotate(0deg);
+  z-index: -1;
+}
+
+.side-node.left::before {
+  transform: translateX(-50%) rotate(30deg);
+}
+
+.side-node.right::before {
+  transform: translateX(-50%) rotate(-30deg);
+}
+
+.level-split {
+  margin: 70px 0 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.split-row {
+  width: 100%;
+  max-width: 1800px;
+  display: flex;
+  justify-content: space-between;
+  gap: 280px;
+}
+
+.level-center {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.center-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.connector-vertical {
+  width: 3px;
+  height: 60px;
+  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.22), rgba(15, 23, 42, 0.12));
+  margin: 0 auto;
+}
+
+.connector-vertical.center {
+  height: 110px;
 }
 
 .level-bottom {
-  margin-top: 40px;
+  margin-top: 20px;
 }
 
 .level-row {
@@ -294,6 +384,10 @@ export default {
   align-items: flex-start;
   width: 100%;
   position: relative;
+}
+
+.level-row::before {
+  display: none;
 }
 
 .member-node {
@@ -308,11 +402,11 @@ export default {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 140px;
-  height: 140px;
+  width: 180px;
+  height: 180px;
   border-radius: 50%;
   background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), rgba(220, 220, 240, 0.8));
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   border: 4px solid rgba(255, 255, 255, 0.98);
@@ -321,12 +415,12 @@ export default {
 .profile-wrapper:hover,
 .profile-wrapper:focus-within {
   transform: scale(1.08);
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.18);
 }
 
 .profile-pic {
-  width: 130px;
-  height: 130px;
+  width: 170px;
+  height: 170px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -458,17 +552,17 @@ export default {
   }
 
   .profile-wrapper {
-    width: 120px;
-    height: 120px;
+    width: 150px;
+    height: 150px;
   }
 
   .profile-pic {
-    width: 110px;
-    height: 110px;
+    width: 140px;
+    height: 140px;
   }
 
   .hover-card {
-    width: 240px;
+    width: 260px;
   }
 }
 
@@ -496,13 +590,13 @@ export default {
   }
 
   .profile-wrapper {
-    width: 100px;
-    height: 100px;
+    width: 130px;
+    height: 130px;
   }
 
   .profile-pic {
-    width: 90px;
-    height: 90px;
+    width: 120px;
+    height: 120px;
   }
 
   .member-label {
