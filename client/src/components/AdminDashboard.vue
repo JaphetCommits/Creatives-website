@@ -7,70 +7,84 @@
       </div>
 
       <nav class="sidebar-nav">
+        <div class="nav-main-title">MAIN</div>
+        
         <div class="nav-section">
-          <h3 class="nav-title">MAIN</h3>
-          <ul class="nav-list">
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'dashboard' }" @click="setActive('dashboard')">
-                <span class="nav-icon">📊</span>
-                <span>DASHBOARD</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'members' }" @click="setActive('members')">
-                <span class="nav-icon">👥</span>
-                <span>MEMBERS</span>
-              </a>
-            </li>
-          </ul>
+          <button class="nav-section-toggle" :aria-expanded="expandedSections.dashboard" @click="toggleSection('dashboard')">
+            <span class="section-label">DASHBOARD</span>
+            <span class="toggle-icon">{{ expandedSections.dashboard ? '▼' : '▶' }}</span>
+          </button>
+          <transition name="nav-list">
+            <ul class="nav-list" v-if="expandedSections.dashboard">
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click.prevent="setActive('application')">
+                  <span>Application</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'pending' }" @click="setActive('pending')">
+                  <span>Pending</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'declined' }" @click="setActive('declined')">
+                  <span>Declined</span>
+                </a>
+              </li>
+            </ul>
+          </transition>
         </div>
 
         <div class="nav-section">
-          <h3 class="nav-title">MEMBERS</h3>
-          <ul class="nav-list">
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'profiles' }" @click="setActive('profiles')">
-                <span class="nav-icon">👤</span>
-                <span>Members Profiles</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'add' }" @click="setActive('add')">
-                <span class="nav-icon">➕</span>
-                <span>Add member</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'delete' }" @click="setActive('delete')">
-                <span class="nav-icon">🗑️</span>
-                <span>Delete member</span>
-              </a>
-            </li>
-          </ul>
+          <button class="nav-section-toggle" :aria-expanded="expandedSections.members" @click="toggleSection('members')">
+            <span class="section-label">MEMBERS</span>
+            <span class="toggle-icon">{{ expandedSections.members ? '▼' : '▶' }}</span>
+          </button>
+          <transition name="nav-list">
+            <ul class="nav-list" v-if="expandedSections.members">
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'profiles' }" @click.prevent="setActive('profiles')">
+                  <span>Members Profiles</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'add' }" @click="setActive('add')">
+                  <span>Add member</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'delete' }" @click="setActive('delete')">
+                  <span>Delete member</span>
+                </a>
+              </li>
+            </ul>
+          </transition>
         </div>
 
         <div class="nav-section">
-          <h3 class="nav-title">OTHERS</h3>
-          <ul class="nav-list">
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click="setActive('application')">
-                <span class="nav-icon">📄</span>
-                <span>Application</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'pending' }" @click="setActive('pending')">
-                <span class="nav-icon">⏳</span>
-                <span>Pending</span>
-              </a>
-            </li>
-            <li>
-              <a href="#" class="nav-item" :class="{ active: activeSection === 'declined' }" @click="setActive('declined')">
-                <span class="nav-icon">❌</span>
-                <span>Declined</span>
-              </a>
-            </li>
-          </ul>
+          <button class="nav-section-toggle" :aria-expanded="expandedSections.others" @click="toggleSection('others')">
+            <span class="section-label">OTHERS</span>
+            <span class="toggle-icon">{{ expandedSections.others ? '▼' : '▶' }}</span>
+          </button>
+          <transition name="nav-list">
+            <ul class="nav-list" v-if="expandedSections.others">
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click="setActive('application')">
+                  <span>Application</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'pending' }" @click="setActive('pending')">
+                  <span>Pending</span>
+                </a>
+              </li>
+              <li>
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'declined' }" @click="setActive('declined')">
+                  <span>Declined</span>
+                </a>
+              </li>
+            </ul>
+          </transition>
         </div>
       </nav>
     </aside>
@@ -79,8 +93,8 @@
     <div class="main-content">
       <!-- Top Header -->
       <header class="top-header">
+        <button class="add-members-btn">{{ activeSection === 'application' ? 'CREATE APPLICATION' : 'Add Members' }}</button>
         <button class="back-btn" @click="goHome">← Back to Home</button>
-        <button class="add-members-btn">Add Members</button>
         <div class="header-actions">
           <button class="icon-btn">🔔</button>
           <button class="icon-btn">⚙️</button>
@@ -106,10 +120,7 @@
           <h2>Delete Member</h2>
           <p>Delete member functionality coming soon</p>
         </div>
-        <div v-else-if="activeSection === 'application'" class="placeholder">
-          <h2>Applications</h2>
-          <p>Applications list coming soon</p>
-        </div>
+        <AdminDashboardApplication v-else-if="activeSection === 'application'" />
         <div v-else-if="activeSection === 'pending'" class="placeholder">
           <h2>Pending</h2>
           <p>Pending applications coming soon</p>
@@ -124,16 +135,39 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import AdminMembersProfile from './AdminMembersProfile.vue'
+import AdminDashboardApplication from './AdminDashboardApplication.vue'
+import AdminDashboardCreateApplication from './AdminDashboardCreateApplication.vue'
 import logo from '../assets/Creatices lines.png'
 
 const router = useRouter()
-const activeSection = ref('profiles')
+const route = useRoute()
+const activeSection = ref(route.query.section || 'profiles')
+const expandedSections = ref({
+  dashboard: true,
+  members: true,
+  others: false
+})
+
+watch(
+  () => route.query.section,
+  (section) => {
+    if (section) {
+      activeSection.value = section
+    }
+  }
+)
 
 const setActive = (section) => {
   activeSection.value = section
+}
+
+const toggleSection = (section) => {
+  Object.keys(expandedSections.value).forEach((key) => {
+    expandedSections.value[key] = key === section ? !expandedSections.value[key] : false
+  })
 }
 
 const goHome = () => {
@@ -142,6 +176,8 @@ const goHome = () => {
 </script>
 
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -152,21 +188,22 @@ const goHome = () => {
   display: flex;
   height: 100vh;
   background: #f5f5f5;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 /* Sidebar Styles */
 .sidebar {
-  width: 220px;
-  background: #e8e8e8;
-  border-right: 1px solid #d0d0d0;
+  width: 300px;
+  background: #ffffff;
   overflow-y: auto;
   padding: 20px 0;
 }
 
 .sidebar-header {
   padding: 0 20px 30px;
-  border-bottom: 1px solid #d0d0d0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-header h2 {
@@ -174,52 +211,139 @@ const goHome = () => {
   font-weight: 700;
   letter-spacing: 2px;
   color: #1a1a1a;
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .sidebar-nav {
   margin-top: 20px;
-}
-
-.nav-section {
-  margin-bottom: 25px;
   padding: 0 15px;
 }
 
-.nav-title {
-  font-size: 11px;
+.nav-section {
+  margin-bottom: 12px;
+  padding: 0;
+}
+
+.nav-main-title {
+  font-size: 20px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #666;
-  margin-bottom: 12px;
+  color: #333;
+  margin: 20px 15px 20px 15px;
   text-transform: uppercase;
+  font-family: 'Unbounded', sans-serif;
+}
+
+.nav-section-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 14px 18px;
+  background: #d0d0d0;
+  border: none;
+  color: #333;
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Unbounded', sans-serif;
+}
+
+.nav-section-toggle:hover {
+  background: #b0b0b0;
+}
+
+.nav-section-toggle:active {
+  background: #909090;
+}
+
+.toggle-icon {
+  font-size: 10px;
+  min-width: 12px;
+  margin-left: auto;
+}
+
+.section-label {
+  flex: 1;
+  text-align: left;
 }
 
 .nav-list {
   list-style: none;
+  padding-left: 15px;
+  margin-top: 18px;
 }
 
 .nav-item {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 15px;
+  padding: 14px 18px;
   text-decoration: none;
   color: #333;
   border-radius: 8px;
   transition: all 0.3s ease;
   font-size: 13px;
-  font-weight: 500;
-  margin-bottom: 6px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-family: 'Inter', sans-serif;
 }
 
 .nav-item:hover {
   background: rgba(0, 0, 0, 0.05);
+  transform: translateX(2px);
+}
+
+.nav-list {
+  list-style: none;
+  padding-left: 15px;
+  margin-top: 18px;
+  overflow: hidden;
+}
+
+.nav-list-enter-active,
+.nav-list-leave-active {
+  transition: all 0.28s ease;
+}
+
+.nav-list-enter-from,
+.nav-list-leave-to {
+  max-height: 0;
+  opacity: 0;
+  transform: scaleY(0.96);
+}
+
+.nav-list-enter-to,
+.nav-list-leave-from {
+  max-height: 500px;
+  opacity: 1;
+  transform: scaleY(1);
+}
+
+.toggle-icon {
+  transition: transform 0.25s ease;
+}
+
+.nav-section-toggle[aria-expanded="true"] .toggle-icon,
+.nav-section-toggle.open .toggle-icon {
+  transform: rotate(180deg);
 }
 
 .nav-item.active {
-  background: #c0c0c0;
+  background: transparent;
   color: #000;
   font-weight: 600;
+  border-bottom: 2px solid #1a1a1a;
+  border-radius: 0;
 }
 
 .nav-icon {
@@ -255,6 +379,7 @@ const goHome = () => {
   cursor: pointer;
   color: #333;
   transition: background 0.3s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 .add-members-btn:hover {
@@ -271,6 +396,7 @@ const goHome = () => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
+  font-family: 'Inter', sans-serif;
 }
 
 .back-btn:hover {
@@ -320,6 +446,7 @@ const goHome = () => {
   font-size: 12px;
   font-weight: 600;
   color: #333;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Page Content */
@@ -335,10 +462,12 @@ const goHome = () => {
   padding: 40px;
   text-align: center;
   color: #999;
+  font-family: 'Inter', sans-serif;
 }
 
 .placeholder h2 {
   color: #333;
+  font-family: 'Inter', sans-serif;
   margin-bottom: 10px;
 }
 
@@ -364,10 +493,16 @@ const goHome = () => {
   background: #999;
 }
 
+.sidebar-header h2 img {
+  height: 40px;
+  max-width: 260px;
+  object-fit: contain;
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .sidebar {
-    width: 180px;
+    width: 240px;
   }
 
   .page-content {
@@ -412,4 +547,5 @@ const goHome = () => {
     border-right: none;
   }
 }
+
 </style>
