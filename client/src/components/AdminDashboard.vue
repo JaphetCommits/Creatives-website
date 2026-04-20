@@ -17,17 +17,17 @@
           <transition name="nav-list">
             <ul class="nav-list" v-if="expandedSections.dashboard">
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click.prevent="setActive('application')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click.prevent="navigateSection('application')">
                   <span>Application</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'pending' }" @click="setActive('pending')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'pending' }" @click.prevent="navigateSection('pending')">
                   <span>Pending</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'declined' }" @click="setActive('declined')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'declined' }" @click.prevent="navigateSection('declined')">
                   <span>Declined</span>
                 </a>
               </li>
@@ -43,17 +43,17 @@
           <transition name="nav-list">
             <ul class="nav-list" v-if="expandedSections.members">
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'profiles' }" @click.prevent="setActive('profiles')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'profiles' }" @click.prevent="navigateSection('profiles')">
                   <span>Members Profiles</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'add' }" @click="setActive('add')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'add' }" @click.prevent="navigateSection('add')">
                   <span>Add member</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'delete' }" @click="setActive('delete')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'delete' }" @click.prevent="navigateSection('delete')">
                   <span>Delete member</span>
                 </a>
               </li>
@@ -69,17 +69,17 @@
           <transition name="nav-list">
             <ul class="nav-list" v-if="expandedSections.others">
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click="setActive('application')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'application' }" @click.prevent="navigateSection('application')">
                   <span>Application</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'pending' }" @click="setActive('pending')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'pending' }" @click.prevent="navigateSection('pending')">
                   <span>Pending</span>
                 </a>
               </li>
               <li>
-                <a href="#" class="nav-item" :class="{ active: activeSection === 'declined' }" @click="setActive('declined')">
+                <a href="#" class="nav-item" :class="{ active: activeSection === 'declined' }" @click.prevent="navigateSection('declined')">
                   <span>Declined</span>
                 </a>
               </li>
@@ -93,7 +93,7 @@
     <div class="main-content">
       <!-- Top Header -->
       <header class="top-header">
-        <button class="add-members-btn">{{ activeSection === 'application' ? 'CREATE APPLICATION' : 'Add Members' }}</button>
+        <button class="add-members-btn" @click="handleCreateApplication">{{ activeSection === 'application' ? 'CREATE APPLICATION' : 'Add Members' }}</button>
         <button class="back-btn" @click="goHome">← Back to Home</button>
         <div class="header-actions">
           <button class="icon-btn">🔔</button>
@@ -107,28 +107,30 @@
 
       <!-- Page Content -->
       <div class="page-content">
-        <AdminMembersProfile v-if="activeSection === 'profiles' || activeSection === 'members'" />
-        <div v-else-if="activeSection === 'dashboard'" class="placeholder">
-          <h2>Dashboard</h2>
-          <p>Dashboard content coming soon</p>
-        </div>
-        <div v-else-if="activeSection === 'add'" class="placeholder">
-          <h2>Add Member</h2>
-          <p>Add member form coming soon</p>
-        </div>
-        <div v-else-if="activeSection === 'delete'" class="placeholder">
-          <h2>Delete Member</h2>
-          <p>Delete member functionality coming soon</p>
-        </div>
-        <AdminDashboardApplication v-else-if="activeSection === 'application'" />
-        <div v-else-if="activeSection === 'pending'" class="placeholder">
-          <h2>Pending</h2>
-          <p>Pending applications coming soon</p>
-        </div>
-        <div v-else-if="activeSection === 'declined'" class="placeholder">
-          <h2>Declined</h2>
-          <p>Declined applications coming soon</p>
-        </div>
+        <slot name="content">
+          <AdminMembersProfile v-if="activeSection === 'profiles' || activeSection === 'members'" />
+          <div v-else-if="activeSection === 'dashboard'" class="placeholder">
+            <h2>Dashboard</h2>
+            <p>Dashboard content coming soon</p>
+          </div>
+          <div v-else-if="activeSection === 'add'" class="placeholder">
+            <h2>Add Member</h2>
+            <p>Add member form coming soon</p>
+          </div>
+          <div v-else-if="activeSection === 'delete'" class="placeholder">
+            <h2>Delete Member</h2>
+            <p>Delete member functionality coming soon</p>
+          </div>
+          <AdminDashboardApplication v-else-if="activeSection === 'application'" />
+          <div v-else-if="activeSection === 'pending'" class="placeholder">
+            <h2>Pending</h2>
+            <p>Pending applications coming soon</p>
+          </div>
+          <div v-else-if="activeSection === 'declined'" class="placeholder">
+            <h2>Declined</h2>
+            <p>Declined applications coming soon</p>
+          </div>
+        </slot>
       </div>
     </div>
   </div>
@@ -139,12 +141,22 @@ import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AdminMembersProfile from './AdminMembersProfile.vue'
 import AdminDashboardApplication from './AdminDashboardApplication.vue'
-import AdminDashboardCreateApplication from './AdminDashboardCreateApplication.vue'
 import logo from '../assets/Creatices lines.png'
 
 const router = useRouter()
 const route = useRoute()
-const activeSection = ref(route.query.section || 'profiles')
+
+const getSectionFromRoute = (route) => {
+  if (route.name === 'AdminDashboardCreateApplication' || route.name === 'AdminDashboardApplication') {
+    return 'application'
+  }
+
+  const section = route.query.section
+  const validSections = ['profiles', 'pending', 'declined', 'add', 'delete', 'dashboard', 'application']
+  return section && validSections.includes(section) ? section : 'profiles'
+}
+
+const activeSection = ref(getSectionFromRoute(route))
 const expandedSections = ref({
   dashboard: true,
   members: true,
@@ -152,16 +164,15 @@ const expandedSections = ref({
 })
 
 watch(
-  () => route.query.section,
-  (section) => {
-    if (section) {
-      activeSection.value = section
-    }
+  () => [route.name, route.query.section],
+  () => {
+    activeSection.value = getSectionFromRoute(route)
   }
 )
 
-const setActive = (section) => {
+const navigateSection = (section) => {
   activeSection.value = section
+  router.push({ name: 'AdminDashboard', query: { section } })
 }
 
 const toggleSection = (section) => {
@@ -172,6 +183,13 @@ const toggleSection = (section) => {
 
 const goHome = () => {
   router.push({ path: '/' })
+}
+
+const handleCreateApplication = () => {
+  if (activeSection.value === 'application') {
+    router.push({ name: 'AdminDashboardCreateApplication' })
+  }
+  // For other sections, could add other logic if needed
 }
 </script>
 
@@ -188,7 +206,7 @@ const goHome = () => {
   display: flex;
   height: 100vh;
   background: #f5f5f5;
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: 'Unbounded', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 /* Sidebar Styles */
@@ -211,7 +229,7 @@ const goHome = () => {
   font-weight: 700;
   letter-spacing: 2px;
   color: #1a1a1a;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   margin: 0;
   display: flex;
   align-items: center;
@@ -243,7 +261,7 @@ const goHome = () => {
   align-items: center;
   gap: 10px;
   width: 100%;
-  padding: 14px 18px;
+  padding: 10px;
   background: #d0d0d0;
   border: none;
   color: #333;
@@ -286,21 +304,27 @@ const goHome = () => {
   align-items: center;
   gap: 12px;
   padding: 14px 18px;
+  margin-left: 30px;
   text-decoration: none;
-  color: #333;
+  color: #000;
   border-radius: 8px;
   transition: all 0.3s ease;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 1px;
-  text-transform: uppercase;
+  line-height: 1;
+  /* text-transform: uppercase; */
   margin-bottom: 12px;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Unbounded', sans-serif;
 }
 
 .nav-item:hover {
   background: rgba(0, 0, 0, 0.05);
   transform: translateX(2px);
+}
+
+.nav-item:hover span {
+  text-decoration: underline;
 }
 
 .nav-list {
@@ -342,8 +366,11 @@ const goHome = () => {
   background: transparent;
   color: #000;
   font-weight: 600;
-  border-bottom: 2px solid #1a1a1a;
   border-radius: 0;
+}
+
+.nav-item.active span {
+  text-decoration: underline;
 }
 
 .nav-icon {
@@ -379,7 +406,7 @@ const goHome = () => {
   cursor: pointer;
   color: #333;
   transition: background 0.3s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Unbounded', sans-serif;
 }
 
 .add-members-btn:hover {
@@ -396,7 +423,7 @@ const goHome = () => {
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Unbounded', sans-serif;
 }
 
 .back-btn:hover {
@@ -446,7 +473,7 @@ const goHome = () => {
   font-size: 12px;
   font-weight: 600;
   color: #333;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Unbounded', sans-serif;
 }
 
 /* Page Content */
@@ -462,12 +489,12 @@ const goHome = () => {
   padding: 40px;
   text-align: center;
   color: #999;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Unbounded', sans-serif;
 }
 
 .placeholder h2 {
   color: #333;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Unbounded', sans-serif;
   margin-bottom: 10px;
 }
 

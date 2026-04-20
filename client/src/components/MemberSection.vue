@@ -10,6 +10,17 @@
     <div class="org-chart">
       <!-- Founder -->
       <div class="chart-level level-founder">
+        <svg class="founder-connectors" viewBox="0 0 1400 150" preserveAspectRatio="none">
+          <!-- Central point at top -->
+          <circle cx="700" cy="10" r="2" fill="black"/>
+          <!-- Line to left node -->
+          <line x1="700" y1="10" x2="200" y2="145" stroke="black" stroke-width="3"/>
+          <!-- Line to right node -->
+          <line x1="700" y1="10" x2="1200" y2="145" stroke="black" stroke-width="3"/>
+          <!-- Line to center node -->
+          <line x1="700" y1="10" x2="700" y2="145" stroke="black" stroke-width="3"/>
+        </svg>
+
         <div class="member-node">
           <div class="profile-wrapper" tabindex="0">
             <img :src="founder.image" :alt="founder.name" class="profile-pic" />
@@ -26,10 +37,6 @@
             </div>
           </div>
           <div class="member-label">{{ founder.roleLabel }}</div>
-        </div>
-
-        <div class="connectors">
-          <span class="connector vertical center"></span>
         </div>
       </div>
 
@@ -76,9 +83,6 @@
         </div>
       </div>
 
-      <!-- Vertical branch to center mid member -->
-      <div class="connector-vertical center"></div>
-
       <!-- Center mid member -->
       <div class="chart-level level-center">
         <div class="member-node center-node" v-if="midMembers[1]">
@@ -99,9 +103,6 @@
           <div class="member-label">{{ midMembers[1].roleLabel }}</div>
         </div>
       </div>
-
-      <!-- Vertical connector line -->
-      <div class="connector-vertical"></div>
 
       <!-- Bottom level members -->
       <div class="chart-level level-bottom">
@@ -270,6 +271,7 @@ export default {
   align-items: center;
   max-width: 2600px;
   margin: 0 auto;
+  position: relative;
 }
 
 .chart-level {
@@ -288,74 +290,53 @@ export default {
   justify-content: center;
 }
 
-.connectors {
+.founder-connectors {
   position: absolute;
   top: 155px;
   left: 0;
   width: 100%;
-  height: 260px;
+  height: 130px;
   pointer-events: none;
   z-index: 0;
-}
-
-.connector {
-  position: absolute;
-  width: 3px;
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0.12));
-  border-radius: 2px;
-}
-
-.connector.vertical.center {
-  left: 50%;
-  top: 0;
-  height: 140px;
-  transform: translateX(-50%);
 }
 
 .side-node {
   position: relative;
   z-index: 2;
-}
-
-.side-node::before {
-  content: '';
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  width: 3px;
-  height: 180px;
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.28), rgba(15, 23, 42, 0.12));
-  transform-origin: bottom center;
-  transform: translateX(-50%) rotate(0deg);
-  z-index: -1;
-}
-
-.side-node.left::before {
-  transform: translateX(-50%) rotate(75deg);
-  margin-bottom: 100px;
-}
-
-.side-node.right::before {
-  transform: translateX(-50%) rotate(-75deg);
+  justify-self: center;
 }
 
 .level-split {
-  margin: 70px 0 0;
+  margin: 0;
   width: 100%;
   display: flex;
   justify-content: center;
+  position: absolute;
+  top: 210px;
+  left: 0;
+  z-index: 2;
 }
 
 .split-row {
   width: 100%;
-  max-width: 1800px;
-  display: flex;
-  justify-content: space-between;
-  gap: 280px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 14.2857% 71.4286% 14.2857%;
+  align-items: start;
+  min-height: 260px;
+}
+
+.side-node.left {
+  grid-column: 1;
+  margin-right: 825px;
+}
+
+.side-node.right {
+  grid-column: 3;
 }
 
 .level-center {
-  margin-top: 40px;
+  margin-top: 20px;
   display: flex;
   justify-content: center;
 }
@@ -364,17 +345,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.connector-vertical {
-  width: 3px;
-  height: 60px;
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.22), rgba(15, 23, 42, 0.12));
-  margin: 0 auto;
-}
-
-.connector-vertical.center {
-  height: 110px;
 }
 
 .level-bottom {
@@ -522,32 +492,6 @@ export default {
   border-radius: 999px;
   font-size: 10px;
   color: #1f2937;
-}
-
-.connector-vertical {
-  width: 3px;
-  height: 30px;
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.15), rgba(15, 23, 42, 0.1));
-}
-
-.connector-horizontal {
-  position: absolute;
-  top: -30px;
-  left: 50%;
-  width: 2px;
-  height: 30px;
-  background: linear-gradient(to bottom, rgba(15, 23, 42, 0.1), rgba(15, 23, 42, 0.05));
-  transform: translateX(-50%);
-}
-
-.level-row::before {
-  content: '';
-  position: absolute;
-  top: -30px;
-  left: 0;
-  right: 0;
-  height: 2px;
-  background: rgba(15, 23, 42, 0.08);
 }
 
 @media (max-width: 968px) {

@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import MainHeroSection from './components/MainHeroSection.vue'
 import AdminDashboard from './components/AdminDashboard.vue'
 import AdminDashboardApplication from './components/AdminDashboardApplication.vue'
+import AdminDashboardCreateApplication from './components/AdminDashboardCreateApplication.vue'
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     path: '/admin/application',
     name: 'AdminDashboardApplication',
     component: AdminDashboardApplication
+  },
+  {
+    path: '/admin/application/create',
+    name: 'AdminDashboardCreateApplication',
+    component: AdminDashboardCreateApplication
   }
 ]
 
