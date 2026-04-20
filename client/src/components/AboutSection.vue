@@ -1,57 +1,43 @@
 <template>
-  <div class="officers-page">
+  <div class="officers-page">   <!-- same wrapper as HistorySection -->
     <main>
-      <!-- About Us Hero Section -->
-      <section class="about-hero-section">
-        <div class="about-hero-content">
-          <h2 class="about-hero-title">[About Us]</h2>
-          <p class="about-hero-desc">
-            The Campus Developers Organization is a community of passionate students
-            dedicated to learning, building, and innovating through technology. Our
-            organization brings together aspiring programmers, designers, and tech
-            enthusiasts who share a common goal of developing skills and creating
-            impactful digital solutions.
-          </p>
-        </div>
-        <div class="about-hero-image">
-          <!-- Image placeholder - add your image here -->
-          <div class="image-placeholder"></div>
-        </div>
+      <!-- About Us -->
+      <section class="history-section">
+        <h2 class="section-title">About Us</h2>
+        <p class="section-desc">
+          The Campus Developers Organization is a community of passionate students
+          dedicated to learning, building, and innovating through technology. Our
+          organization brings together aspiring programmers, designers, and tech
+          enthusiasts who share a common goal of developing skills and creating
+          impactful digital solutions.
+        </p>
       </section>
 
-      <!-- Why We Exist Hero Section -->
-      <section class="about-hero-section alternate">
-        <div class="about-hero-image">
-          <!-- Image placeholder - add your image here -->
-          <div class="image-placeholder"></div>
-        </div>
-        <div class="about-hero-content">
-          <h2 class="about-hero-title">[Why We Exist]</h2>
-          <p class="about-hero-desc">
-            The Campus Developers Organization is a community of passionate students
-            dedicated to learning, building, and innovating through technology. Our
-            organization brings together aspiring programmers, designers, and tech
-            enthusiasts who share a common goal of developing skills and creating
-            impactful digital solutions.
-          </p>
-        </div>
+      <!-- Why We Exist -->
+      <section class="history-section">
+        <h2 class="section-title">Why We Exist</h2>
+        <p class="section-desc">
+          The Campus Developers Organization is a community of passionate students
+          dedicated to learning, building, and innovating through technology. Our
+          organization brings together aspiring programmers, designers, and tech
+          enthusiasts who share a common goal of developing skills and creating
+          impactful digital solutions.
+        </p>
       </section>
 
       <!-- Mission & Vision (side‑by‑side) -->
-      <div class="mission-vision-section">
+      <div class="two-columns">
         <div class="mission-vision-card">
-          <div class="card-icon-placeholder"></div>
-          <h2 class="mission-vision-title">Our Mission</h2>
-          <p class="mission-vision-desc">
+          <h2 class="section-title left-aligned">Our Mission</h2>
+          <p class="section-desc left-aligned">
             Panthers College of computing studies Panthers College of computing
             studies Panthers College of computing studies College of computing
             studies
           </p>
         </div>
         <div class="mission-vision-card">
-          <div class="card-icon-placeholder"></div>
-          <h2 class="mission-vision-title">Our Vision</h2>
-          <p class="mission-vision-desc">
+          <h2 class="section-title left-aligned">Our Vision</h2>
+          <p class="section-desc left-aligned">
             Panthers College of computing studies Panthers College of computing
             studies Panthers College of computing studies College of Computing
             Studies
@@ -68,28 +54,24 @@
         </p>
         <div class="values-grid">
           <div class="value-card">
-            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Integrity</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
-            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Resilience</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
-            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Excellence</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
             </p>
           </div>
           <div class="value-card">
-            <div class="value-icon-placeholder"></div>
             <h3 class="value-title">Altruism</h3>
             <p class="value-desc">
               We strive for excellence in everything we do, from curriculum development to student support.
@@ -111,9 +93,24 @@
 
 .officers-page {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  padding: 0;
-  margin: 0;
+  position: relative;
+  min-height: 100vh;
   color: #111827;
+}
+
+.officers-page::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
 }
 
 h1, h2, h3, h4, h5, h6,
@@ -129,82 +126,16 @@ h1, h2, h3, h4, h5, h6,
   font-size: 28px;      
   font-weight: 700;
   color: #000000;
-  margin-bottom: 18px;
-  letter-spacing: 0.5px;
+  margin-bottom: 18px;   
+  padding-left: 1rem;
+}
+
+.section-title.left-aligned {
+  text-align: left;
 }
 
 main {
   padding-top: 0;
-}
-
-/* About Hero Sections */
-.about-hero-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  align-items: center;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 80px 36px;
-  box-sizing: border-box;
-}
-
-.about-hero-section.alternate {
-  grid-template-columns: 1fr 1fr;
-}
-
-.about-hero-section.alternate .about-hero-image {
-  order: -1;
-}
-
-.about-hero-content {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.about-hero-title {
-  font-size: 42px;
-  font-weight: 700;
-  color: #000000;
-  margin-bottom: 24px;
-  letter-spacing: 0.5px;
-  font-family: 'Unbounded', sans-serif;
-}
-
-.about-hero-desc {
-  font-size: 16px;
-  font-weight: 400;
-  color: #9ca3af;
-  line-height: 1.8;
-  max-width: 520px;
-}
-
-.about-hero-image {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  min-height: 400px;
-}
-
-.image-placeholder {
-  width: 100%;
-  height: 100%;
-  min-height: 400px;
-  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
-  border-radius: 12px;
-  border: 2px dashed #d1d5db;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.image-placeholder::before {
-  content: "← Image placeholder - add your image here";
 }
 
 .section-desc {
@@ -215,73 +146,48 @@ main {
   text-align: center;
 }
 
+.section-desc.left-aligned {
+  text-align: left;
+}
+
 .history-section {
-  padding: 60px 40px;
+  padding: 64px 32px;
   text-align: center;
   max-width: 620px;
   margin: 0 auto;
 }
 
-/* Mission & Vision Section */
-.mission-vision-section {
+.two-columns {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 32px;
-  max-width: 1400px;
-  margin: 80px auto;
-  padding: 60px 36px;
-  background: #1a1f2e;
-  border-radius: 16px;
-  box-sizing: border-box;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  gap: 48px;
+  max-width: 860px;
+  margin: 40px auto;
+  padding: 0 32px;
 }
 
 .mission-vision-card {
-  background: rgba(31, 41, 55, 0.5);
+  background: #1f2937;
   border: 1px solid #374151;
-  border-radius: 12px;
-  padding: 32px 24px;
-  text-align: center;
-  transition: transform 0.3s ease;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
-.mission-vision-card:hover {
-  transform: translateY(-4px);
-}
-
-.card-icon-placeholder {
-  width: 60px;
-  height: 60px;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, #4b5563 0%, #374151 100%);
-  border-radius: 12px;
-  border: 2px dashed #4b5563;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.mission-vision-title {
-  font-size: 20px;
-  font-weight: 700;
+.mission-vision-card .section-title {
   color: #ffffff;
-  margin-bottom: 12px;
-  letter-spacing: 0.5px;
+  border-left: 6px solid #ffffff;
 }
 
-.mission-vision-desc {
-  font-size: 14px;
+.mission-vision-card .section-desc {
   color: #d1d5db;
-  line-height: 1.6;
-  font-family: 'Inter', sans-serif;
 }
 
 .core-values-section {
-  max-width: 1400px;
-  margin: 80px auto;
-  padding: 0 36px;
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 32px;
   text-align: center;
-  box-sizing: border-box;
 }
 
 .core-values-intro {
@@ -295,41 +201,28 @@ main {
 .values-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  gap: 32px;
 }
 
 .value-card {
-  background: #f3f4f6;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 32px 24px;
-  text-align: center;
+  background: #ffffff;
+  border: 1px solid #f3f4f6;
+  border-radius: 14px;
+  padding: 24px;
+  text-align: left;
   transition: transform 0.2s ease;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05);
 }
 
 .value-card:hover {
   transform: translateY(-4px);
 }
 
-.value-icon-placeholder {
-  width: 50px;
-  height: 50px;
-  margin: 0 auto 16px;
-  background: linear-gradient(135deg, #e5e7eb 0%, #d1d5db 100%);
-  border-radius: 12px;
-  border: 2px dashed #c4c8d0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .value-title {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 600;
   color: #111827;
   margin-bottom: 12px;
-  letter-spacing: 0.3px;
 }
 
 .value-desc {
@@ -340,80 +233,50 @@ main {
 }
 
 @media (max-width: 768px) {
-  .about-hero-section {
+  .two-columns {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Mobile view */
+@media (max-width: 768px) {
+  .two-columns {
     grid-template-columns: 1fr;
     gap: 24px;
-    padding: 60px 18px;
-  }
-
-  .about-hero-section.alternate .about-hero-image {
-    order: 0;
-  }
-
-  .about-hero-title {
-    font-size: 32px;
-  }
-
-  .about-hero-desc {
-    font-size: 15px;
-  }
-
-  .image-placeholder {
-    min-height: 300px;
-  }
-
-  .mission-vision-section {
-    grid-template-columns: 1fr;
-    gap: 24px;
-    margin: 60px auto;
-    padding: 40px 18px;
+    padding: 0 20px;
   }
 
   .values-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+    grid-template-columns: 1fr;
   }
 
   .history-section {
-    padding: 40px 18px;
+    padding: 40px 20px;
+  }
+
+  .mission-vision-card {
+    padding: 20px;
   }
 
   .core-values-section {
-    padding: 0 18px;
+    padding: 0 20px;
   }
 
   .core-values-intro {
     font-size: 14px;
     margin-bottom: 32px;
   }
+
+  .value-title {
+    font-size: 18px;
+  }
+
+  .value-desc {
+    font-size: 12px;
+  }
 }
-
-@media (max-width: 480px) {
-  .about-hero-section {
-    padding: 40px 18px;
-  }
-
-  .about-hero-title {
-    font-size: 26px;
-  }
-
-  .image-placeholder {
-    min-height: 250px;
-  }
-
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .section-title {
-    font-size: 24px;
-  }
-
-  .mission-vision-card {
-    padding: 20px 16px;
-  }
-
-  .value-card {
-    padding: 20px 16px;
-  }
-} </style>
+</style>

@@ -8,11 +8,13 @@
       <div class="member-card" v-for="member in members" :key="member.id">
         <div class="card-header">
           <img :src="member.image" :alt="member.name" class="member-image" />
-          <h3 class="member-role">{{ member.role }}</h3>
+          <div class="member-info">
+            <h3 class="member-role">{{ member.role }}</h3>
+            <p class="member-description">{{ member.description }}</p>
+          </div>
         </div>
 
         <div class="card-content">
-          <p class="member-description">{{ member.description }}</p>
 
           <div class="skills-section">
             <h4>TechStack</h4>
@@ -49,7 +51,7 @@ export default {
           role: 'ROLE',
           image: 'https://via.placeholder.com/100?text=Founder',
           description: 'DESCRIPTION',
-          skills: 'SKILLS',
+          skills: ['HTML', 'CSS', 'JavaScript'],
           projects: [1, 2, 3]
         },
         {
@@ -58,7 +60,7 @@ export default {
           role: 'ROLE',
           image: 'https://via.placeholder.com/100?text=Fullstack',
           description: 'DESCRIPTION',
-          skills: 'SKILLS',
+          skills: ['Node.js', 'Vue', 'Tailwind'],
           projects: [1, 2, 3]
         },
         {
@@ -67,7 +69,7 @@ export default {
           role: 'ROLE',
           image: 'https://via.placeholder.com/100?text=Frontend',
           description: 'DESCRIPTION',
-          skills: 'SKILLS',
+          skills: ['React', 'TypeScript', 'Sass'],
           projects: [1, 2, 3]
         },
         {
@@ -76,7 +78,7 @@ export default {
           role: 'ROLE',
           image: 'https://via.placeholder.com/100?text=UIUX',
           description: 'DESCRIPTION',
-          skills: 'SKILLS',
+          skills: ['Figma', 'Sketch', 'Adobe XD'],
           projects: [1, 2, 3]
         },
         {
@@ -85,7 +87,7 @@ export default {
           role: 'ROLE',
           image: 'https://via.placeholder.com/100?text=Backend',
           description: 'DESCRIPTION',
-          skills: 'SKILLS',
+          skills: ['Python', 'Django', 'SQL'],
           projects: [1, 2, 3]
         }
       ]
@@ -104,14 +106,12 @@ export default {
 .members-profile-container {
   width: 100%;
   padding: 40px 20px;
-  background-image: 
-    linear-gradient(rgba(200, 200, 200, 0.1) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(200, 200, 200, 0.1) 1px, transparent 1px);
-  background-size: 40px 40px;
-  background-color: #ffffff;
-  background-attachment: fixed;
-  height: 100vh;
-  overflow-y: auto;
+  background: #f5f5f5;
+  background-image:
+    linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent),
+    linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent);
+  background-size: 80px 80px;
+  min-height: 100vh;
 }
 
 .profile-header {
@@ -128,34 +128,39 @@ export default {
 
 .members-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
-  max-width: 1400px;
+  grid-template-columns: repeat(3, minmax(260px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
 .member-card {
-  background: linear-gradient(135deg, #8b7e9c 0%, #6d5e84 100%);
-  border-radius: 16px;
+  background: linear-gradient(180deg, #d9dade 0%, #5d5f66 100%);
+  border: none;
+  border-radius: 18px;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 24px;
-  color: white;
+  padding: 18px;
+  color: #111827;
 }
 
 .member-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
+  transform: translateY(-4px);
+  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.22);
 }
 
 .card-header {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
+  gap: 16px;
   margin-bottom: 24px;
-  text-align: center;
+  text-align: left;
+}
+
+.member-info {
+  flex: 1;
 }
 
 .member-image {
@@ -172,6 +177,7 @@ export default {
   font-weight: 600;
   letter-spacing: 1px;
   margin-bottom: 8px;
+  color: #111827;
 }
 
 .card-content {
@@ -182,8 +188,7 @@ export default {
   font-size: 13px;
   line-height: 1.6;
   margin-bottom: 20px;
-  opacity: 0.95;
-  color: rgba(255, 255, 255, 0.9);
+  color: #475569;
 }
 
 .skills-section {
@@ -206,19 +211,19 @@ export default {
 }
 
 .skill-badge {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+  background: rgba(15, 23, 42, 0.05);
+  color: #334155;
   padding: 6px 12px;
   border-radius: 20px;
   font-size: 11px;
   font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   transition: all 0.3s ease;
 }
 
 .skill-badge:hover {
-  background: rgba(255, 255, 255, 0.25);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(15, 23, 42, 0.1);
+  border-color: rgba(15, 23, 42, 0.16);
 }
 
 .projects-section {
@@ -242,9 +247,9 @@ export default {
 
 .project-item {
   aspect-ratio: 1;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.04);
   border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -254,15 +259,15 @@ export default {
 }
 
 .project-item:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(15, 23, 42, 0.08);
+  border-color: rgba(15, 23, 42, 0.14);
   transform: scale(1.05);
 }
 
 .project-placeholder {
   width: 100%;
   height: 100%;
-  background: linear-gradient(135deg, rgba(139, 126, 156, 0.8), rgba(109, 94, 132, 0.8));
+  background: linear-gradient(135deg, rgba(196, 181, 253, 0.4), rgba(165, 180, 252, 0.4));
   border-radius: 8px;
 }
 

@@ -31,38 +31,38 @@
 
     <div class="page">
       <transition name="fade" mode="out-in">
-        <div v-if="currentSection === 'about'" key="hero-about" class="hero-about-container">
-          <main class="hero">
-            <section class="hero-text">
-              <h1>Creatives<br />Society</h1>
-              <p>
-                Panthers College of computing studies Panthers College of computing
-                studies Panthers College of computing studies
-              </p>
-              <button class="button">Join now →</button>
-            </section>
-            <section class="hero-image">
-              <img :src="hero" alt="Creatives artwork" />
-              <div class="hero-overlay badges">
-                <span class="badge--1">Innovate</span>
-                <span class="badge--2">Debug</span>
-                <span class="badge--3">Develop</span>
-              </div>
-            </section>
-          </main>
-          <About id="about" />
-        </div>
-        <div v-else key="sections" class="sections-container">
-          <History v-if="currentSection === 'history'" id="history" />
-          <Members v-else-if="currentSection === 'members'" id="members" />
-          <section v-else-if="currentSection === 'achievements'" id="achievements" class="vision">
+        <main v-if="currentSection === 'about'" key="hero" class="hero">
+          <section class="hero-text">
+            <h1>Creatives<br />Society</h1>
+            <p>
+              Panthers College of computing studies Panthers College of computing
+              studies Panthers College of computing studies
+            </p>
+          </section>
+          <section class="hero-image">
+            <img :src="hero" alt="Creatives artwork" />
+            <div class="hero-overlay badges">
+              <span class="badge--1">Innovate</span>
+              <span class="badge--2">Debug</span>
+              <span class="badge--3">Develop</span>
+            </div>
+          </section>
+        </main>
+      </transition>
+
+      <div class="sections-container">
+        <transition name="fade" mode="out-in">
+          <About v-if="currentSection === 'about'" key="about" id="about" />
+          <History v-else-if="currentSection === 'history'" key="history" id="history" />
+          <Members v-else-if="currentSection === 'members'" key="members" id="members" />
+          <section v-else-if="currentSection === 'achievements'" key="achievements" id="achievements" class="vision">
             <div class="vision-card">
               <h2>Achievements</h2>
               <p>This is the Achievements section. Content coming soon.</p>
             </div>
           </section>
-        </div>
-      </transition>
+        </transition>
+      </div>
     </div>
 
     <Footer />
@@ -73,10 +73,10 @@
 import { nextTick, ref } from 'vue'
 import logo from '../assets/Creatices lines.png'
 import hero from '../assets/Creatuives logo.png'
-import History from '../components/HistorySection.vue'
-import About from '../components/AboutSection.vue'
-import Footer from '../components/Footer.vue'
-import Members from '../components/MemberSection.vue'
+import History from './HistorySection.vue'
+import About from './AboutSection.vue'
+import Footer from './Footer.vue'
+import Members from './MemberSection.vue'
 import '../App.css'
 
 const isMenuOpen = ref(false)
@@ -122,6 +122,22 @@ html, body {
 #app {
   overflow-x: hidden;
   width: 100%;
+  position: relative;
+}
+
+#app::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
+  background-size: 40px 40px;
+  pointer-events: none;
+  z-index: -1;
 }
 
 /* Ensure smooth scrolling for anchor links */
@@ -141,7 +157,7 @@ html {
 
 .hero-image img {
   max-width: 100%;
-  height:100%;
+  height: auto;
   display: block;
 }
 
@@ -177,11 +193,6 @@ html {
   
   .hero {
     padding: 0 1rem;
-    margin-top: 20px;
-  }
-  
-  .hero-about-container {
-    padding: 0;
   }
 }
 </style>
