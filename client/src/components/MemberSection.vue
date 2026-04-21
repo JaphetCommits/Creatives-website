@@ -104,6 +104,60 @@
         </div>
       </div>
 
+      <!-- Backend members level -->
+      <div class="chart-level level-backend">
+        <svg class="backend-connectors" viewBox="0 0 1400 150" preserveAspectRatio="none">
+          <!-- Line from Backend Developer parent -->
+          <line x1="200" y1="0" x2="200" y2="145" stroke="black" stroke-width="3"/>
+        </svg>
+        <div class="level-row backend-row">
+          <div class="member-node" v-for="member in backendMembers" :key="member.id">
+            <div class="profile-wrapper" tabindex="0">
+              <img :src="member.image" :alt="member.name" class="profile-pic" />
+              <div class="hover-card">
+                <div class="hover-header">
+                  <span class="hover-label">Profile</span>
+                </div>
+                <div class="hover-name">{{ member.name }}</div>
+                <div class="hover-meta">{{ member.role }}</div>
+                <p class="hover-description">{{ member.description }}</p>
+                <div class="hover-tags">
+                  <span class="hover-tag" v-for="tag in member.tags" :key="tag">{{ tag }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="member-label">{{ member.roleLabel }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Frontend members level -->
+      <div class="chart-level level-frontend">
+        <svg class="frontend-connectors" viewBox="0 0 1400 150" preserveAspectRatio="none">
+          <!-- Line from Frontend Developer parent -->
+          <line x1="1200" y1="0" x2="1200" y2="145" stroke="black" stroke-width="3"/>
+        </svg>
+        <div class="level-row frontend-row">
+          <div class="member-node" v-for="member in frontendMembers" :key="member.id">
+            <div class="profile-wrapper" tabindex="0">
+              <img :src="member.image" :alt="member.name" class="profile-pic" />
+              <div class="hover-card">
+                <div class="hover-header">
+                  <span class="hover-label">Profile</span>
+                </div>
+                <div class="hover-name">{{ member.name }}</div>
+                <div class="hover-meta">{{ member.role }}</div>
+                <p class="hover-description">{{ member.description }}</p>
+                <div class="hover-tags">
+                  <span class="hover-tag" v-for="tag in member.tags" :key="tag">{{ tag }}</span>
+                </div>
+              </div>
+            </div>
+            <div class="member-label">{{ member.roleLabel }}</div>
+          </div>
+        </div>
+      </div>
+
       <!-- Bottom level members -->
       <div class="chart-level level-bottom">
         <div class="level-row">
@@ -158,7 +212,7 @@ export default {
           id: 3,
           name: 'N/A',
           role: 'N/A',
-          roleLabel: 'Developer',
+          roleLabel: 'UI/UX Developer',
           image: 'https://via.placeholder.com/140x140?text=Dev',
           description: 'N/A',
           tags: ['N/A', 'N/A']
@@ -173,9 +227,31 @@ export default {
           tags: ['N/A', 'N/A']
         }
       ],
-      bottomMembers: [
+      backendMembers: [
         {
           id: 5,
+          name: 'N/A',
+          role: 'N/A',
+          roleLabel: 'Backend Developer',
+          image: 'https://via.placeholder.com/140x140?text=Backend1',
+          description: 'N/A',
+          tags: ['N/A', 'N/A']
+        }
+      ],
+      frontendMembers: [
+        {
+          id: 6,
+          name: 'N/A',
+          role: 'N/A',
+          roleLabel: 'Frontend Developer',
+          image: 'https://via.placeholder.com/140x140?text=Frontend1',
+          description: 'N/A',
+          tags: ['N/A', 'N/A']
+        }
+      ],
+      bottomMembers: [
+        {
+          id: 7,
           name: 'N/A',
           role: 'N/A',
           roleLabel: 'Member',
@@ -184,7 +260,7 @@ export default {
           tags: ['N/A', 'N/A']
         },
         {
-          id: 6,
+          id: 8,
           name: 'N/A',
           role: 'N/A',
           roleLabel: 'Member',
@@ -193,7 +269,7 @@ export default {
           tags: ['N/A', 'N/A']
         },
         {
-          id: 7,
+          id: 9,
           name: 'N/A',
           role: 'N/A',
           roleLabel: 'Member',
@@ -345,6 +421,54 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.level-backend {
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 100px;
+}
+
+.backend-connectors {
+  position: absolute;
+  top: 0;
+  left: 170px;
+  width: 300px;
+  height: 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.backend-row {
+  gap: 40px;
+  justify-content: flex-start;
+}
+
+.level-frontend {
+  margin-top: 20px;
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 100px;
+}
+
+.frontend-connectors {
+  position: absolute;
+  top: 0;
+  right: 170px;
+  width: 300px;
+  height: 200px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.frontend-row {
+  gap: 40px;
+  justify-content: flex-end;
 }
 
 .level-bottom {
