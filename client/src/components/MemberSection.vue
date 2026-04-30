@@ -235,7 +235,7 @@
 </template>
 
 <script>
-import founderPhoto from '../assets/d8135965-490e-4bf4-9144-bfbf783f7f5b_removalai_preview.png'
+import founderPhoto from '../assets/founder-sheenlee.png'
 import raldin from '../assets/raldin.png'
 import sheele from '../assets/sheele.png'
 import sheenlee from '../assets/Sheenlee.png'
@@ -330,8 +330,8 @@ export default {
 }
 
 .founder-photo {
-  width: 130px;
-  height: 170px;
+  width: 140px;
+  height: 180px;
   border-radius: 14px;
   overflow: hidden;
   background: linear-gradient(135deg, #b30b1c 0%, #7a0712 100%);
@@ -342,6 +342,7 @@ export default {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center top;
 }
 
 /* ============ ORG CHART ============ */
