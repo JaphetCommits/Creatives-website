@@ -12,23 +12,36 @@ const routes = [
   {
     path: '/admin',
     name: 'AdminDashboard',
-    component: AdminDashboard
+    component: AdminDashboard,
+    meta: { requiresAdmin: true }
   },
   {
     path: '/admin/application',
     name: 'AdminDashboardApplication',
-    component: AdminDashboardApplication
+    component: AdminDashboardApplication,
+    meta: { requiresAdmin: true }
   },
   {
     path: '/admin/application/create',
     name: 'AdminDashboardCreateApplication',
-    component: AdminDashboardCreateApplication
+    component: AdminDashboardCreateApplication,
+    meta: { requiresAdmin: true }
   }
 ]
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if (to.meta?.requiresAdmin) {
+    const isAdmin = localStorage.getItem('cs_is_admin') === 'true'
+    if (!isAdmin) {
+      return next({ path: '/' })
+    }
+  }
+  next()
 })
 
 export default router
