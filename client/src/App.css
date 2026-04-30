@@ -108,6 +108,69 @@ body {
   min-height: 100vh;
 }
 
+/* ============ BLURRY WHITE EMPHASIS HALO ============
+   Soft, blurred white backdrop that sits behind text blocks
+   and cards on the white grid background, making them pop. */
+.section-header,
+.intro-text,
+.intro-block,
+.founder-section,
+.founder-header,
+.founder-card,
+.timeline-item,
+.content-card,
+.value-card,
+.note-card,
+.member-node,
+.stat-block,
+.hero-text,
+.hero-eyebrow,
+.hero-title,
+.hero-sub,
+.hero-stats {
+  position: relative;
+  isolation: isolate;
+}
+
+.section-header::before,
+.intro-text::before,
+.intro-block::before,
+.founder-section::before,
+.founder-header::before,
+.founder-card::before,
+.timeline-item::before,
+.content-card::before,
+.value-card::before,
+.note-card::before,
+.member-node::before,
+.stat-block::before,
+.hero-text::before,
+.hero-eyebrow::before,
+.hero-title::before,
+.hero-sub::before,
+.hero-stats::before {
+  content: '';
+  position: absolute;
+  inset: -28px;
+  z-index: -1;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.95) 0%,
+    rgba(255, 255, 255, 0.78) 35%,
+    rgba(255, 255, 255, 0.45) 60%,
+    rgba(255, 255, 255, 0) 80%
+  );
+  filter: blur(14px);
+  pointer-events: none;
+  border-radius: 32px;
+}
+
+/* Tighter halo for small inline elements like eyebrow pills */
+.hero-eyebrow::before {
+  inset: -14px;
+  filter: blur(10px);
+}
+
 .page {
   max-width: var(--max);
   margin: 80px auto 0 auto;
