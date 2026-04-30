@@ -33,19 +33,61 @@
       <transition name="fade" mode="out-in">
         <main v-if="currentSection === 'about'" key="hero" class="hero">
           <section class="hero-text">
-            <h1>Creatives<br />Society</h1>
+            <span class="hero-eyebrow">
+              <span class="hero-eyebrow-dot"></span>
+              Panthers College of Computing Studies
+            </span>
+            <h1>
+              Creatives<br />
+              <span class="hero-grad">Society</span>
+            </h1>
             <p>
-              Panthers College of computing studies Panthers College of computing
-              studies Panthers College of computing studies
+              A community of student developers, designers and innovators —
+              building, learning and shipping real-world digital solutions together.
             </p>
+            <div class="hero-actions">
+              <a href="#members" @click.prevent="showSection('members')" class="hero-cta primary">
+                Meet the Team
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </a>
+              <a href="#history" @click.prevent="showSection('history')" class="hero-cta ghost">
+                Our Story
+              </a>
+            </div>
+            <div class="hero-stats">
+              <div class="hero-stat">
+                <span class="hero-stat-num">50<span class="plus">+</span></span>
+                <span class="hero-stat-label">Active members</span>
+              </div>
+              <span class="hero-stat-sep"></span>
+              <div class="hero-stat">
+                <span class="hero-stat-num">20<span class="plus">+</span></span>
+                <span class="hero-stat-label">Projects shipped</span>
+              </div>
+              <span class="hero-stat-sep"></span>
+              <div class="hero-stat">
+                <span class="hero-stat-num">10<span class="plus">+</span></span>
+                <span class="hero-stat-label">Events hosted</span>
+              </div>
+            </div>
           </section>
           <section class="hero-image">
-            <img :src="hero" alt="Creatives artwork" />
-            <div class="hero-overlay badges">
-              <span class="badge--1">Innovate</span>
-              <span class="badge--2">Debug</span>
-              <span class="badge--3">Develop</span>
+            <div class="hero-image-glow"></div>
+            <div class="hero-image-frame">
+              <img :src="hero" alt="Creatives artwork" />
             </div>
+            <span class="float-badge float-badge--1">
+              <span class="float-badge-dot"></span> Innovate
+            </span>
+            <span class="float-badge float-badge--2">
+              <span class="float-badge-dot"></span> Debug
+            </span>
+            <span class="float-badge float-badge--3">
+              <span class="float-badge-dot"></span> Develop
+            </span>
           </section>
         </main>
       </transition>
