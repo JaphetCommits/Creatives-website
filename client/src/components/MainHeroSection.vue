@@ -97,12 +97,7 @@
           <About v-if="currentSection === 'about'" key="about" id="about" />
           <History v-else-if="currentSection === 'history'" key="history" id="history" />
           <Members v-else-if="currentSection === 'members'" key="members" id="members" />
-          <section v-else-if="currentSection === 'achievements'" key="achievements" id="achievements" class="vision">
-            <div class="vision-card">
-              <h2>Achievements</h2>
-              <p>This is the Achievements section. Content coming soon.</p>
-            </div>
-          </section>
+          <Achievements v-else-if="currentSection === 'achievements'" key="achievements" id="achievements" />
         </transition>
       </div>
     </div>
@@ -119,6 +114,7 @@ import History from './HistorySection.vue'
 import About from './AboutSection.vue'
 import Footer from './Footer.vue'
 import Members from './MemberSection.vue'
+import Achievements from './AchievementsSection.vue'
 import '../App.css'
 
 const isMenuOpen = ref(false)
