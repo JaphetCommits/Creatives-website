@@ -1,129 +1,233 @@
 <template>
   <section class="members-section" id="members">
-    <div class="section-header">
-      <div class="section-title">[Our Founder]</div>
-      <p class="section-copy">
-        The Campus Developers Organization is a community of passionate students dedicated to learning, building, and innovating through technology.
-      </p>
+    <!-- Header: title left, founder photo right -->
+    <div class="founder-header">
+      <div class="founder-intro">
+        <h2 class="section-title">[Our Founder]</h2>
+        <p class="section-copy">
+          The Campus Developers Organization is a community of passionate students dedicated to learning, building, and innovating through technology.
+        </p>
+      </div>
+      <div class="founder-card">
+        <div class="founder-photo">
+          <img :src="founderPhoto" alt="Founder" />
+        </div>
+      </div>
     </div>
 
+    <!-- Org chart -->
     <div class="org-chart">
-      <!-- Founder -->
-      <div class="chart-level level-founder">
-        <svg class="founder-connectors" viewBox="0 0 1400 150" preserveAspectRatio="none">
-          <!-- Central point at top -->
-          <circle cx="700" cy="10" r="2" fill="black"/>
-          <!-- Line to left node -->
-          <line x1="700" y1="10" x2="200" y2="145" stroke="black" stroke-width="3"/>
-          <!-- Line to right node -->
-          <line x1="700" y1="10" x2="1200" y2="145" stroke="black" stroke-width="3"/>
-          <!-- Line to center node -->
-          <line x1="700" y1="10" x2="700" y2="145" stroke="black" stroke-width="3"/>
-        </svg>
+      <!-- Row 1: Wraneles note + Founder circle -->
+      <div class="row row-top">
+        <div class="slot slot-left">
+          <div class="note-card note-right">
+            <div class="note-title">Wraneles</div>
+            <div class="note-meta">A . . . is also us. The Campus Developers is a community of passionate students dedicated to learning.</div>
+            <div class="note-meta-row">
+              <span>Membership</span>
+              <span>Membership</span>
+            </div>
+          </div>
+        </div>
+        <div class="slot slot-center">
+          <div class="member-node">
+            <div class="profile-circle has-photo">
+              <img :src="founderPhoto" alt="Founder" />
+            </div>
+            <div class="role-tag">FOUNDER</div>
+          </div>
+        </div>
+        <div class="slot slot-right"></div>
+      </div>
 
+      <!-- Row 2: Left photo + center notes + Right photo (with Ricky? note) -->
+      <div class="row row-split">
+        <div class="slot slot-left">
+          <div class="member-node">
+            <div class="profile-circle has-photo">
+              <img :src="raldin" alt="Member" />
+            </div>
+            <div class="role-tag">Member</div>
+          </div>
+        </div>
+        <div class="slot slot-center center-note">
+          <div class="note-card">
+            <div class="note-title">Wraneles</div>
+            <div class="note-meta">A . . . is also us. The Campus Developers is a community of passionate students dedicated to learning.</div>
+            <div class="note-meta-row">
+              <span>Membership</span>
+              <span>Membership</span>
+            </div>
+          </div>
+        </div>
+        <div class="slot slot-right">
+          <div class="ricky-cluster">
+            <div class="note-card note-left">
+              <div class="note-title">Ricky?</div>
+              <div class="note-meta">A . . . is also us. The Campus Developers is a community of passionate students dedicated to learning.</div>
+            </div>
+            <div class="member-node">
+              <div class="profile-circle has-photo">
+                <img :src="sheele" alt="Member" />
+              </div>
+              <div class="role-tag">Member</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Japhet center -->
+      <div class="row row-center">
+        <div class="japhet-cluster">
+          <div class="note-card note-right">
+            <div class="note-title">Japhet</div>
+            <div class="note-meta">A . . . is also us. The Campus Developers is a community of passionate students dedicated to learning.</div>
+            <div class="note-meta-row">
+              <span>Membership</span>
+              <span>Membership</span>
+            </div>
+          </div>
+          <div class="member-node">
+            <div class="profile-circle has-photo">
+              <img :src="japhet" alt="Japhet" />
+            </div>
+            <div class="role-tag">Member</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 4: left photo + right sphere -->
+      <div class="row row-split">
+        <div class="slot slot-left">
+          <div class="member-node">
+            <div class="profile-circle has-photo">
+              <img :src="sheenlee" alt="Member" />
+            </div>
+            <div class="role-tag">Member</div>
+          </div>
+        </div>
+        <div class="slot slot-center"></div>
+        <div class="slot slot-right">
+          <div class="member-node">
+            <div class="profile-circle sphere"></div>
+            <div class="role-tag">Member</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 5: center sphere -->
+      <div class="row row-center">
         <div class="member-node">
-          <div class="profile-wrapper" tabindex="0">
-            <img :src="founder.image" :alt="founder.name" class="profile-pic" />
-            <div class="hover-card">
-              <div class="hover-header">
-                <span class="hover-label">Founder</span>
-              </div>
-              <div class="hover-name">{{ founder.name }}</div>
-              <div class="hover-meta">{{ founder.role }}</div>
-              <p class="hover-description">{{ founder.description }}</p>
-              <div class="hover-tags">
-                <span class="hover-tag" v-for="tag in founder.tags" :key="tag">{{ tag }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="member-label">{{ founder.roleLabel }}</div>
+          <div class="profile-circle sphere"></div>
+          <div class="role-tag">Member</div>
         </div>
       </div>
 
-      <!-- Upper diagonal mid members -->
-      <div class="chart-level level-split">
-        <div class="level-row split-row">
-          <!-- Left member -->
-          <div class="member-node side-node left" v-if="midMembers[0]">
-            <div class="profile-wrapper" tabindex="0">
-              <img :src="midMembers[0].image" :alt="midMembers[0].name" class="profile-pic" />
-              <div class="hover-card">
-                <div class="hover-header">
-                  <span class="hover-label">Profile</span>
-                </div>
-                <div class="hover-name">{{ midMembers[0].name }}</div>
-                <div class="hover-meta">{{ midMembers[0].role }}</div>
-                <p class="hover-description">{{ midMembers[0].description }}</p>
-                <div class="hover-tags">
-                  <span class="hover-tag" v-for="tag in midMembers[0].tags" :key="tag">{{ tag }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="member-label">{{ midMembers[0].roleLabel }}</div>
+      <!-- Row 6: left + right spheres -->
+      <div class="row row-split">
+        <div class="slot slot-left">
+          <div class="member-node">
+            <div class="profile-circle sphere"></div>
+            <div class="role-tag">Member</div>
           </div>
-
-          <!-- Right member -->
-          <div class="member-node side-node right" v-if="midMembers[2]">
-            <div class="profile-wrapper" tabindex="0">
-              <img :src="midMembers[2].image" :alt="midMembers[2].name" class="profile-pic" />
-              <div class="hover-card">
-                <div class="hover-header">
-                  <span class="hover-label">Profile</span>
-                </div>
-                <div class="hover-name">{{ midMembers[2].name }}</div>
-                <div class="hover-meta">{{ midMembers[2].role }}</div>
-                <p class="hover-description">{{ midMembers[2].description }}</p>
-                <div class="hover-tags">
-                  <span class="hover-tag" v-for="tag in midMembers[2].tags" :key="tag">{{ tag }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="member-label">{{ midMembers[2].roleLabel }}</div>
+        </div>
+        <div class="slot slot-center"></div>
+        <div class="slot slot-right">
+          <div class="member-node">
+            <div class="profile-circle sphere"></div>
+            <div class="role-tag">Member</div>
           </div>
         </div>
       </div>
 
-      <!-- Center mid member -->
-      <div class="chart-level level-center">
-        <div class="member-node center-node" v-if="midMembers[1]">
-          <div class="profile-wrapper" tabindex="0">
-            <img :src="midMembers[1].image" :alt="midMembers[1].name" class="profile-pic" />
-            <div class="hover-card">
-              <div class="hover-header">
-                <span class="hover-label">Profile</span>
-              </div>
-              <div class="hover-name">{{ midMembers[1].name }}</div>
-              <div class="hover-meta">{{ midMembers[1].role }}</div>
-              <p class="hover-description">{{ midMembers[1].description }}</p>
-              <div class="hover-tags">
-                <span class="hover-tag" v-for="tag in midMembers[1].tags" :key="tag">{{ tag }}</span>
-              </div>
-            </div>
-          </div>
-          <div class="member-label">{{ midMembers[1].roleLabel }}</div>
+      <!-- Row 7: center sphere -->
+      <div class="row row-center">
+        <div class="member-node">
+          <div class="profile-circle sphere"></div>
+          <div class="role-tag">Member</div>
         </div>
       </div>
 
-      <!-- Bottom level members -->
-      <div class="chart-level level-bottom">
-        <div class="level-row">
-          <div class="member-node" v-for="member in bottomMembers" :key="member.id">
-            <div class="profile-wrapper" tabindex="0">
-              <img :src="member.image" :alt="member.name" class="profile-pic" />
-              <div class="hover-card">
-                <div class="hover-header">
-                  <span class="hover-label">Profile</span>
-                </div>
-                <div class="hover-name">{{ member.name }}</div>
-                <div class="hover-meta">{{ member.role }}</div>
-                <p class="hover-description">{{ member.description }}</p>
-                <div class="hover-tags">
-                  <span class="hover-tag" v-for="tag in member.tags" :key="tag">{{ tag }}</span>
-                </div>
-              </div>
-            </div>
-            <div class="member-label">{{ member.roleLabel }}</div>
+      <!-- Row 8: branching out wider -->
+      <div class="row row-split wide">
+        <div class="slot slot-left">
+          <div class="member-node">
+            <div class="profile-circle sphere"></div>
+            <div class="role-tag">Member</div>
           </div>
+        </div>
+        <div class="slot slot-center"></div>
+        <div class="slot slot-right">
+          <div class="member-node">
+            <div class="profile-circle sphere"></div>
+            <div class="role-tag">Member</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 9: final center sphere -->
+      <div class="row row-center">
+        <div class="member-node">
+          <div class="profile-circle sphere"></div>
+          <div class="role-tag">Member</div>
+        </div>
+      </div>
+
+      <!-- Connecting lines layer -->
+      <svg class="connectors" preserveAspectRatio="none" viewBox="0 0 1000 2300">
+        <!-- Founder to row 2 -->
+        <line x1="600" y1="180" x2="160" y2="350" />
+        <line x1="600" y1="180" x2="840" y2="350" />
+        <line x1="600" y1="180" x2="500" y2="540" />
+
+        <!-- to japhet -->
+        <line x1="160" y1="430" x2="500" y2="540" />
+        <line x1="840" y1="430" x2="500" y2="540" />
+
+        <!-- japhet to row 4 -->
+        <line x1="500" y1="640" x2="160" y2="800" />
+        <line x1="500" y1="640" x2="840" y2="800" />
+
+        <!-- row 4 to row 5 -->
+        <line x1="160" y1="880" x2="500" y2="1020" />
+        <line x1="840" y1="880" x2="500" y2="1020" />
+
+        <!-- row 5 to row 6 -->
+        <line x1="500" y1="1100" x2="160" y2="1260" />
+        <line x1="500" y1="1100" x2="840" y2="1260" />
+
+        <!-- row 6 to row 7 -->
+        <line x1="160" y1="1340" x2="500" y2="1480" />
+        <line x1="840" y1="1340" x2="500" y2="1480" />
+
+        <!-- row 7 to row 8 (wide) -->
+        <line x1="500" y1="1560" x2="80" y2="1740" />
+        <line x1="500" y1="1560" x2="920" y2="1740" />
+
+        <!-- row 8 to row 9 -->
+        <line x1="80" y1="1820" x2="500" y2="1980" />
+        <line x1="920" y1="1820" x2="500" y2="1980" />
+      </svg>
+    </div>
+
+    <!-- Gallery section -->
+    <div class="gallery-section">
+      <div class="gallery-inner">
+        <h2 class="gallery-title">[GALLERY]</h2>
+        <p class="gallery-copy">
+          The Campus Developers Organization is a community of passionate students dedicated to learning, building, and innovating through technology.
+        </p>
+
+        <div class="gallery-stage">
+          <button class="gallery-arrow left" @click="prevSlide" aria-label="Previous">‹</button>
+
+          <div class="gallery-grid">
+            <div class="gallery-tile" v-for="(img, i) in currentSlide" :key="i">
+              <img :src="img" :alt="'Gallery ' + i" />
+            </div>
+          </div>
+
+          <button class="gallery-arrow right" @click="nextSlide" aria-label="Next">›</button>
         </div>
       </div>
     </div>
@@ -131,77 +235,43 @@
 </template>
 
 <script>
+import founderPhoto from '../assets/d8135965-490e-4bf4-9144-bfbf783f7f5b_removalai_preview.png'
+import raldin from '../assets/raldin.png'
+import sheele from '../assets/sheele.png'
+import sheenlee from '../assets/Sheenlee.png'
+import japhet from '../assets/Japhet pfp.png'
+import pic1 from '../assets/pics.png'
+import pic2 from '../assets/pics (1).png'
+import pic3 from '../assets/pics (2).png'
+import pic4 from '../assets/pics (3).png'
+
 export default {
   name: 'MemberSection',
   data() {
     return {
-      founder: {
-        id: 1,
-        name: 'N/A',
-        role: 'N/A',
-        roleLabel: 'Founder',
-        image: 'https://via.placeholder.com/140x140?text=Founder',
-        description: 'N/A',
-        tags: ['N/A', 'N/A']
-      },
-      midMembers: [
-        {
-          id: 2,
-          name: 'N/A',
-          role: 'N/A',
-          roleLabel: 'Backend Developer',
-          image: 'https://via.placeholder.com/140x140?text=Backend',
-          description: 'N/A',
-          tags: ['N/A', 'N/A']
-        },
-        {
-          id: 3,
-          name: 'N/A',
-          role: 'N/A',
-          roleLabel: 'Developer',
-          image: 'https://via.placeholder.com/140x140?text=Dev',
-          description: 'N/A',
-          tags: ['N/A', 'N/A']
-        },
-        {
-          id: 4,
-          name: 'N/A',
-          role: 'N/A',
-          roleLabel: 'Frontend Developer',
-          image: 'https://via.placeholder.com/140x140?text=Frontend',
-          description: 'N/A',
-          tags: ['N/A', 'N/A']
-        }
+      founderPhoto,
+      raldin,
+      sheele,
+      sheenlee,
+      japhet,
+      slides: [
+        [pic1, pic2, pic3],
+        [pic4, pic1, pic2],
       ],
-      bottomMembers: [
-        {
-          id: 5,
-          name: 'N/A',
-          role: 'N/A',
-          roleLabel: 'Member',
-          image: 'https://via.placeholder.com/140x140?text=Member1',
-          description: 'N/A',
-          tags: ['N/A', 'N/A']
-        },
-        {
-          id: 6,
-          name: 'N/A',
-          role: 'N/A',
-          roleLabel: 'Member',
-          image: 'https://via.placeholder.com/140x140?text=Member2',
-          description: 'N/A',
-          tags: ['N/A', 'N/A']
-        },
-        {
-          id: 7,
-          name: 'N/A',
-          role: 'N/A',
-          roleLabel: 'Member',
-          image: 'https://via.placeholder.com/140x140?text=Member3',
-          description: 'N/A',
-          tags: ['N/A', 'N/A']
-        }
-      ]
+      slideIdx: 0,
+    }
+  },
+  computed: {
+    currentSlide() {
+      return this.slides[this.slideIdx]
+    }
+  },
+  methods: {
+    nextSlide() {
+      this.slideIdx = (this.slideIdx + 1) % this.slides.length
+    },
+    prevSlide() {
+      this.slideIdx = (this.slideIdx - 1 + this.slides.length) % this.slides.length
     }
   }
 }
@@ -215,361 +285,379 @@ export default {
 }
 
 .members-section {
-  width: 100vw;                /* Force full viewport width */
-  margin-left: calc(-50vw + 50%); /* Center it if parent has padding */
-  left: 50%;
-  right: 50%;
-  padding: 60px 24px 80px;
-  min-height: 100vh;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
   background: transparent;
   color: #111;
+  padding: 0 0 0 0;
+  position: relative;
 }
 
-.members-section::before {
-  content: '';
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-image: 
-    linear-gradient(to right, rgba(0, 0, 0, 0.02) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.02) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: -1;
+/* ============ HEADER ============ */
+.founder-header {
+  max-width: 1100px;
+  margin: 40px auto 60px;
+  padding: 0 60px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 40px;
 }
 
-.section-header {
-  max-width: 900px;
-  margin: 0 auto 60px;
-  text-align: center;
+.founder-intro {
+  padding-top: 20px;
 }
 
 .section-title {
-  display: inline-flex;
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
-  letter-spacing: 1px;
   color: #1b1f36;
   margin-bottom: 16px;
+  letter-spacing: 0.5px;
 }
 
 .section-copy {
-  margin: 0;
-  color: #4b5563;
-  line-height: 1.8;
-  max-width: 580px;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.7;
+  font-size: 14px;
+  max-width: 360px;
 }
 
+.founder-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.founder-photo {
+  width: 130px;
+  height: 170px;
+  border-radius: 14px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #b30b1c 0%, #7a0712 100%);
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.18);
+}
+
+.founder-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============ ORG CHART ============ */
 .org-chart {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 2600px;
+  position: relative;
+  max-width: 1100px;
   margin: 0 auto;
-  position: relative;
+  padding: 0 40px 80px;
 }
 
-.chart-level {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  position: relative;
-}
-
-.level-founder {
-  margin-bottom: 20px;
-  width: 100%;
-  position: relative;
-  display: flex;
-  justify-content: center;
-}
-
-.founder-connectors {
+.connectors {
   position: absolute;
-  top: 155px;
-  left: 0;
+  inset: 0;
   width: 100%;
-  height: 130px;
+  height: 100%;
   pointer-events: none;
   z-index: 0;
 }
 
-.side-node {
-  position: relative;
-  z-index: 2;
-  justify-self: center;
+.connectors line {
+  stroke: #94a3b8;
+  stroke-width: 1.2;
 }
 
-.level-split {
-  margin: 0;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: absolute;
-  top: 210px;
-  left: 0;
-  z-index: 2;
-}
-
-.split-row {
-  width: 100%;
+.row {
   position: relative;
+  z-index: 2;
   display: grid;
-  grid-template-columns: 14.2857% 71.4286% 14.2857%;
-  align-items: start;
-  min-height: 260px;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  margin-bottom: 60px;
+  min-height: 100px;
 }
 
-.side-node.left {
-  grid-column: 1;
-  margin-right: 825px;
+.row-top {
+  margin-bottom: 80px;
 }
 
-.side-node.right {
-  grid-column: 3;
-}
-
-.level-center {
-  margin-top: 20px;
+.row-center {
   display: flex;
   justify-content: center;
 }
 
-.center-node {
+.row-split.wide {
+  grid-template-columns: 1fr 2fr 1fr;
+}
+
+.slot {
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
 
-.level-bottom {
-  margin-top: 20px;
+.slot-left {
+  justify-content: flex-start;
 }
 
-.level-row {
-  display: flex;
+.slot-center {
   justify-content: center;
-  gap: 60px;
-  align-items: flex-start;
-  width: 100%;
-  position: relative;
 }
 
-.level-row::before {
-  display: none;
+.slot-right {
+  justify-content: flex-end;
 }
 
+.center-note {
+  justify-content: center;
+}
+
+/* ============ NODES ============ */
 .member-node {
-  display: flex;
+  display: inline-flex;
   flex-direction: column;
   align-items: center;
   position: relative;
+  z-index: 3;
 }
 
-.profile-wrapper {
-  position: relative;
-  display: inline-flex;
+.profile-circle {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 3px solid #fff;
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.18);
+  background: #fff;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 180px;
-  height: 180px;
-  border-radius: 50%;
-  background: radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), rgba(220, 220, 240, 0.8));
-  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.12);
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  border: 4px solid rgba(255, 255, 255, 0.98);
 }
 
-.profile-wrapper:hover,
-.profile-wrapper:focus-within {
-  transform: scale(1.08);
-  box-shadow: 0 22px 55px rgba(15, 23, 42, 0.18);
-}
-
-.profile-pic {
-  width: 170px;
-  height: 170px;
-  border-radius: 50%;
+.profile-circle img {
+  width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
-.member-label {
-  margin-top: 12px;
-  color: #334155;
-  font-size: 12px;
+.profile-circle.sphere {
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff 0%, #e5e7eb 25%, #9ca3af 60%, #4b5563 100%);
+  border-color: #f3f4f6;
+}
+
+.role-tag {
+  margin-top: 8px;
+  font-size: 9px;
+  letter-spacing: 0.8px;
+  color: #475569;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  text-align: center;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 2px 8px;
+  border-radius: 4px;
 }
 
-.hover-card {
+/* ============ NOTE CARDS (speech bubbles) ============ */
+.note-card {
+  background: #e9ecf1;
+  border-radius: 10px;
+  padding: 12px 14px;
+  width: 200px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.06);
+  position: relative;
+  font-size: 11px;
+  color: #4b5563;
+  line-height: 1.5;
+}
+
+.note-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 4px;
+}
+
+.note-meta {
+  font-size: 10px;
+  color: #6b7280;
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.note-meta-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  color: #94a3b8;
+  font-weight: 600;
+  border-top: 1px solid rgba(0, 0, 0, 0.05);
+  padding-top: 6px;
+}
+
+/* speech bubble tails */
+.note-card.note-right::after {
+  content: '';
   position: absolute;
+  right: -8px;
   top: 50%;
-  left: 100%;
-  width: 260px;
-  padding: 16px 18px;
-  background: rgba(255, 255, 255, 0.98);
-  border-radius: 18px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.15);
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-50%) translateX(8px);
-  transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s ease;
-  z-index: 20;
-  pointer-events: none;
+  transform: translateY(-50%);
+  border-width: 8px 0 8px 8px;
+  border-style: solid;
+  border-color: transparent transparent transparent #e9ecf1;
 }
 
-.profile-wrapper:hover .hover-card,
-.profile-wrapper:focus-within .hover-card {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(-50%) translateX(16px);
-}
-
-.hover-card::before {
+.note-card.note-left::after {
   content: '';
   position: absolute;
   left: -8px;
   top: 50%;
   transform: translateY(-50%);
-  border-width: 8px;
+  border-width: 8px 8px 8px 0;
   border-style: solid;
-  border-color: transparent rgba(255, 255, 255, 0.98) transparent transparent;
+  border-color: transparent #e9ecf1 transparent transparent;
 }
 
-.hover-header {
-  margin-bottom: 8px;
-}
-
-.hover-label {
+/* clusters that put a note next to a circle */
+.ricky-cluster,
+.japhet-cluster {
   display: inline-flex;
-  padding: 3px 10px;
-  background: rgba(79, 70, 229, 0.08);
-  color: #4338ca;
-  border-radius: 999px;
-  font-size: 10px;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ============ GALLERY ============ */
+.gallery-section {
+  background: #1b1f36;
+  color: #fff;
+  padding: 60px 24px 70px;
+  width: 100%;
+}
+
+.gallery-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.gallery-title {
+  font-size: 28px;
   font-weight: 700;
-  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 12px;
 }
 
-.hover-name {
-  font-size: 14px;
-  font-weight: 700;
-  color: #111827;
-  margin-bottom: 4px;
-}
-
-.hover-meta {
-  color: #475569;
+.gallery-copy {
   font-size: 12px;
-  margin-bottom: 10px;
+  color: #cbd5e1;
+  line-height: 1.7;
+  max-width: 480px;
+  margin: 0 auto 28px;
 }
 
-.hover-description {
-  font-size: 12px;
-  line-height: 1.6;
-  color: #334155;
-  margin: 0 0 12px;
-}
-
-.hover-tags {
+.gallery-stage {
   display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  align-items: center;
+  gap: 14px;
+  justify-content: center;
 }
 
-.hover-tag {
-  padding: 4px 8px;
-  background: rgba(15, 23, 42, 0.06);
-  border-radius: 999px;
-  font-size: 10px;
-  color: #1f2937;
+.gallery-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  max-width: 720px;
 }
 
-@media (max-width: 968px) {
-  .level-row {
-    gap: 40px;
-  }
-
-  .profile-wrapper {
-    width: 150px;
-    height: 150px;
-  }
-
-  .profile-pic {
-    width: 140px;
-    height: 140px;
-  }
-
-  .hover-card {
-    width: 260px;
-  }
+.gallery-tile {
+  aspect-ratio: 4 / 3;
+  background: #475569;
+  border-radius: 4px;
+  overflow: hidden;
 }
 
-@media (max-width: 680px) {
-  .members-section {
-    padding: 40px 16px 60px;
+.gallery-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-arrow {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.gallery-arrow:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 768px) {
+  .founder-header {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 0 20px;
   }
 
-  .section-header {
-    margin-bottom: 40px;
-  }
-
-  .section-title {
-    font-size: 22px;
-    margin-bottom: 12px;
+  .founder-intro {
+    padding-top: 0;
   }
 
   .section-copy {
-    font-size: 13px;
+    margin: 0 auto;
   }
 
-  .level-row {
-    gap: 30px;
-    flex-wrap: wrap;
+  .founder-card {
+    margin-top: 12px;
   }
 
-  .profile-wrapper {
-    width: 130px;
-    height: 130px;
+  .org-chart {
+    padding: 0 16px 60px;
   }
 
-  .profile-pic {
-    width: 120px;
-    height: 120px;
-  }
-
-  .member-label {
-    font-size: 11px;
-  }
-
-  .hover-card {
-    position: fixed;
-    left: 50%;
-    top: 50%;
-    width: 280px;
-    transform: translate(-50%, -50%);
-    z-index: 100;
-    opacity: 0;
-    visibility: hidden;
-  }
-
-  .hover-card::before {
+  .connectors {
     display: none;
   }
 
-  .profile-wrapper:hover .hover-card,
-  .profile-wrapper:focus-within .hover-card {
-    opacity: 1;
-    visibility: visible;
+  .row,
+  .row-split.wide {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .slot {
+    justify-content: center !important;
+  }
+
+  .ricky-cluster,
+  .japhet-cluster {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .note-card.note-left::after,
+  .note-card.note-right::after {
+    display: none;
+  }
+
+  .profile-circle {
+    width: 80px;
+    height: 80px;
+  }
+
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>
