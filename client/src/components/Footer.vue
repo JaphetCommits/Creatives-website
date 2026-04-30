@@ -104,11 +104,64 @@
         </div>
         <div class="bottom-actions">
           <button class="ghost-link" @click="showModal = true">Powered by Creatives Society</button>
-          <button class="admin-btn" @click="goToAdminDashboard">
+
+          <!-- Admin sign-in trigger (visible to everyone, opens password prompt) -->
+          <button
+            v-if="!isAdmin"
+            class="ghost-link admin-login-link"
+            @click="showAdminLogin = true"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 11c2.21 0 4-1.79 4-4S14.21 3 12 3 8 4.79 8 7s1.79 4 4 4z"/><path d="M6 21v-1a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v1"/></svg>
+            Admin Login
+          </button>
+
+          <!-- Admin Dashboard button (admin-only) -->
+          <button v-if="isAdmin" class="admin-btn" @click="goToAdminDashboard">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
             Admin Dashboard
           </button>
+
+          <!-- Sign out (admin-only) -->
+          <button v-if="isAdmin" class="ghost-link sign-out-link" @click="signOutAdmin">
+            Sign out
+          </button>
         </div>
+      </div>
+    </div>
+
+    <!-- ============ ADMIN LOGIN MODAL ============ -->
+    <div v-if="showAdminLogin" class="modal-overlay" @click="closeAdminLogin">
+      <div class="modal admin-modal" @click.stop>
+        <button class="modal-close" @click="closeAdminLogin" aria-label="Close">&times;</button>
+        <div class="modal-header">
+          <span class="modal-eyebrow">Restricted</span>
+          <h3>Admin Sign-In</h3>
+          <p class="modal-sub">Enter the admin password to access the dashboard.</p>
+        </div>
+        <form class="admin-form" @submit.prevent="submitAdminLogin">
+          <label class="admin-field">
+            <span>Password</span>
+            <input
+              ref="passwordInput"
+              v-model="adminPassword"
+              :type="showPassword ? 'text' : 'password'"
+              placeholder="Enter password"
+              autocomplete="current-password"
+              required
+            />
+            <button
+              type="button"
+              class="toggle-pass"
+              @click="showPassword = !showPassword"
+              :aria-label="showPassword ? 'Hide password' : 'Show password'"
+            >
+              <svg v-if="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 20c-7 0-11-8-11-8a19.77 19.77 0 0 1 4.22-5.39M9.9 4.24A10.94 10.94 0 0 1 12 4c7 0 11 8 11 8a19.85 19.85 0 0 1-3.16 4.19M14.12 14.12a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </button>
+          </label>
+          <p v-if="loginError" class="login-error">{{ loginError }}</p>
+          <button type="submit" class="admin-submit">Sign In</button>
+        </form>
       </div>
     </div>
 
@@ -148,16 +201,30 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, nextTick, onMounted, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import logo from '../assets/Creatices lines.png'
 
+const ADMIN_PASSWORD = 'creatives2025'
+const ADMIN_STORAGE_KEY = 'cs_is_admin'
+
 const showModal = ref(false)
+const showAdminLogin = ref(false)
 const email = ref('')
 const subscribed = ref(false)
+const isAdmin = ref(false)
+const adminPassword = ref('')
+const showPassword = ref(false)
+const loginError = ref('')
+const passwordInput = ref(null)
 const router = useRouter()
 
+onMounted(() => {
+  isAdmin.value = localStorage.getItem(ADMIN_STORAGE_KEY) === 'true'
+})
+
 const goToAdminDashboard = () => {
+  if (!isAdmin.value) return
   router.push({ name: 'AdminDashboard' })
 }
 
@@ -167,7 +234,6 @@ const navigate = (section) => {
     target.scrollIntoView({ behavior: 'smooth', block: 'start' })
     return
   }
-  // Fallback: jump to top of the page using hash so MainHeroSection nav still works
   window.location.hash = `#${section}`
 }
 
@@ -177,6 +243,36 @@ const onSubscribe = () => {
   email.value = ''
   setTimeout(() => (subscribed.value = false), 2400)
 }
+
+const closeAdminLogin = () => {
+  showAdminLogin.value = false
+  adminPassword.value = ''
+  loginError.value = ''
+  showPassword.value = false
+}
+
+const submitAdminLogin = () => {
+  if (adminPassword.value === ADMIN_PASSWORD) {
+    isAdmin.value = true
+    localStorage.setItem(ADMIN_STORAGE_KEY, 'true')
+    closeAdminLogin()
+  } else {
+    loginError.value = 'Incorrect password. Please try again.'
+    adminPassword.value = ''
+  }
+}
+
+const signOutAdmin = () => {
+  isAdmin.value = false
+  localStorage.removeItem(ADMIN_STORAGE_KEY)
+}
+
+watch(showAdminLogin, async (open) => {
+  if (open) {
+    await nextTick()
+    passwordInput.value?.focus()
+  }
+})
 </script>
 
 <style scoped>
@@ -458,6 +554,31 @@ const onSubscribe = () => {
   color: #fff;
 }
 
+.admin-login-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+  color: rgba(203, 213, 225, 0.55);
+}
+
+.admin-login-link svg {
+  width: 14px;
+  height: 14px;
+}
+
+.admin-login-link:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.sign-out-link {
+  color: rgba(239, 68, 68, 0.8);
+}
+
+.sign-out-link:hover {
+  color: #ef4444;
+}
+
 .admin-btn {
   background: linear-gradient(135deg, #2f9e83 0%, #1e6aa8 100%);
   color: #fff;
@@ -555,6 +676,106 @@ const onSubscribe = () => {
   margin: 0;
   font-size: 0.92rem;
   color: #64748b;
+}
+
+/* ----- Admin login form inside modal ----- */
+.admin-modal {
+  max-width: 420px;
+}
+
+.admin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  position: relative;
+}
+
+.admin-field span {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.admin-field input {
+  width: 100%;
+  padding: 12px 44px 12px 14px;
+  border: 1px solid rgba(15, 23, 42, 0.15);
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  color: #0f172a;
+  background: #fff;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  box-sizing: border-box;
+}
+
+.admin-field input:focus {
+  border-color: #2f9e83;
+  box-shadow: 0 0 0 3px rgba(47, 158, 131, 0.15);
+}
+
+.toggle-pass {
+  position: absolute;
+  right: 8px;
+  top: 28px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  color: #64748b;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.toggle-pass:hover {
+  background: rgba(15, 23, 42, 0.05);
+  color: #0f172a;
+}
+
+.toggle-pass svg {
+  width: 18px;
+  height: 18px;
+}
+
+.login-error {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #dc2626;
+  background: rgba(220, 38, 38, 0.08);
+  border: 1px solid rgba(220, 38, 38, 0.2);
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.admin-submit {
+  margin-top: 4px;
+  background: linear-gradient(135deg, #2f9e83 0%, #1e6aa8 100%);
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.admin-submit:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px rgba(47, 158, 131, 0.35);
 }
 
 .team-grid {
