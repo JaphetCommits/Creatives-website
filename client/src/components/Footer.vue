@@ -177,7 +177,7 @@
         <div class="team-grid">
           <div class="team-category">
             <h4>Project Manager</h4>
-            <p><em>—</em></p>
+            <p>Ej A. Vinculado</p>
           </div>
           <div class="team-category">
             <h4>Front-End Developers</h4>
@@ -186,13 +186,13 @@
           </div>
           <div class="team-category">
             <h4>Back-End Developers</h4>
-            <p><em>—</em></p>
-            <p><em>—</em></p>
+            <p>Japhet V. Bastillada</p>
+            <p>Cyd M. Ballon</p>
           </div>
           <div class="team-category">
             <h4>UI Designers</h4>
-            <p><em>—</em></p>
-            <p><em>—</em></p>
+            <p>Japhet V. Bastillada</p>
+            <p>Mischi Jeda J. Elumba</p>
           </div>
         </div>
       </div>
