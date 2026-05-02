@@ -591,7 +591,7 @@ export default {
 .filter-nav {
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 50;
   background: rgba(255, 255, 255, 0.96);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
