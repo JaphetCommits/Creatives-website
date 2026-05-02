@@ -92,7 +92,7 @@
         </main>
       </transition>
 
-      <div class="sections-container">
+      <div :class="['sections-container', { 'sections-container--members': currentSection === 'members' }]">
         <transition name="fade" mode="out-in">
           <About v-if="currentSection === 'about'" key="about" id="about" />
           <History v-else-if="currentSection === 'history'" key="history" id="history" />
@@ -183,7 +183,7 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Additional styles for sections container */
+/* Additional style for section container */
 .sections-container {
   margin-top: 2rem;
   padding: 0 2rem;
@@ -191,6 +191,12 @@ html {
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+}
+
+.sections-container--members {
+  margin-top: 0;
+  padding: 0;
+  max-width: 100%;
 }
 
 .hero-image img {
