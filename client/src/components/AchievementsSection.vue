@@ -71,12 +71,15 @@
 </template>
 
 <script setup>
-import pic1 from '../assets/pics.png'
-import pic2 from '../assets/pics (1).png'
-import pic3 from '../assets/pics (2).png'
-import pic4 from '../assets/pics (3).png'
+import pic1         from '../assets/pics.png'
+import pic2         from '../assets/pics (1).png'
+import pic3         from '../assets/pics (2).png'
+import pic4         from '../assets/pics (3).png'
 import historyPhoto from '../assets/history-photo.png'
-import eventPhoto from '../assets/event-photo.png'
+import eventPhoto   from '../assets/event-photo.png'
+import orgChart     from '../assets/org-chart.png'
+import misionVision from '../assets/mission-vision.png'
+import sheenlee     from '../assets/Sheenlee.png'
 
 const stats = [
   {
@@ -108,18 +111,19 @@ const galleryByYear = [
       {
         title: 'SSAAM V 1.0 Development',
         photos: [
-          { src: pic1, caption: 'Development session' },
-          { src: pic2, caption: 'Team at work' },
-          { src: pic3, caption: 'System demo' },
-          { src: pic4, caption: 'Project review' },
+          { src: pic3, caption: 'Development session' },
+          { src: pic4, caption: 'Team collaboration' },
+          { src: pic1, caption: 'System demo' },
+          { src: pic2, caption: 'Project review' },
         ],
       },
       {
         title: 'DICT Philippine Startup Challenge 8',
         photos: [
-          { src: historyPhoto, caption: 'Pitch day' },
-          { src: eventPhoto, caption: 'Team presentation' },
-          { src: pic1, caption: 'Competition proper' },
+          { src: sheenlee, caption: 'Team leader' },
+          { src: pic3, caption: 'Pitch day' },
+          { src: pic4, caption: 'Team presentation' },
+          { src: orgChart, caption: 'Org structure' },
         ],
       },
     ],
@@ -130,34 +134,36 @@ const galleryByYear = [
       {
         title: 'Startup 101 Workshop',
         photos: [
-          { src: pic2, caption: 'Workshop proper' },
-          { src: pic3, caption: 'Speaker session' },
-          { src: pic4, caption: 'Group activity' },
+          { src: pic1, caption: 'Workshop proper' },
+          { src: pic2, caption: 'Speaker session' },
+          { src: pic3, caption: 'Group activity' },
+          { src: pic4, caption: 'Participants' },
         ],
       },
       {
         title: 'SSAAM V 2.0 Development',
         photos: [
-          { src: pic1, caption: 'Development sprint' },
-          { src: pic2, caption: 'Feature testing' },
-          { src: historyPhoto, caption: 'System walkthrough' },
-          { src: eventPhoto, caption: 'Launch preparation' },
+          { src: pic3, caption: 'Development sprint' },
+          { src: pic4, caption: 'Feature testing' },
+          { src: misionVision, caption: 'Mission & Vision' },
+          { src: pic1, caption: 'Launch preparation' },
         ],
       },
       {
         title: 'DICT Philippine Startup Challenge 9',
         photos: [
-          { src: pic3, caption: 'Pitch presentation' },
-          { src: pic4, caption: 'Competition day' },
-          { src: pic1, caption: 'Team effort' },
+          { src: pic2, caption: 'Pitch presentation' },
+          { src: sheenlee, caption: 'Team on stage' },
+          { src: pic3, caption: 'Competition day' },
+          { src: pic4, caption: 'Team effort' },
         ],
       },
       {
         title: 'Zambasulta Business and Innovation Summit',
         photos: [
-          { src: pic2, caption: 'Summit venue' },
-          { src: historyPhoto, caption: 'Innovation showcase' },
-          { src: eventPhoto, caption: 'Team representation' },
+          { src: pic1, caption: 'Summit venue' },
+          { src: pic2, caption: 'Innovation showcase' },
+          { src: orgChart, caption: 'Team representation' },
           { src: pic3, caption: 'Networking' },
         ],
       },
@@ -178,35 +184,37 @@ const galleryByYear = [
       {
         title: 'SSAAM V 3.0 Development',
         photos: [
-          { src: historyPhoto, caption: 'Planning phase' },
-          { src: eventPhoto, caption: 'Development sprint' },
-          { src: pic4, caption: 'Testing session' },
+          { src: sheenlee, caption: 'Project lead' },
+          { src: pic4, caption: 'Planning phase' },
+          { src: misionVision, caption: 'Mission alignment' },
+          { src: pic1, caption: 'Testing session' },
         ],
       },
       {
         title: 'Mugna Startup Pitching Competition',
         photos: [
-          { src: pic1, caption: 'Pitch day' },
-          { src: pic2, caption: 'Judges\' panel' },
-          { src: historyPhoto, caption: 'Team on stage' },
-          { src: eventPhoto, caption: 'Post-pitch' },
+          { src: pic2, caption: 'Pitch day' },
+          { src: pic3, caption: 'Judges\' panel' },
+          { src: pic4, caption: 'Team on stage' },
+          { src: orgChart, caption: 'Post-pitch' },
         ],
       },
       {
         title: 'DICT Philippine Startup Challenge 10',
         photos: [
-          { src: pic3, caption: 'Competition proper' },
-          { src: pic4, caption: 'Pitch presentation' },
-          { src: pic1, caption: 'Team preparation' },
+          { src: pic1, caption: 'Competition proper' },
+          { src: sheenlee, caption: 'Team representative' },
+          { src: pic2, caption: 'Pitch presentation' },
+          { src: pic3, caption: 'Team preparation' },
         ],
       },
       {
         title: 'University Week — College Attendance Committee',
         photos: [
-          { src: pic2, caption: 'University Week event' },
-          { src: historyPhoto, caption: 'Attendance committee duty' },
-          { src: eventPhoto, caption: 'Team in action' },
-          { src: pic3, caption: 'Event proper' },
+          { src: pic4, caption: 'University Week event' },
+          { src: pic1, caption: 'Attendance duty' },
+          { src: pic2, caption: 'Team in action' },
+          { src: misionVision, caption: 'Event proper' },
         ],
       },
     ],
@@ -217,19 +225,19 @@ const galleryByYear = [
       {
         title: 'CCS General Assembly — College Attendance Committee',
         photos: [
-          { src: pic4, caption: 'General assembly proper' },
-          { src: pic1, caption: 'Committee at work' },
-          { src: pic2, caption: 'Assembly session' },
-          { src: historyPhoto, caption: 'Team coordination' },
+          { src: pic3, caption: 'General assembly proper' },
+          { src: pic4, caption: 'Committee at work' },
+          { src: sheenlee, caption: 'Assembly session' },
+          { src: orgChart, caption: 'Team coordination' },
         ],
       },
       {
         title: 'Intercollegiate Students\' Festival — College Attendance Committee',
         photos: [
-          { src: eventPhoto, caption: 'Festival opening' },
-          { src: pic3, caption: 'Attendance committee' },
-          { src: pic4, caption: 'Festival activities' },
-          { src: pic1, caption: 'Team representation' },
+          { src: pic1, caption: 'Festival opening' },
+          { src: pic2, caption: 'Attendance committee' },
+          { src: pic3, caption: 'Festival activities' },
+          { src: misionVision, caption: 'Team representation' },
         ],
       },
     ],
