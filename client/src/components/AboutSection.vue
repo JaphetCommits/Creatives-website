@@ -38,8 +38,7 @@
             </div>
             <h3 class="mv-title">Our Mission</h3>
             <p class="mv-desc">
-              Panthers College of computing studies Panthers College of computing studies
-              Panthers College of computing studies College of computing studies
+              The Creatives Society is committed to developing its members into well-rounded IT professionals by providing a dynamic and inclusive environment that fosters technical excellence, creative growth, and ethical responsibility. Through mentorship programs, hands-on projects, seminars, workshops, and community outreach initiatives, the organization empowers its members to hone their skills, embrace innovation, and contribute positively to society — all while upholding the values of integrity, professionalism, and teamwork that define the spirit of the Creatives Society.
             </p>
           </article>
 
@@ -54,8 +53,7 @@
             </div>
             <h3 class="mv-title">Our Vision</h3>
             <p class="mv-desc">
-              Panthers College of computing studies Panthers College of computing studies
-              Panthers College of computing studies College of computing studies
+              The Creatives Society envisions itself as a premier student organization that nurtures technically competent, ethically grounded, and creatively driven Information Technology professionals — individuals who are not only equipped to meet the demands of a rapidly evolving digital world, but who also serve as catalysts for innovation, collaboration, and meaningful community impact within and beyond Jose Rizal Memorial State University.
             </p>
           </article>
         </div>
