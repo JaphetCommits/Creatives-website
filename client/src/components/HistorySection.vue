@@ -5,8 +5,9 @@
       <section class="history-section">
         <h2 class="section-title">[Our History]</h2>
         <p class="section-desc">
-          The Campus Developers Organization is a community of passionate students
-          dedicated to learning, building, and innovating through technology.
+          From a small group of passionate IT students to a thriving organization
+          at Jose Rizal Memorial State University — here's how the Creatives Society
+          has grown across the years.
         </p>
       </section>
 
@@ -15,9 +16,11 @@
         <div class="founder-text">
           <h2 class="section-title left-aligned">[Our Founder]</h2>
           <p class="section-desc left-aligned">
-            The Campus Developers Organization is a community of passionate
-            students dedicated to learning, building, and innovating through
-            technology.
+            The Creatives Society was founded by Sheenlee, a visionary IT student
+            at Panthers College of Computing Studies, who believed that creativity
+            and technology go hand in hand. Under her leadership, the organization
+            took its first steps toward becoming a premier student tech community
+            at Jose Rizal Memorial State University.
           </p>
         </div>
         <div class="founder-images">
@@ -32,7 +35,7 @@
       <section class="journey-section">
         <h2 class="section-title">[Our Journey]</h2>
         <p class="journey-subtitle">
-          The Campus Developers Organization is a community of passionate students.
+          Milestones and accomplishments year by year, from SY 2023–2024 to present.
         </p>
 
         <!-- Timeline -->
@@ -54,13 +57,13 @@
             <!-- Left card -->
             <div class="timeline-half left">
               <div v-if="item.side === 'left'" class="timeline-card">
-                <h3 class="card-title">Context</h3>
+                <h3 class="card-title">{{ item.title }}</h3>
                 <p class="card-text">{{ item.context }}</p>
                 <div class="card-project-label">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  <span>Project</span>
+                  <span>Activities</span>
                 </div>
                 <div class="project-grid">
                   <a
@@ -71,7 +74,7 @@
                     href="#"
                     @click.prevent
                   >
-                    <img v-if="p.image" :src="p.image" :alt="p.name || 'Project'" />
+                    <img v-if="p.image" :src="p.image" :alt="p.name || 'Activity'" />
                     <span v-if="p.name" class="project-tile-label">{{ p.name }}</span>
                   </a>
                 </div>
@@ -81,13 +84,13 @@
             <!-- Right card -->
             <div class="timeline-half right">
               <div v-if="item.side === 'right'" class="timeline-card">
-                <h3 class="card-title">Context</h3>
+                <h3 class="card-title">{{ item.title }}</h3>
                 <p class="card-text">{{ item.context }}</p>
                 <div class="card-project-label">
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                   </svg>
-                  <span>Project</span>
+                  <span>Activities</span>
                 </div>
                 <div class="project-grid">
                   <a
@@ -98,7 +101,7 @@
                     href="#"
                     @click.prevent
                   >
-                    <img v-if="p.image" :src="p.image" :alt="p.name || 'Project'" />
+                    <img v-if="p.image" :src="p.image" :alt="p.name || 'Activity'" />
                     <span v-if="p.name" class="project-tile-label">{{ p.name }}</span>
                   </a>
                 </div>
@@ -113,11 +116,10 @@
 
       <!-- Content Footer -->
       <section class="content-footer">
-        <h2 class="section-title">[Content]</h2>
+        <h2 class="section-title">[Our Pillars]</h2>
         <p class="footer-desc">
-          Our organization brings together aspiring programmers, designers, and tech
-          enthusiasts who share a common goal of developing skills and creating impactful
-          digital solutions.
+          Everything we do is rooted in four core principles that guide every
+          project, event, and initiative we take on as an organization.
         </p>
 
         <div class="footer-grid">
@@ -137,50 +139,56 @@ import pic1 from '../assets/pics.png'
 import pic2 from '../assets/pics (1).png'
 import pic3 from '../assets/pics (2).png'
 import pic4 from '../assets/pics (3).png'
+import historyPhoto from '../assets/history-photo.png'
+import eventPhoto from '../assets/event-photo.png'
 
 const timelineItems = [
   {
-    year: '2020',
-    side: 'left',
-    context:
-      'The Campus Developers Organization was founded in 2020 as a group of passionate students dedicated to learning, programming, technology, and innovation. The goal is to create a supportive platform that enables our students to meet their learning development needs.',
-    projects: [
-      { name: 'CodeBase', image: pic1 },
-      { name: 'Pulse UI', image: pic2 },
-      { name: 'NightOwl', image: pic3 },
-    ],
-  },
-  {
-    year: '2021',
-    side: 'right',
-    context:
-      'In 2021 we kicked off our first internal hackathon and shipped tooling to support member onboarding, team formation, and collaborative development across multiple curriculums.',
-    projects: [
-      { name: 'Hackathon', image: pic4 },
-      { name: 'Onboard', image: pic1 },
-      { name: 'Studio', image: pic2 },
-    ],
-  },
-  {
-    year: '2022',
-    side: 'left',
-    context:
-      'A year of growth — we expanded into design, mobile, and game development tracks, mentored junior batches, and ran our first community-facing showcase.',
-    projects: [
-      { name: 'Design Lab', image: pic3 },
-      { image: null },
-      { image: null },
-    ],
-  },
-  {
     year: '2023',
-    side: 'right',
+    side: 'left',
+    title: 'SY 2023–2024',
     context:
-      'We partnered with the college on production-ready projects, contributed to open source, and launched our annual Creatives Conference featuring student speakers.',
+      'The Creatives Society launched its first major initiative — SSAAM V 1.0 Development — a student-built system that marked the beginning of the organization\'s journey into real-world software development. The team also competed in the DICT Philippine Startup Challenge 8, gaining national exposure and invaluable startup experience.',
     projects: [
-      { image: null },
-      { image: null },
-      { image: null },
+      { name: 'SSAAM V 1.0', image: pic1 },
+      { name: 'DICT PSC 8', image: pic2 },
+      { name: 'Startup 101', image: pic3 },
+    ],
+  },
+  {
+    year: '2024',
+    side: 'right',
+    title: 'SY 2024–2025',
+    context:
+      'A year of growth and wider reach. The organization developed SSAAM V 2.0, competed in the DICT Philippine Startup Challenge 9, and represented JRMSU at the Zambasulta Business and Innovation Summit. The year concluded with the electrifying CCS IT Day "Techtopia" — a celebration of technology, creativity, and student talent.',
+    projects: [
+      { name: 'SSAAM V 2.0', image: pic4 },
+      { name: 'DICT PSC 9', image: historyPhoto },
+      { name: 'Zambasulta Summit', image: eventPhoto },
+    ],
+  },
+  {
+    year: '2025',
+    side: 'left',
+    title: 'SY 2025–2026 (Part 1)',
+    context:
+      'The Creatives Society stepped up with SSAAM V 3.0 Development and joined the Mugna Startup Pitching Competition, showcasing student-built innovations on a regional stage. The team also competed in the DICT Philippine Startup Challenge 10, continuing its streak of national-level participation.',
+    projects: [
+      { name: 'SSAAM V 3.0', image: pic1 },
+      { name: 'Mugna Startup', image: pic2 },
+      { name: 'DICT PSC 10', image: pic3 },
+    ],
+  },
+  {
+    year: '2026',
+    side: 'right',
+    title: 'SY 2025–2026 (Part 2)',
+    context:
+      'The organization took on a broader campus role — serving as the College Attendance Committee for the University Week, the CCS General Assembly, and the Intercollegiate Students\' Festival. These responsibilities reflected the growing trust and recognition the Creatives Society has earned within Jose Rizal Memorial State University.',
+    projects: [
+      { name: 'University Week', image: pic4 },
+      { name: 'CCS General Assembly', image: historyPhoto },
+      { name: 'Intercollegiate Festival', image: eventPhoto },
     ],
   },
 ]
@@ -188,19 +196,19 @@ const timelineItems = [
 const contentItems = [
   {
     title: 'Community',
-    description: 'A vibrant community of developers and tech enthusiasts.',
+    description: 'A vibrant community of IT students united by creativity and a drive to make a difference.',
   },
   {
     title: 'Learning',
-    description: 'Continuous learning and skill development opportunities.',
+    description: 'Continuous skill-building through workshops, seminars, and hands-on project development.',
   },
   {
     title: 'Innovation',
-    description: 'Building innovative projects and solutions.',
+    description: 'Building real-world solutions like SSAAM that create impact within and beyond the campus.',
   },
   {
     title: 'Collaboration',
-    description: 'Working together to achieve common goals.',
+    description: 'Working together across disciplines — design, development, and strategy — to achieve shared goals.',
   },
 ]
 </script>

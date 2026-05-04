@@ -419,15 +419,17 @@
 </template>
 
 <script>
-import founderPhoto from '../assets/founder-sheenlee.png'
-import raldin      from '../assets/raldin.png'
-import sheele      from '../assets/sheele.png'
-import sheenlee    from '../assets/Sheenlee.png'
-import japhet      from '../assets/Japhet pfp.png'
-import pic1        from '../assets/pics.png'
-import pic2        from '../assets/pics (1).png'
-import pic3        from '../assets/pics (2).png'
-import pic4        from '../assets/pics (3).png'
+import founderPhoto  from '../assets/founder-sheenlee.png'
+import raldin        from '../assets/raldin.png'
+import sheele        from '../assets/sheele.png'
+import sheenlee      from '../assets/Sheenlee.png'
+import japhet        from '../assets/Japhet pfp.png'
+import pic1          from '../assets/pics.png'
+import pic2          from '../assets/pics (1).png'
+import pic3          from '../assets/pics (2).png'
+import pic4          from '../assets/pics (3).png'
+import orgChart      from '../assets/org-chart.png'
+import misionVision  from '../assets/mission-vision.png'
 
 export default {
   name: 'MemberSection',
@@ -530,8 +532,10 @@ export default {
 
       /* ── gallery ── */
       slides: [
-        [pic1, pic2, pic3],
-        [pic4, pic1, pic2],
+        [pic3, pic4, pic1],
+        [pic2, pic3, pic4],
+        [orgChart, pic1, pic2],
+        [misionVision, pic3, pic4],
       ],
       slideIdx: 0,
     }
