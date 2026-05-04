@@ -218,15 +218,17 @@ body {
 
 .nav a {
   margin: 0 0.5rem;
+  font-family: 'Unbounded', sans-serif;
   font-weight: 600;
-  color: var(--muted);
+  color: #000;
   text-decoration: none;
   transition: color 0.25s ease;
   line-height: 1;
+  font-size: 13px;
 }
 
 .nav a:hover {
-  color: var(--text);
+  color: #333;
 }
 
 /* ============ HERO ============ */
