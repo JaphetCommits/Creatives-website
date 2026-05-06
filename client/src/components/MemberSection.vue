@@ -541,8 +541,8 @@ import pic1          from '../assets/pics.png'
 import pic2          from '../assets/pics (1).png'
 import pic3          from '../assets/pics (2).png'
 import pic4          from '../assets/pics (3).png'
-import orgChart      from '../assets/org-chart.png'
-import misionVision  from '../assets/mission-vision.png'
+import orgChart      from '../assets/Organization chart.png'
+import misionVision  from '../assets/Mission Vision.png'
 
 export default {
   name: 'MemberSection',
@@ -690,8 +690,10 @@ export default {
       ],
 
       slides: [
-        [pic1, pic2, pic3],
-        [pic4, pic1, pic2],
+        [pic3, pic4, pic1],
+        [pic2, pic3, pic4],
+        [orgChart, pic1, pic2],
+        [misionVision, pic3, pic4],
       ],
       slideIdx: 0,
     }
