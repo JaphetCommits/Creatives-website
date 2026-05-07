@@ -34,14 +34,14 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, from) => {
   if (to.meta?.requiresAdmin) {
     const isAdmin = localStorage.getItem('cs_is_admin') === 'true'
     if (!isAdmin) {
-      return next({ path: '/' })
+      return { path: '/' }
     }
   }
-  next()
+  return true
 })
 
 export default router

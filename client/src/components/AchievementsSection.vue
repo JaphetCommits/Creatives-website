@@ -1,6 +1,6 @@
 <template>
   <div class="achievements-page">
-    <!-- ============ HEADER ============ -->
+    <!-- HEADER -->
     <header class="section-header">
       <h2>[Our Achievements]</h2>
       <p class="intro-text">
@@ -9,18 +9,20 @@
       </p>
     </header>
 
-    <!-- ============ STATS BAND ============ -->
+    <!-- STATS BAND -->
     <section class="stats-band">
       <div class="stats-band-inner">
-        <div class="stat-tile" v-for="stat in stats" :key="stat.label">
-          <div class="stat-icon" v-html="stat.icon"></div>
-          <div class="stat-value">{{ stat.value }}<span>+</span></div>
-          <div class="stat-label">{{ stat.label }}</div>
-        </div>
+        <template v-for="(stat, i) in stats" :key="stat.label">
+          <div class="stat-tile">
+            <div class="stat-value">{{ stat.value }}<span>+</span></div>
+            <div class="stat-label">{{ stat.label }}</div>
+          </div>
+          <div v-if="i < stats.length - 1" class="stat-divider"></div>
+        </template>
       </div>
     </section>
 
-    <!-- ============ PHOTO GALLERY BY YEAR ============ -->
+    <!-- PHOTO GALLERY BY YEAR -->
     <section
       v-for="yearGroup in galleryByYear"
       :key="yearGroup.year"
@@ -77,30 +79,26 @@ import pic3         from '../assets/pics (2).png'
 import pic4         from '../assets/pics (3).png'
 import historyPhoto from '../assets/history-photo.png'
 import eventPhoto   from '../assets/event-photo.png'
-import orgChart     from '../assets/org-chart.png'
-import misionVision from '../assets/mission-vision.png'
-import sheenlee     from '../assets/Sheenlee.png'
+import orgChart     from '../assets/Organization chart.png'
+import misionVision from '../assets/Mission Vision.png'
+import sheen        from '../assets/sheen.png'
 
 const stats = [
   {
     value: '10',
     label: 'Competitions Joined',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="6"/><path d="M9 13.5l-2 8 5-3 5 3-2-8"/></svg>`,
   },
   {
     value: '3',
     label: 'SSAAM Versions Built',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>`,
   },
   {
     value: '6',
     label: 'Major Events Hosted',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>`,
   },
   {
     value: '3',
     label: 'School Years Active',
-    icon: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21h8M12 17v4M17 4h3v3a5 5 0 0 1-5 5M7 4H4v3a5 5 0 0 0 5 5M7 4h10v6a5 5 0 0 1-10 0V4z"/></svg>`,
   },
 ]
 
@@ -120,7 +118,7 @@ const galleryByYear = [
       {
         title: 'DICT Philippine Startup Challenge 8',
         photos: [
-          { src: sheenlee, caption: 'Team leader' },
+          { src: sheen, caption: 'Team leader' },
           { src: pic3, caption: 'Pitch day' },
           { src: pic4, caption: 'Team presentation' },
           { src: orgChart, caption: 'Org structure' },
@@ -153,7 +151,7 @@ const galleryByYear = [
         title: 'DICT Philippine Startup Challenge 9',
         photos: [
           { src: pic2, caption: 'Pitch presentation' },
-          { src: sheenlee, caption: 'Team on stage' },
+          { src: sheen, caption: 'Team on stage' },
           { src: pic3, caption: 'Competition day' },
           { src: pic4, caption: 'Team effort' },
         ],
@@ -184,7 +182,7 @@ const galleryByYear = [
       {
         title: 'SSAAM V 3.0 Development',
         photos: [
-          { src: sheenlee, caption: 'Project lead' },
+          { src: sheen, caption: 'Project lead' },
           { src: pic4, caption: 'Planning phase' },
           { src: misionVision, caption: 'Mission alignment' },
           { src: pic1, caption: 'Testing session' },
@@ -203,7 +201,7 @@ const galleryByYear = [
         title: 'DICT Philippine Startup Challenge 10',
         photos: [
           { src: pic1, caption: 'Competition proper' },
-          { src: sheenlee, caption: 'Team representative' },
+          { src: sheen, caption: 'Team representative' },
           { src: pic2, caption: 'Pitch presentation' },
           { src: pic3, caption: 'Team preparation' },
         ],
@@ -227,7 +225,7 @@ const galleryByYear = [
         photos: [
           { src: pic3, caption: 'General assembly proper' },
           { src: pic4, caption: 'Committee at work' },
-          { src: sheenlee, caption: 'Assembly session' },
+          { src: sheen, caption: 'Assembly session' },
           { src: orgChart, caption: 'Team coordination' },
         ],
       },
@@ -298,7 +296,7 @@ const awards = [
   padding: 0 0 60px 0;
 }
 
-/* ============ HEADER ============ */
+/* HEADER */
 .section-header {
   text-align: center;
   max-width: 760px;
@@ -331,96 +329,68 @@ const awards = [
   letter-spacing: -0.01em;
 }
 
-/* ============ STATS BAND ============ */
+/*  STATS BAND */
 .stats-band {
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  background: linear-gradient(135deg, #0b1f3a 0%, #0f172a 60%, #1e293b 100%);
-  padding: 56px 24px;
-  position: relative;
-  overflow: hidden;
-}
-
-.stats-band::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 20% 50%, rgba(47, 158, 131, 0.18), transparent 50%),
-    radial-gradient(circle at 80% 50%, rgba(30, 106, 168, 0.18), transparent 50%);
-  pointer-events: none;
+  background: rgba(248, 250, 252, 0.4);
+  border-top: 1px solid rgba(15, 23, 42, 0.06);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+  padding: 48px 24px;
+  backdrop-filter: blur(8px);
 }
 
 .stats-band-inner {
-  position: relative;
-  z-index: 1;
-  max-width: 1200px;
+  max-width: 900px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .stat-tile {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 18px;
-  padding: 28px 22px;
-  text-align: left;
-  backdrop-filter: blur(8px);
-  transition: transform 0.25s ease, background 0.25s ease;
+  flex: 1;
+  min-width: 140px;
+  text-align: center;
+  padding: 12px 32px;
 }
 
-.stat-tile:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.stat-icon {
-  width: 38px;
-  height: 38px;
-  display: grid;
-  place-items: center;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #2f9e83 0%, #1e6aa8 100%);
-  color: #fff;
-  margin-bottom: 16px;
-}
-
-.stat-icon :deep(svg) {
-  width: 22px;
-  height: 22px;
+.stat-divider {
+  width: 1px;
+  height: 52px;
+  background: rgba(15, 23, 42, 0.08);
+  flex-shrink: 0;
 }
 
 .stat-value {
   font-family: 'Unbounded', sans-serif;
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   font-weight: 700;
-  color: #fff;
+  color: #0f172a;
   line-height: 1;
   display: flex;
   align-items: flex-start;
-  gap: 4px;
+  justify-content: center;
+  gap: 2px;
 }
 
 .stat-value span {
-  font-size: 1.6rem;
-  background: linear-gradient(135deg, #2f9e83, #1e6aa8);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  margin-top: 6px;
+  font-size: 1.8rem;
+  color: #2f9e83;
+  margin-top: 4px;
 }
 
 .stat-label {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.72rem;
+  color: #64748b;
   margin-top: 8px;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
+  font-weight: 600;
 }
 
-/* ============ YEAR SECTIONS ============ */
+/* YEAR SECTIONS */
 .year-section {
   max-width: 1100px;
   margin: 0 auto;
@@ -453,7 +423,7 @@ const awards = [
   background: rgba(15, 23, 42, 0.1);
 }
 
-/* ============ EVENT BLOCKS ============ */
+/* EVENT BLOCKS */
 .event-block {
   display: flex;
   flex-direction: column;
@@ -470,7 +440,7 @@ const awards = [
   text-transform: uppercase;
 }
 
-/* ============ PHOTO GRID ============ */
+/* PHOTO GRID  */
 .photo-grid {
   display: grid;
   gap: 12px;
@@ -527,7 +497,7 @@ const awards = [
   opacity: 1;
 }
 
-/* ============ AWARDS GRID ============ */
+/* AWARDS GRID */
 .awards-section {
   max-width: 1100px;
   margin: 0 auto;
@@ -619,11 +589,7 @@ const awards = [
   margin-top: 4px;
 }
 
-/* ============ RESPONSIVE ============ */
 @media (max-width: 960px) {
-  .stats-band-inner {
-    grid-template-columns: repeat(2, 1fr);
-  }
   .awards-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -633,16 +599,35 @@ const awards = [
 }
 
 @media (max-width: 600px) {
-  .stats-band-inner {
-    grid-template-columns: 1fr;
+  .section-header {
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
   }
+
+  .stats-band-inner {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-tile {
+    padding: 16px 12px;
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  }
+
+  .stat-divider {
+    display: none;
+  }
+
   .awards-grid {
     grid-template-columns: 1fr;
   }
+
   .photo-grid--3,
   .photo-grid--4 {
     grid-template-columns: repeat(2, 1fr);
   }
+
   .photo-grid--2 {
     grid-template-columns: 1fr;
   }

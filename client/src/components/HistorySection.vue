@@ -134,7 +134,7 @@
 </template>
 
 <script setup>
-import founderPhoto from '../assets/founder-sheenlee.png'
+import founderPhoto from '../assets/sheen.png'
 import pic1 from '../assets/pics.png'
 import pic2 from '../assets/pics (1).png'
 import pic3 from '../assets/pics (2).png'
