@@ -140,6 +140,7 @@
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.armando.portfolio }"
                 @click="goToPortfolio(orgMembers.armando)" @mouseenter="onHover(orgMembers.armando, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
+                <img :src="armando" alt="Adviser" />
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Adviser</div>
@@ -481,6 +482,7 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.marc.portfolio }"
                   @click="goToPortfolio(orgMembers.marc)" @mouseenter="onHover(orgMembers.marc, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
+                  <img :src="marc" alt="Marc" />
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
@@ -495,6 +497,7 @@
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.justine.portfolio }"
                 @click="goToPortfolio(orgMembers.justine)" @mouseenter="onHover(orgMembers.justine, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
+                <img :src="justine" alt="Justine" />
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag">Member</div>
@@ -536,7 +539,10 @@ import japhet        from '../assets/Japhet pfp.png'
 import ej            from '../assets/ej.png'
 import stef        from '../assets/stef.png'
 import kenzen        from '../assets/kenzen.png'
+import justine       from '../assets/justine.jpeg'
+import armando        from '../assets/armando.jpg'
 import keith        from '../assets/keith.jpg'
+import marc            from '../assets/marc.jpg'
 import pic1          from '../assets/pics.png'
 import pic2          from '../assets/pics (1).png'
 import pic3          from '../assets/pics (2).png'
@@ -549,7 +555,7 @@ export default {
 
   data() {
     return {
-      orgChart, misionVision, founderPhoto, raldin, japhet, ej, stef, sheen, kenzen, keith,
+      orgChart, misionVision, founderPhoto, raldin, japhet, ej, stef, sheen, kenzen, keith, justine, armando, marc,  
 
       activeTab: 'chart',
       hoveredMember: null,
@@ -616,11 +622,11 @@ export default {
         kenzen:   { firstName: 'Kenzen',   portfolio: 'https://kenm.vercel.app/' },
         renz:     { firstName: 'Renz',     portfolio: null },
         keith:    { firstName: 'Keith',    portfolio: 'https://keithlar.vercel.app/' },
-        jullan:   { firstName: 'Jullan',   portfolio: null },
+        jullan:   { firstName: 'Jullan',   portfolio: 'https://jullanmaglinte.site/' },
         japhet:   { firstName: 'Japhet',   portfolio: null },
         cristoph: { firstName: 'Cristoph', portfolio: 'https://n91ives.vercel.app/' },
         cyd:      { firstName: 'Cyd',      portfolio: null },
-        marc:     { firstName: 'Marc',     portfolio: null },
+        marc:     { firstName: 'Marc',     portfolio: 'https://memitsuki.vercel.app/' },
         justine:  { firstName: 'Justine',  portfolio: null },
       },
 
@@ -634,8 +640,8 @@ export default {
       ],
 
       currentMembers: [
-        { name: 'SHEEN LEE S. EDIS',        role: 'founder',       roleLabel: 'Founder',         photo: sheen   },
-        { name: 'ARMANDO T. SAGUIN, MSIT',   role: 'mentor',        roleLabel: 'Adviser',         photo: null    },
+        { name: 'SHEEN LEE S. EDIS',        role: 'founder',       roleLabel: 'Founder',          photo: sheen   },
+        { name: 'ARMANDO T. SAGUIN, MSIT',   role: 'mentor',        roleLabel: 'Adviser',         photo: armando },
         { name: 'JUVELITO MARTINEZ',         role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
         { name: 'MARK MASCARDO',             role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
         { name: 'WHELSTER R. ESMADE',        role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
@@ -658,8 +664,8 @@ export default {
         { name: 'JAPHET V. BASTILLADA',      role: 'member',        roleLabel: 'Member',          photo: japhet  },
         { name: 'CRISTOPH B. BAGABUYO',      role: 'member',        roleLabel: 'Member',          photo: null    },
         { name: 'CYD M. BALLON',             role: 'member',        roleLabel: 'Member',          photo: null    },
-        { name: 'MARC LESTER D. GUIDO',      role: 'member',        roleLabel: 'Member',          photo: null    },
-        { name: 'JUSTINE P. BUNCAG',         role: 'member',        roleLabel: 'Member',          photo: null    },
+        { name: 'MARC LESTER D. GUIDO',      role: 'member',        roleLabel: 'Member',          photo: marc    },
+        { name: 'JUSTINE P. BUNCAG',         role: 'member',        roleLabel: 'Member',          photo: justine },
       ],
 
       previousGroups: [

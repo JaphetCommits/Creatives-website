@@ -81,7 +81,7 @@ import historyPhoto from '../assets/history-photo.png'
 import eventPhoto   from '../assets/event-photo.png'
 import orgChart     from '../assets/Organization chart.png'
 import misionVision from '../assets/Mission Vision.png'
-import sheen        from '../assets/Sheen.png'
+import sheen        from '../assets/sheen.png'
 
 const stats = [
   {
