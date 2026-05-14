@@ -59,12 +59,12 @@
             </div>
             <div class="hero-stats">
               <div class="hero-stat">
-                <span class="hero-stat-num">50<span class="plus">+</span></span>
+                <span class="hero-stat-num">20<span class="plus">+</span></span>
                 <span class="hero-stat-label">Active members</span>
               </div>
               <span class="hero-stat-sep"></span>
               <div class="hero-stat">
-                <span class="hero-stat-num">20<span class="plus">+</span></span>
+                <span class="hero-stat-num">15<span class="plus">+</span></span>
                 <span class="hero-stat-label">Projects shipped</span>
               </div>
               <span class="hero-stat-sep"></span>
