@@ -532,6 +532,7 @@
 </template>
 
 <script>
+import { membersStore } from '../stores/members.js'
 import founderPhoto  from '../assets/founder-sheenlee.png'
 import raldin        from '../assets/raldin.png'
 import sheen        from '../assets/sheen.png'
@@ -639,35 +640,6 @@ export default {
         { key: 'mentors',  label: 'Mentors / Advisers', color: '#7c3aed', desc: 'Faculty advisers and mentors guiding the organization.' },
       ],
 
-      currentMembers: [
-        { name: 'SHEEN LEE S. EDIS',        role: 'founder',       roleLabel: 'Founder',          photo: sheen   },
-        { name: 'ARMANDO T. SAGUIN, MSIT',   role: 'mentor',        roleLabel: 'Adviser',         photo: armando },
-        { name: 'JUVELITO MARTINEZ',         role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'MARK MASCARDO',             role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'WHELSTER R. ESMADE',        role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'HENZON DIONSAY',            role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'JUNE A. JACINTO',           role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'ROBERT MAYO L. ELUMBA',     role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'GEHAN RESALUTE',            role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'MARKLAN A. HAMPAC',         role: 'mentor',        roleLabel: 'Mentor',          photo: null    },
-        { name: 'RALDIN C. DISOMIMBA',       role: 'member-mentor', roleLabel: 'Member / Mentor', photo: raldin  },
-        { name: 'STEFHANIE ANN V. BATUCAN',  role: 'officer',       roleLabel: 'President',       photo: stef    },
-        { name: 'EJ A. VINCULADO',           role: 'officer',       roleLabel: 'Vice President',  photo: ej      },
-        { name: 'NESFHE NINA S. MAGSANAY',   role: 'officer',       roleLabel: 'Secretary',       photo: null    },
-        { name: 'KATE NICOLE S. EDIS',       role: 'officer',       roleLabel: 'Asst. Secretary', photo: null    },
-        { name: 'MISCHI JEDA J. ELUMBA',     role: 'officer',       roleLabel: 'Treasurer',       photo: null    },
-        { name: 'PETER ROBERT C. AYONO',     role: 'officer',       roleLabel: 'Auditor',         photo: null    },
-        { name: 'KENZEN L. MINAO',           role: 'officer',       roleLabel: 'P.I.O',           photo: kenzen  },
-        { name: 'RENZ L. SANTIAGO',          role: 'member',        roleLabel: 'Member',          photo: null    },
-        { name: 'KEITH BRAIN B. LARANJO',    role: 'member',        roleLabel: 'Member',          photo: keith   },
-        { name: 'JULLAN CARL J. MAGLINTE',   role: 'member',        roleLabel: 'Member',          photo: null    },
-        { name: 'JAPHET V. BASTILLADA',      role: 'member',        roleLabel: 'Member',          photo: japhet  },
-        { name: 'CRISTOPH B. BAGABUYO',      role: 'member',        roleLabel: 'Member',          photo: null    },
-        { name: 'CYD M. BALLON',             role: 'member',        roleLabel: 'Member',          photo: null    },
-        { name: 'MARC LESTER D. GUIDO',      role: 'member',        roleLabel: 'Member',          photo: marc    },
-        { name: 'JUSTINE P. BUNCAG',         role: 'member',        roleLabel: 'Member',          photo: justine },
-      ],
-
       previousGroups: [
         {
           year: 2024,
@@ -706,6 +678,28 @@ export default {
   },
 
   computed: {
+    currentMembers() {
+      const roleKeyMap = {
+        'Founder':          'founder',
+        'Adviser':          'mentor',
+        'Mentor':           'mentor',
+        'Member / Mentor':  'member-mentor',
+        'President':        'officer',
+        'Vice President':   'officer',
+        'Secretary':        'officer',
+        'Asst. Secretary':  'officer',
+        'Treasurer':        'officer',
+        'Auditor':          'officer',
+        'P.I.O':            'officer',
+        'Member':           'member',
+      }
+      return membersStore.list.map(m => ({
+        name:      m.name,
+        role:      roleKeyMap[m.role] || 'member',
+        roleLabel: m.role,
+        photo:     m.image || null,
+      }))
+    },
     currentTab() {
       return this.tabs.find(t => t.key === this.activeTab) || this.tabs[0]
     },
