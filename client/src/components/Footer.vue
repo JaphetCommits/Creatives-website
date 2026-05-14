@@ -33,10 +33,10 @@
         <div class="footer-col">
           <h4 class="col-title">Explore</h4>
           <ul class="link-list">
-            <li><a href="#about" @click.prevent="navigate('about')">About Us</a></li>
-            <li><a href="#history" @click.prevent="navigate('history')">Our History</a></li>
-            <li><a href="#members" @click.prevent="navigate('members')">Members</a></li>
-            <li><a href="#achievements" @click.prevent="navigate('achievements')">Achievements</a></li>
+            <li><a href="#about" @click.prevent="showSection && showSection('about')">About Us</a></li>
+            <li><a href="#history" @click.prevent="showSection && showSection('history')">Our History</a></li>
+            <li><a href="#members" @click.prevent="showSection && showSection('members')">Members</a></li>
+            <li><a href="#achievements" @click.prevent="showSection && showSection('achievements')">Achievements</a></li>
           </ul>
         </div>
 
@@ -201,9 +201,11 @@
 </template>
 
 <script setup>
-import { ref, nextTick, onMounted, watch } from 'vue'
+import { ref, nextTick, onMounted, watch, inject } from 'vue'
 import { useRouter } from 'vue-router'
 import logo from '../assets/Creatices lines.png'
+
+const showSection = inject('showSection', null)
 
 const ADMIN_PASSWORD = 'creatives2025'
 const ADMIN_STORAGE_KEY = 'cs_is_admin'
