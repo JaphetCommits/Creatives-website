@@ -192,8 +192,9 @@ const goHome = () => {
 const handleCreateApplication = () => {
   if (activeSection.value === 'application') {
     router.push({ name: 'AdminDashboardCreateApplication' })
+  } else if (activeSection.value === 'profiles' || activeSection.value === 'members') {
+    navigateSection('add')
   }
-  // For other sections, could add other logic if needed
 }
 </script>
 
