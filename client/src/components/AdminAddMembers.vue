@@ -69,27 +69,36 @@ const emptyForm = () => ({
 
 const form = reactive(emptyForm())
 const successMsg = ref('')
+const errorMsg = ref('')
+const submitting = ref(false)
 
 const resetForm = () => {
   Object.assign(form, emptyForm())
 }
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
+  submitting.value = true
+  errorMsg.value = ''
   const skills = form.skillsRaw
     ? form.skillsRaw.split(',').map((s) => s.trim()).filter(Boolean)
     : []
-
-  addMember({
-    name: form.name.trim(),
-    role: form.role.trim(),
-    description: form.description.trim(),
-    skills,
-    image: form.image.trim() || null
-  })
-
-  successMsg.value = `${form.name} has been added successfully!`
-  resetForm()
-  setTimeout(() => (successMsg.value = ''), 3000)
+  try {
+    await addMember({
+      name: form.name.trim(),
+      role: form.role.trim(),
+      description: form.description.trim(),
+      skills,
+      image: form.image.trim() || null
+    })
+    successMsg.value = `${form.name} has been added successfully!`
+    resetForm()
+    setTimeout(() => (successMsg.value = ''), 3000)
+  } catch (err) {
+    errorMsg.value = 'Failed to add member. Please try again.'
+    setTimeout(() => (errorMsg.value = ''), 3000)
+  } finally {
+    submitting.value = false
+  }
 }
 </script>
 

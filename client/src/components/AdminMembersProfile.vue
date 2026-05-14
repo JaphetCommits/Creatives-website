@@ -59,14 +59,21 @@ import { membersStore, deleteMember } from '../stores/members.js'
 
 const members = computed(() => membersStore.list)
 const pendingDelete = ref(null)
+const deleting = ref(false)
 
 const confirmDelete = (member) => {
   pendingDelete.value = member
 }
 
-const doDelete = () => {
-  if (pendingDelete.value) {
-    deleteMember(pendingDelete.value.id)
+const doDelete = async () => {
+  if (!pendingDelete.value) return
+  deleting.value = true
+  try {
+    await deleteMember(pendingDelete.value._id || pendingDelete.value.id)
+  } catch (err) {
+    console.error('Delete failed:', err)
+  } finally {
+    deleting.value = false
     pendingDelete.value = null
   }
 }
