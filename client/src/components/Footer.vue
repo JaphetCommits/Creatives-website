@@ -33,10 +33,10 @@
         <div class="footer-col">
           <h4 class="col-title">Explore</h4>
           <ul class="link-list">
-            <li><a href="#about" @click.prevent>About Us</a></li>
-            <li><a href="#history" @click.prevent>Our History</a></li>
-            <li><a href="#members" @click.prevent>Members</a></li>
-            <li><a href="#achievements" @click.prevent>Achievements</a></li>
+            <li><a href="#about" @click.prevent="navigate('about')">About Us</a></li>
+            <li><a href="#history" @click.prevent="navigate('history')">Our History</a></li>
+            <li><a href="#members" @click.prevent="navigate('members')">Members</a></li>
+            <li><a href="#achievements" @click.prevent="navigate('achievements')">Achievements</a></li>
           </ul>
         </div>
 
