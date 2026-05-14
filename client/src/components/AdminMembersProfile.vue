@@ -35,9 +35,14 @@
           </div>
         </div>
 
-        <button class="delete-btn" @click="confirmDelete(member)" aria-label="Remove member">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
-        </button>
+        <div class="card-actions">
+          <button class="edit-btn" @click="openEdit(member)" aria-label="Edit member">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          </button>
+          <button class="delete-btn" @click="confirmDelete(member)" aria-label="Remove member">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+          </button>
+        </div>
       </div>
     </div>
 
@@ -46,24 +51,56 @@
         <p>Remove <strong>{{ pendingDelete.name }}</strong> from the members list?</p>
         <div class="confirm-actions">
           <button class="btn-cancel" @click="pendingDelete = null">Cancel</button>
-          <button class="btn-confirm" @click="doDelete">Remove</button>
+          <button class="btn-confirm" @click="doDelete" :disabled="deleting">{{ deleting ? 'Removing…' : 'Remove' }}</button>
         </div>
+      </div>
+    </div>
+
+    <div v-if="editTarget" class="confirm-overlay" @click.self="closeEdit">
+      <div class="edit-modal">
+        <h2 class="edit-title">Edit Member</h2>
+        <form @submit.prevent="doEdit" class="edit-form">
+          <div class="edit-field">
+            <label>Full Name <span class="req">*</span></label>
+            <input v-model="editForm.name" type="text" required />
+          </div>
+          <div class="edit-field">
+            <label>Role / Position <span class="req">*</span></label>
+            <input v-model="editForm.role" type="text" required />
+          </div>
+          <div class="edit-field">
+            <label>Description</label>
+            <textarea v-model="editForm.description" rows="3"></textarea>
+          </div>
+          <div class="edit-field">
+            <label>Skills</label>
+            <input v-model="editForm.skillsRaw" type="text" placeholder="Vue, JavaScript, CSS (comma-separated)" />
+          </div>
+          <div class="edit-field">
+            <label>Profile Image URL</label>
+            <input v-model="editForm.imageUrl" type="url" placeholder="https://example.com/photo.jpg" />
+          </div>
+          <div class="edit-actions">
+            <button type="button" class="btn-cancel" @click="closeEdit">Cancel</button>
+            <button type="submit" class="btn-save" :disabled="saving">{{ saving ? 'Saving…' : 'Save Changes' }}</button>
+          </div>
+          <p v-if="editError" class="edit-error">{{ editError }}</p>
+        </form>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import { membersStore, deleteMember } from '../stores/members.js'
+import { ref, computed, reactive } from 'vue'
+import { membersStore, deleteMember, updateMember } from '../stores/members.js'
 
 const members = computed(() => membersStore.list)
+
 const pendingDelete = ref(null)
 const deleting = ref(false)
 
-const confirmDelete = (member) => {
-  pendingDelete.value = member
-}
+const confirmDelete = (member) => { pendingDelete.value = member }
 
 const doDelete = async () => {
   if (!pendingDelete.value) return
@@ -75,6 +112,46 @@ const doDelete = async () => {
   } finally {
     deleting.value = false
     pendingDelete.value = null
+  }
+}
+
+const editTarget = ref(null)
+const saving = ref(false)
+const editError = ref('')
+const editForm = reactive({ name: '', role: '', description: '', skillsRaw: '', imageUrl: '' })
+
+const openEdit = (member) => {
+  editTarget.value = member
+  editForm.name        = member.name
+  editForm.role        = member.role
+  editForm.description = member.description || ''
+  editForm.skillsRaw   = (member.skills || []).join(', ')
+  editForm.imageUrl    = member.imageUrl || ''
+  editError.value      = ''
+}
+
+const closeEdit = () => { editTarget.value = null }
+
+const doEdit = async () => {
+  if (!editTarget.value) return
+  saving.value = true
+  editError.value = ''
+  try {
+    const skills = editForm.skillsRaw
+      ? editForm.skillsRaw.split(',').map(s => s.trim()).filter(Boolean)
+      : []
+    await updateMember(editTarget.value._id || editTarget.value.id, {
+      name:        editForm.name.trim(),
+      role:        editForm.role.trim(),
+      description: editForm.description.trim(),
+      skills,
+      imageUrl:    editForm.imageUrl.trim() || null,
+    })
+    closeEdit()
+  } catch (err) {
+    editError.value = 'Failed to save changes. Please try again.'
+  } finally {
+    saving.value = false
   }
 }
 </script>
@@ -241,10 +318,16 @@ const doDelete = async () => {
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.delete-btn {
+.card-actions {
   position: absolute;
   top: 14px;
   right: 14px;
+  display: flex;
+  gap: 6px;
+}
+
+.edit-btn,
+.delete-btn {
   width: 30px;
   height: 30px;
   display: inline-flex;
@@ -258,9 +341,15 @@ const doDelete = async () => {
   transition: background 0.2s, color 0.2s;
 }
 
+.edit-btn svg,
 .delete-btn svg {
   width: 14px;
   height: 14px;
+}
+
+.edit-btn:hover {
+  background: rgba(59, 130, 246, 0.15);
+  color: #2563eb;
 }
 
 .delete-btn:hover {
@@ -333,6 +422,98 @@ const doDelete = async () => {
 
 .btn-confirm:hover {
   background: #b91c1c;
+}
+
+.edit-modal {
+  background: #fff;
+  border-radius: 20px;
+  padding: 32px;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+.edit-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1a1a1a;
+  font-family: 'Unbounded', sans-serif;
+  margin-bottom: 24px;
+}
+
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.edit-field label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #444;
+  font-family: 'Unbounded', sans-serif;
+}
+
+.req { color: #e53e3e; }
+
+.edit-field input,
+.edit-field textarea {
+  padding: 11px 14px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #fafafa;
+  outline: none;
+  resize: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.edit-field input:focus,
+.edit-field textarea:focus {
+  border-color: #333;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+}
+
+.edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.btn-save {
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: none;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Unbounded', sans-serif;
+  transition: background 0.2s;
+}
+
+.btn-save:hover:not(:disabled) { background: #333; }
+.btn-save:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.edit-error {
+  font-size: 12px;
+  color: #dc2626;
+  text-align: center;
 }
 
 @media (max-width: 900px) {

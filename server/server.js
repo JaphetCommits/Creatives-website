@@ -75,6 +75,22 @@ app.post('/api/members', async (req, res) => {
   }
 })
 
+app.put('/api/members/:id', async (req, res) => {
+  try {
+    const { name, role, description, skills, imageUrl } = req.body
+    if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
+    const member = await Member.findByIdAndUpdate(
+      req.params.id,
+      { name, role, description, skills, imageUrl },
+      { new: true }
+    )
+    if (!member) return res.status(404).json({ error: 'Member not found' })
+    res.json(member)
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to update member' })
+  }
+})
+
 app.delete('/api/members/:id', async (req, res) => {
   try {
     const member = await Member.findByIdAndDelete(req.params.id)

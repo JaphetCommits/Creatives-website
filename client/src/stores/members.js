@@ -79,3 +79,22 @@ export async function deleteMember(id) {
   const idx = membersStore.list.findIndex((m) => m._id === id || m.id === id)
   if (idx !== -1) membersStore.list.splice(idx, 1)
 }
+
+export async function updateMember(id, updates) {
+  const res = await fetch(`${API_BASE}/members/${id}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      name:        updates.name,
+      role:        updates.role,
+      description: updates.description || '',
+      skills:      updates.skills || [],
+      imageUrl:    updates.imageUrl || null,
+    }),
+  })
+  if (!res.ok) throw new Error('Failed to update member')
+  const updated = await res.json()
+  const idx = membersStore.list.findIndex((m) => m._id === id || m.id === id)
+  if (idx !== -1) membersStore.list.splice(idx, 1, attachLocalPhoto(updated))
+  return updated
+}
