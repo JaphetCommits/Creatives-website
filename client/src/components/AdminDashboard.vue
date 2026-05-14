@@ -138,7 +138,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, provide } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AdminMembersProfile from './AdminMembersProfile.vue'
 import AdminDashboardApplication from './AdminDashboardApplication.vue'
@@ -176,6 +176,8 @@ const navigateSection = (section) => {
   activeSection.value = section
   router.push({ name: 'AdminDashboard', query: { section } })
 }
+
+provide('navigateSection', navigateSection)
 
 const toggleSection = (section) => {
   Object.keys(expandedSections.value).forEach((key) => {

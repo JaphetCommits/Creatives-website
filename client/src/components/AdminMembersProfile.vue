@@ -1,8 +1,14 @@
 <template>
   <div class="members-profile-container">
     <div class="profile-header">
-      <h1>Members Profile</h1>
-      <span class="member-count">{{ members.length }} member{{ members.length !== 1 ? 's' : '' }}</span>
+      <div class="header-left">
+        <h1>Members Profile</h1>
+        <span class="member-count">{{ members.length }} member{{ members.length !== 1 ? 's' : '' }}</span>
+      </div>
+      <button class="add-btn" @click="navigateSection && navigateSection('add')">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add Members
+      </button>
     </div>
 
     <div v-if="members.length === 0" class="empty-state">
@@ -54,8 +60,10 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, inject } from 'vue'
 import { membersStore, deleteMember } from '../stores/members.js'
+
+const navigateSection = inject('navigateSection', null)
 
 const members = computed(() => membersStore.list)
 const pendingDelete = ref(null)
@@ -88,8 +96,15 @@ const doDelete = () => {
 .profile-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 14px;
   margin-bottom: 28px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
 .profile-header h1 {
@@ -109,6 +124,34 @@ const doDelete = () => {
   padding: 4px 12px;
   border-radius: 999px;
   font-family: 'Unbounded', sans-serif;
+}
+
+.add-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Unbounded', sans-serif;
+  transition: background 0.2s, transform 0.2s;
+  white-space: nowrap;
+}
+
+.add-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.add-btn:hover {
+  background: #333;
+  transform: translateY(-1px);
 }
 
 .empty-state {
