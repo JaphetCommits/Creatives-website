@@ -117,10 +117,7 @@
             <h2>Dashboard</h2>
             <p>Dashboard content coming soon</p>
           </div>
-          <div v-else-if="activeSection === 'add'" class="placeholder">
-            <h2>Add Member</h2>
-            <p>Add member form coming soon</p>
-          </div>
+          <AdminAddMembers v-else-if="activeSection === 'add'" />
           <div v-else-if="activeSection === 'delete'" class="placeholder">
             <h2>Delete Member</h2>
             <p>Delete member functionality coming soon</p>
@@ -145,6 +142,7 @@ import { ref, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import AdminMembersProfile from './AdminMembersProfile.vue'
 import AdminDashboardApplication from './AdminDashboardApplication.vue'
+import AdminAddMembers from './AdminAddMembers.vue'
 import logo from '../assets/Creatices lines.png'
 
 const router = useRouter()

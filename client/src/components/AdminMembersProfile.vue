@@ -2,96 +2,72 @@
   <div class="members-profile-container">
     <div class="profile-header">
       <h1>Members Profile</h1>
+      <span class="member-count">{{ members.length }} member{{ members.length !== 1 ? 's' : '' }}</span>
     </div>
 
-    <div class="members-grid">
+    <div v-if="members.length === 0" class="empty-state">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <p>No members yet. Use <strong>Add member</strong> to get started.</p>
+    </div>
+
+    <div v-else class="members-grid">
       <div class="member-card" v-for="member in members" :key="member.id">
         <div class="card-header">
-          <img :src="member.image" :alt="member.name" class="member-image" />
+          <img
+            :src="member.image || `https://ui-avatars.com/api/?name=${encodeURIComponent(member.name)}&background=d9dade&color=1a1a1a&size=120`"
+            :alt="member.name"
+            class="member-image"
+          />
           <div class="member-info">
-            <h3 class="member-role">{{ member.role }}</h3>
-            <p class="member-description">{{ member.description }}</p>
+            <h3 class="member-name">{{ member.name }}</h3>
+            <p class="member-role">{{ member.role }}</p>
           </div>
         </div>
 
         <div class="card-content">
+          <p v-if="member.description" class="member-description">{{ member.description }}</p>
 
-          <div class="skills-section">
-            <h4>TechStack</h4>
+          <div v-if="member.skills && member.skills.length" class="skills-section">
+            <h4>Tech Stack</h4>
             <div class="skills-container">
-              <span v-for="skill in member.skills" :key="skill" class="skill-badge">
-                {{ skill }}
-              </span>
+              <span v-for="skill in member.skills" :key="skill" class="skill-badge">{{ skill }}</span>
             </div>
           </div>
+        </div>
 
-          <div class="projects-section">
-            <h4>Projects</h4>
-            <div class="projects-grid">
-              <div v-for="(project, index) in member.projects" :key="index" class="project-item">
-                <div class="project-placeholder"></div>
-              </div>
-            </div>
-          </div>
+        <button class="delete-btn" @click="confirmDelete(member)" aria-label="Remove member">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <div v-if="pendingDelete" class="confirm-overlay" @click.self="pendingDelete = null">
+      <div class="confirm-modal">
+        <p>Remove <strong>{{ pendingDelete.name }}</strong> from the members list?</p>
+        <div class="confirm-actions">
+          <button class="btn-cancel" @click="pendingDelete = null">Cancel</button>
+          <button class="btn-confirm" @click="doDelete">Remove</button>
         </div>
       </div>
     </div>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'AdminMembersProfile',
-  data() {
-    return {
-      members: [
-        {
-          id: 1,
-          name: 'NAME',
-          role: 'ROLE',
-          image: 'https://via.placeholder.com/100?text=Founder',
-          description: 'DESCRIPTION',
-          skills: ['HTML', 'CSS', 'JavaScript'],
-          projects: [1, 2, 3]
-        },
-        {
-          id: 2,
-          name: 'NAME',
-          role: 'ROLE',
-          image: 'https://via.placeholder.com/100?text=Fullstack',
-          description: 'DESCRIPTION',
-          skills: ['Node.js', 'Vue', 'Tailwind'],
-          projects: [1, 2, 3]
-        },
-        {
-          id: 3,
-          name: 'NAME',
-          role: 'ROLE',
-          image: 'https://via.placeholder.com/100?text=Frontend',
-          description: 'DESCRIPTION',
-          skills: ['React', 'TypeScript', 'Sass'],
-          projects: [1, 2, 3]
-        },
-        {
-          id: 4,
-          name: 'NAME',
-          role: 'ROLE',
-          image: 'https://via.placeholder.com/100?text=UIUX',
-          description: 'DESCRIPTION',
-          skills: ['Figma', 'Sketch', 'Adobe XD'],
-          projects: [1, 2, 3]
-        },
-        {
-          id: 5,
-          name: 'NAME',
-          role: 'ROLE',
-          image: 'https://via.placeholder.com/100?text=Backend',
-          description: 'DESCRIPTION',
-          skills: ['Python', 'Django', 'SQL'],
-          projects: [1, 2, 3]
-        }
-      ]
-    }
+<script setup>
+import { ref, computed } from 'vue'
+import { membersStore, deleteMember } from '../stores/members.js'
+
+const members = computed(() => membersStore.list)
+const pendingDelete = ref(null)
+
+const confirmDelete = (member) => {
+  pendingDelete.value = member
+}
+
+const doDelete = () => {
+  if (pendingDelete.value) {
+    deleteMember(pendingDelete.value.id)
+    pendingDelete.value = null
   }
 }
 </script>
@@ -105,208 +81,261 @@ export default {
 
 .members-profile-container {
   width: 100%;
-  padding: 40px 20px;
-  background: #f5f5f5;
-  background-image:
-    linear-gradient(0deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent),
-    linear-gradient(90deg, transparent 24%, rgba(0,0,0,0.025) 25%, rgba(0,0,0,0.025) 26%, transparent 27%, transparent 74%, rgba(0,0,0,0.025) 75%, rgba(0,0,0,0.025) 76%, transparent 77%, transparent);
-  background-size: 80px 80px;
-  min-height: 100vh;
+  padding: 0;
+  position: relative;
 }
 
 .profile-header {
-  margin-bottom: 40px;
-  padding-left: 20px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 28px;
 }
 
 .profile-header h1 {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #1a1a1a;
   letter-spacing: 0.5px;
+  font-family: 'Unbounded', sans-serif;
+  margin: 0;
+}
+
+.member-count {
+  background: #e8e8e8;
+  color: #555;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-family: 'Unbounded', sans-serif;
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 80px 20px;
+  background: #fff;
+  border-radius: 20px;
+  color: #999;
+  text-align: center;
+}
+
+.empty-state svg {
+  width: 52px;
+  height: 52px;
+  opacity: 0.35;
+}
+
+.empty-state p {
+  font-size: 14px;
+  color: #888;
+}
+
+.empty-state strong {
+  color: #444;
 }
 
 .members-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(260px, 1fr));
-  gap: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  gap: 20px;
 }
 
 .member-card {
   background: linear-gradient(180deg, #d9dade 0%, #5d5f66 100%);
-  border: none;
   border-radius: 18px;
-  overflow: hidden;
-  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
+  padding: 20px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  padding: 18px;
-  color: #111827;
+  position: relative;
 }
 
 .member-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 22px 44px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18);
 }
 
 .card-header {
   display: flex;
   align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 24px;
-  text-align: left;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.member-image {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.4);
+  object-fit: cover;
+  flex-shrink: 0;
 }
 
 .member-info {
   flex: 1;
+  min-width: 0;
 }
 
-.member-image {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  margin-bottom: 16px;
-  border: 3px solid rgba(255, 255, 255, 0.3);
-  object-fit: cover;
+.member-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .member-role {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 1px;
-  margin-bottom: 8px;
-  color: #111827;
+  font-size: 12px;
+  color: #374151;
+  font-weight: 500;
 }
 
 .card-content {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .member-description {
   font-size: 13px;
   line-height: 1.6;
-  margin-bottom: 20px;
   color: #475569;
 }
 
-.skills-section {
-  margin-bottom: 24px;
-}
-
 .skills-section h4 {
-  font-size: 12px;
-  font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  opacity: 0.9;
+  color: #374151;
+  margin-bottom: 8px;
 }
 
 .skills-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .skill-badge {
-  background: rgba(15, 23, 42, 0.05);
-  color: #334155;
-  padding: 6px 12px;
+  background: rgba(255, 255, 255, 0.55);
+  color: #1f2937;
+  padding: 4px 10px;
   border-radius: 20px;
   font-size: 11px;
-  font-weight: 500;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  transition: all 0.3s ease;
-}
-
-.skill-badge:hover {
-  background: rgba(15, 23, 42, 0.1);
-  border-color: rgba(15, 23, 42, 0.16);
-}
-
-.projects-section {
-  margin-top: 20px;
-}
-
-.projects-section h4 {
-  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.5px;
-  margin-bottom: 12px;
-  text-transform: uppercase;
-  opacity: 0.9;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 12px;
-}
-
-.project-item {
-  aspect-ratio: 1;
-  background: rgba(15, 23, 42, 0.04);
+.delete-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.3);
+  border: none;
   border-radius: 8px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
+  cursor: pointer;
+  color: #374151;
+  transition: background 0.2s, color 0.2s;
+}
+
+.delete-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+.delete-btn:hover {
+  background: rgba(220, 38, 38, 0.15);
+  color: #dc2626;
+}
+
+.confirm-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 200;
+  backdrop-filter: blur(4px);
+}
+
+.confirm-modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 28px 32px;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.confirm-modal p {
+  font-size: 15px;
+  color: #1a1a1a;
+  margin-bottom: 22px;
+  line-height: 1.6;
+}
+
+.confirm-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn-cancel {
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  background: #f5f5f5;
+  font-size: 13px;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
-  overflow: hidden;
+  font-family: 'Unbounded', sans-serif;
+  transition: background 0.2s;
 }
 
-.project-item:hover {
-  background: rgba(15, 23, 42, 0.08);
-  border-color: rgba(15, 23, 42, 0.14);
-  transform: scale(1.05);
+.btn-cancel:hover {
+  background: #eee;
 }
 
-.project-placeholder {
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(135deg, rgba(196, 181, 253, 0.4), rgba(165, 180, 252, 0.4));
-  border-radius: 8px;
+.btn-confirm {
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: none;
+  background: #dc2626;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: 'Unbounded', sans-serif;
+  transition: background 0.2s;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+.btn-confirm:hover {
+  background: #b91c1c;
+}
+
+@media (max-width: 900px) {
   .members-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-  }
-
-  .profile-header h1 {
-    font-size: 24px;
-  }
-
-  .member-card {
-    padding: 20px;
-  }
-
-  .projects-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-@media (max-width: 480px) {
-  .members-profile-container {
-    padding: 20px 10px;
-  }
-
+@media (max-width: 560px) {
   .members-grid {
     grid-template-columns: 1fr;
-    gap: 15px;
-  }
-
-  .profile-header h1 {
-    font-size: 20px;
-  }
-
-  .member-card {
-    padding: 16px;
   }
 }
 </style>
