@@ -23,9 +23,24 @@
             <h2 class="list-title">{{ currentTab.label }}</h2>
             <p class="list-desc">{{ currentTab.desc }}</p>
           </div>
-          <div class="list-total">
-            <span class="list-total-num">{{ activeTab === 'previous' ? totalPrevious : displayedMembers.length }}</span>
-            <span class="list-total-label">members</span>
+          <div class="list-header-right">
+            <div class="search-wrap" v-if="activeTab !== 'previous'">
+              <span class="search-icon">
+                <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="6" stroke="#9ca3af" stroke-width="2"/><path d="M15 15l3 3" stroke="#9ca3af" stroke-width="2" stroke-linecap="round"/></svg>
+              </span>
+              <input
+                class="search-input"
+                type="text"
+                v-model="searchQuery"
+                placeholder="Search by name or role…"
+                autocomplete="off"
+              />
+              <button v-if="searchQuery" class="search-clear" @click="searchQuery = ''" aria-label="Clear search">×</button>
+            </div>
+            <div class="list-total">
+              <span class="list-total-num">{{ activeTab === 'previous' ? totalPrevious : filteredMembers.length }}</span>
+              <span class="list-total-label">members</span>
+            </div>
           </div>
         </div>
 
@@ -51,8 +66,11 @@
           </div>
         </div>
 
+        <div v-else-if="filteredMembers.length === 0" class="search-empty">
+          <p>No members found for "<strong>{{ searchQuery }}</strong>"</p>
+        </div>
         <div v-else class="member-grid">
-          <div class="member-card" v-for="m in displayedMembers" :key="m.name">
+          <div class="member-card" v-for="m in filteredMembers" :key="m.name">
             <div class="member-avatar" :class="'avatar--' + m.role">
               <img v-if="m.photo" :src="m.photo" :alt="m.name" />
               <div v-else class="avatar-sphere"></div>
@@ -559,6 +577,7 @@ export default {
       orgChart, misionVision, founderPhoto, raldin, japhet, ej, stef, sheen, kenzen, keith, justine, armando, marc,  
 
       activeTab: 'chart',
+      searchQuery: '',
       hoveredMember: null,
       tooltipX: 0,
       tooltipY: 0,
@@ -713,14 +732,19 @@ export default {
         case 'officers':
           return this.currentMembers.filter(m => m.role === 'officer' || m.role === 'founder')
         case 'members':
-          // member-mentor shows in Members tab
           return this.currentMembers.filter(m => m.role === 'member' || m.role === 'member-mentor')
         case 'mentors':
-          // member-mentor shows in Mentors tab too
           return this.currentMembers.filter(m => m.role === 'mentor' || m.role === 'member-mentor')
         default:
           return []
       }
+    },
+    filteredMembers() {
+      const q = this.searchQuery.trim().toLowerCase()
+      if (!q) return this.displayedMembers
+      return this.displayedMembers.filter(m =>
+        m.name.toLowerCase().includes(q) || m.roleLabel.toLowerCase().includes(q)
+      )
     },
     currentSlide() { return this.slides[this.slideIdx] },
     tooltipStyle() {
@@ -730,6 +754,7 @@ export default {
 
   watch: {
     activeTab(val) {
+      this.searchQuery = ''
       if (val === 'chart') {
         this.$nextTick(() => this.computeConnections())
       }
@@ -835,9 +860,18 @@ export default {
 .list-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; padding-bottom: 28px; margin-bottom: 36px; border-bottom: 1px solid #e5e7eb; }
 .list-title { font-size: 28px; font-weight: 700; color: #1b1f36; margin-bottom: 6px; letter-spacing: 0.3px; }
 .list-desc { font-size: 13px; color: #6b7280; line-height: 1.6; max-width: 480px; }
-.list-total { text-align: right; flex-shrink: 0; }
+.list-header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+.list-total { text-align: right; }
 .list-total-num { display: block; font-size: 40px; font-weight: 800; color: #1b1f36; line-height: 1; }
 .list-total-label { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: #9ca3af; }
+.search-wrap { position: relative; display: flex; align-items: center; }
+.search-icon { position: absolute; left: 11px; pointer-events: none; display: flex; align-items: center; }
+.search-input { padding: 8px 34px 8px 32px; border: 1px solid #e5e7eb; border-radius: 10px; font-size: 13px; color: #1f2937; background: #f9fafb; outline: none; width: 220px; transition: border-color 0.15s, box-shadow 0.15s; }
+.search-input::placeholder { color: #9ca3af; }
+.search-input:focus { border-color: #1b1f36; background: #fff; box-shadow: 0 0 0 3px rgba(27,31,54,0.07); }
+.search-clear { position: absolute; right: 9px; background: none; border: none; color: #9ca3af; font-size: 16px; line-height: 1; cursor: pointer; padding: 2px 4px; border-radius: 4px; transition: color 0.15s; }
+.search-clear:hover { color: #1b1f36; }
+.search-empty { padding: 48px 0; text-align: center; color: #6b7280; font-size: 14px; }
 .member-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
 .member-card { display: flex; flex-direction: column; align-items: center; padding: 24px 14px 18px; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; text-align: center; cursor: default; transition: transform 0.2s ease, box-shadow 0.2s ease; }
 .member-card:hover { transform: translateY(-3px); box-shadow: 0 10px 28px rgba(0,0,0,0.09); }
