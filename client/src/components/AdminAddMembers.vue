@@ -14,8 +14,27 @@
         </div>
 
         <div class="field">
-          <label>Role / Position <span class="req">*</span></label>
-          <input v-model="form.role" type="text" placeholder="e.g. Front-End Developer" required />
+          <label>Role Selection <span class="req">*</span></label>
+          <div class="select-wrap">
+            <select v-model="form.role" required>
+              <option value="" disabled>Select a role…</option>
+              <option>Founder</option>
+              <option>Adviser</option>
+              <option>Mentor</option>
+              <option>Member / Mentor</option>
+              <option>President</option>
+              <option>Vice President</option>
+              <option>Secretary</option>
+              <option>Asst. Secretary</option>
+              <option>Treasurer</option>
+              <option>Auditor</option>
+              <option>P.I.O</option>
+              <option>Member</option>
+            </select>
+            <span class="select-arrow">
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 4l4 4 4-4" stroke="#6b7280" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+          </div>
         </div>
 
         <div class="field full">
@@ -183,6 +202,46 @@ const handleSubmit = async () => {
   border-color: #333;
   background: #fff;
   box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+}
+
+.select-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-wrap select {
+  width: 100%;
+  padding: 12px 40px 12px 16px;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  font-size: 14px;
+  font-family: inherit;
+  color: #1a1a1a;
+  background: #fafafa;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.select-wrap select:focus {
+  border-color: #333;
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(0,0,0,0.06);
+}
+
+.select-wrap select option[value=""] {
+  color: #999;
+}
+
+.select-arrow {
+  position: absolute;
+  right: 14px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
 }
 
 .field-hint {
