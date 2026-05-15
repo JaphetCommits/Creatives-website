@@ -1,11 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
+const path = require('path')
 const Member = require('./models/Member')
 
 const app = express()
 app.use(cors())
 app.use(express.json())
+
+const distPath = path.join(__dirname, '../client/dist')
+app.use(express.static(distPath))
 
 const dbURI = process.env.MONGO_URI
 if (!dbURI) {
@@ -99,6 +103,10 @@ app.delete('/api/members/:id', async (req, res) => {
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete member' })
   }
+})
+
+app.get('/{*path}', (req, res) => {
+  res.sendFile(path.join(distPath, 'index.html'))
 })
 
 const PORT = process.env.SERVER_PORT || 3001
