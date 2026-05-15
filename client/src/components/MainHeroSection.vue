@@ -59,12 +59,12 @@
             </div>
             <div class="hero-stats">
               <div class="hero-stat">
-                <span class="hero-stat-num">50<span class="plus">+</span></span>
+                <span class="hero-stat-num">20<span class="plus">+</span></span>
                 <span class="hero-stat-label">Active members</span>
               </div>
               <span class="hero-stat-sep"></span>
               <div class="hero-stat">
-                <span class="hero-stat-num">20<span class="plus">+</span></span>
+                <span class="hero-stat-num">15<span class="plus">+</span></span>
                 <span class="hero-stat-label">Projects shipped</span>
               </div>
               <span class="hero-stat-sep"></span>
@@ -107,7 +107,7 @@
 </template>
 
 <script setup>
-import { nextTick, ref } from 'vue'
+import { nextTick, ref, provide } from 'vue'
 import logo from '../assets/Creatices lines.png'
 import hero from '../assets/Creatuives logo.png'
 import History from './HistorySection.vue'
@@ -130,10 +130,14 @@ const showSection = async (section) => {
   await nextTick()
   if (currentSection.value === 'about') {
     scrollToTop()
+  } else {
+    scrollToTop()
   }
 
   closeMenu()
 }
+
+provide('showSection', showSection)
 
 const toggleMenu = () => {
   isMenuOpen.value = !isMenuOpen.value
