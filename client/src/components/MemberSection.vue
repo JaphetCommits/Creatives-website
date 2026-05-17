@@ -163,7 +163,6 @@
                   @click="onClickFace(orgMembers.sheenlee)" @mouseenter="onHover(orgMembers.sheenlee, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="sheen" alt="Founder" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--founder">FOUNDER</div>
                 <div class="org-name">SHEEN LEE S. EDIS</div>
@@ -179,7 +178,6 @@
                 @click="onClickFace(orgMembers.armando)" @mouseenter="onHover(orgMembers.armando, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="armando" alt="Adviser" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Adviser</div>
               <div class="org-name">ARMANDO T. SAGUIN, MSIT</div>
@@ -197,7 +195,6 @@
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.juvelito.portfolio }"
                 @click="onClickFace(orgMembers.juvelito)" @mouseenter="onHover(orgMembers.juvelito, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Mentor</div>
               <div class="org-name">JUVELITO MARTINEZ</div>
@@ -211,7 +208,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.mark.portfolio }"
                   @click="onClickFace(orgMembers.mark)" @mouseenter="onHover(orgMembers.mark, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">MARK MASCARDO</div>
@@ -223,7 +219,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.whelster.portfolio }"
                   @click="onClickFace(orgMembers.whelster)" @mouseenter="onHover(orgMembers.whelster, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">WHELSTER R. ESMADE</div>
@@ -237,7 +232,6 @@
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.henzon.portfolio }"
                 @click="onClickFace(orgMembers.henzon)" @mouseenter="onHover(orgMembers.henzon, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Mentor</div>
               <div class="org-name">HENZON DIONSAY</div>
@@ -251,7 +245,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.june.portfolio }"
                   @click="onClickFace(orgMembers.june)" @mouseenter="onHover(orgMembers.june, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">JUNE A. JACINTO</div>
@@ -263,7 +256,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.robert.portfolio }"
                   @click="onClickFace(orgMembers.robert)" @mouseenter="onHover(orgMembers.robert, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">ROBERT MAYO L. ELUMBA</div>
@@ -277,7 +269,6 @@
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.gehan.portfolio }"
                 @click="onClickFace(orgMembers.gehan)" @mouseenter="onHover(orgMembers.gehan, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Mentor</div>
               <div class="org-name">GEHAN RESALUTE</div>
@@ -291,7 +282,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.marklan.portfolio }"
                   @click="onClickFace(orgMembers.marklan)" @mouseenter="onHover(orgMembers.marklan, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">MARKLAN A. HAMPAC</div>
@@ -304,7 +294,6 @@
                   @click="onClickFace(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="raldin" alt="Raldin" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--member-mentor">Member / Mentor</div>
                 <div class="org-name">RALDIN C. DISOMIMBA</div>
@@ -324,7 +313,6 @@
                 @click="onClickFace(orgMembers.stef)" @mouseenter="onHover(orgMembers.stef, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="stef" alt="Stefhanie" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--officers">President</div>
               <div class="org-name">STEFHANIE ANN V. BATUCAN</div>
@@ -339,7 +327,6 @@
                   @click="onClickFace(orgMembers.ej)" @mouseenter="onHover(orgMembers.ej, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="ej" alt="EJ" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Vice President</div>
                 <div class="org-name">EJ A. VINCULADO</div>
@@ -351,7 +338,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.nesfhe.portfolio }"
                   @click="onClickFace(orgMembers.nesfhe)" @mouseenter="onHover(orgMembers.nesfhe, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Secretary</div>
                 <div class="org-name">NESFHE NINA S. MAGSANAY</div>
@@ -365,7 +351,6 @@
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.kate.portfolio }"
                 @click="onClickFace(orgMembers.kate)" @mouseenter="onHover(orgMembers.kate, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--officers">Assistant Secretary</div>
               <div class="org-name">KATE NICOLE S. EDIS</div>
@@ -379,7 +364,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.mischi.portfolio }"
                   @click="onClickFace(orgMembers.mischi)" @mouseenter="onHover(orgMembers.mischi, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Treasurer</div>
                 <div class="org-name">MISCHI JEDA J. ELUMBA</div>
@@ -391,7 +375,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.peter.portfolio }"
                   @click="onClickFace(orgMembers.peter)" @mouseenter="onHover(orgMembers.peter, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Auditor</div>
                 <div class="org-name">PETER ROBERT C. AYONO</div>
@@ -406,7 +389,6 @@
                 @click="onClickFace(orgMembers.kenzen)" @mouseenter="onHover(orgMembers.kenzen, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="kenzen" alt="Kenzen" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--officers">P.I.O</div>
               <div class="org-name">KENZEN L. MINAO</div>
@@ -425,7 +407,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.renz.portfolio }"
                   @click="onClickFace(orgMembers.renz)" @mouseenter="onHover(orgMembers.renz, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">RENZ L. SANTIAGO</div>
@@ -438,7 +419,6 @@
                   @click="onClickFace(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="raldin" alt="Raldin" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--member-mentor">Member / Mentor</div>
                 <div class="org-name">RALDIN C. DISOMIMBA</div>
@@ -453,7 +433,6 @@
                 @click="onClickFace(orgMembers.keith)" @mouseenter="onHover(orgMembers.keith, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="keith" alt="Keith" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag">Member</div>
               <div class="org-name">KEITH BRAIN B. LARANJO</div>
@@ -467,7 +446,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.jullan.portfolio }"
                   @click="onClickFace(orgMembers.jullan)" @mouseenter="onHover(orgMembers.jullan, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">JULLAN CARL J. MAGLINTE</div>
@@ -480,7 +458,6 @@
                   @click="onClickFace(orgMembers.japhet)" @mouseenter="onHover(orgMembers.japhet, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="japhet" alt="Japhet" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">JAPHET V. BASTILLADA</div>
@@ -494,7 +471,6 @@
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.cristoph.portfolio }"
                 @click="onClickFace(orgMembers.cristoph)" @mouseenter="onHover(orgMembers.cristoph, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag">Member</div>
               <div class="org-name">CRISTOPH B. BAGABUYO</div>
@@ -508,7 +484,6 @@
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.cyd.portfolio }"
                   @click="onClickFace(orgMembers.cyd)" @mouseenter="onHover(orgMembers.cyd, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">CYD M. BALLON</div>
@@ -521,7 +496,6 @@
                   @click="onClickFace(orgMembers.marc)" @mouseenter="onHover(orgMembers.marc, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="marc" alt="Marc" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">MARC LESTER D. GUIDO</div>
@@ -536,7 +510,6 @@
                 @click="onClickFace(orgMembers.justine)" @mouseenter="onHover(orgMembers.justine, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="justine" alt="Justine" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag">Member</div>
               <div class="org-name">JUSTINE P. BUNCAG</div>
@@ -602,6 +575,8 @@ export default {
       hoverRect: null,
       pinnedMember: null,
       pinnedRect: null,
+      pinnedElement: null,
+      hoveredElement: null,
 
       svgWidth: 1000,
       svgHeight: 5000,
@@ -797,10 +772,20 @@ export default {
   mounted() {
     this.$nextTick(() => this.computeConnections())
     window.addEventListener('resize', this.computeConnections)
+    this._updatePinnedPos = () => {
+      if (this.pinnedElement) {
+        const r = this.pinnedElement.getBoundingClientRect()
+        this.pinnedRect = { top: r.top, right: r.right, height: r.height }
+      }
+    }
+    window.addEventListener('scroll', this._updatePinnedPos, { passive: true })
+    window.addEventListener('resize', this._updatePinnedPos, { passive: true })
   },
 
   beforeUnmount() {
     window.removeEventListener('resize', this.computeConnections)
+    window.removeEventListener('scroll', this._updatePinnedPos)
+    window.removeEventListener('resize', this._updatePinnedPos)
   },
 
   methods: {
@@ -856,17 +841,24 @@ export default {
       if (this.pinnedMember === member) {
         this.pinnedMember = null
         this.pinnedRect = null
+        this.pinnedElement = null
       } else {
         this.pinnedMember = member
-        this.pinnedRect = this.hoverRect
+        this.pinnedElement = this.hoveredElement
+        if (this.pinnedElement) {
+          const r = this.pinnedElement.getBoundingClientRect()
+          this.pinnedRect = { top: r.top, right: r.right, height: r.height }
+        }
       }
     },
     unpinCard() {
       this.pinnedMember = null
       this.pinnedRect = null
+      this.pinnedElement = null
     },
     onHover(member, event) {
       clearTimeout(this._leaveTimer)
+      this.hoveredElement = event.currentTarget
       if (!this.pinnedMember) {
         this.hoveredMember = member
         const r = event.currentTarget.getBoundingClientRect()
@@ -1002,12 +994,9 @@ export default {
 .profile-circle { width: 92px; height: 92px; border-radius: 50%; overflow: hidden; border: 3px solid #fff; box-shadow: 0 8px 22px rgba(15,23,42,0.18); background: #fff; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease; cursor: default; }
 .profile-circle img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
 .profile-circle.sphere { background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e5e7eb 25%, #9ca3af 60%, #4b5563 100%); border-color: #f3f4f6; }
-.portfolio-overlay { position: absolute; inset: 0; z-index: 2; border-radius: 50%; background: rgba(27,31,54,0.80); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; }
-.portfolio-overlay span { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #fff; text-align: center; line-height: 1.35; padding: 0 8px; }
 .profile-circle { cursor: pointer; }
 .profile-circle:hover { transform: scale(1.08); box-shadow: 0 12px 28px rgba(15,23,42,0.22); }
 .profile-circle.has-portfolio:hover { transform: scale(1.12); box-shadow: 0 14px 36px rgba(179,11,28,0.28); border-color: #b30b1c; }
-.profile-circle.has-portfolio:hover .portfolio-overlay { opacity: 1; }
 
 .card-pop-enter-active { transition: opacity 0.18s ease, transform 0.18s ease; }
 .card-pop-leave-active { transition: opacity 0.13s ease, transform 0.13s ease; }
