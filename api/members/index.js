@@ -24,7 +24,7 @@ const defaultMembers = [
   { _id: '23', name: 'CRISTOPH B. BAGABUYO',     role: 'Member',          description: '', skills: [], imageUrl: null },
   { _id: '24', name: 'CYD M. BALLON',            role: 'Member',          description: '', skills: [], imageUrl: null },
   { _id: '25', name: 'MARC LESTER D. GUIDO',     role: 'Member',          description: '', skills: ['Vue'], imageUrl: null },
-  { _id: '26', name: 'JUSTINE P. BUNCAG',        role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '26', name: 'JUSTINE P. BUNCAG',        role: 'Member',          description: '', skills: ['Vue'], imageUrl: null },
 ]
 
 let members = [...defaultMembers]
