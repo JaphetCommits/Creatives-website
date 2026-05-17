@@ -87,9 +87,26 @@
     <transition name="fade">
       <div v-if="activeTab === 'chart'" key="chart">
 
-        <div class="portfolio-tooltip" v-if="hoveredMember" :style="tooltipStyle">
-          <span class="tooltip-icon">🔗</span>
-          <span>View {{ hoveredMember }}'s portfolio</span>
+        <div class="member-hover-card" v-if="hoveredMember" :style="hoverCardStyle"
+          @mouseenter="onCardEnter" @mouseleave="onCardLeave">
+          <div class="hc-top">
+            <div class="hc-avatar">
+              <img v-if="hoveredMember.photo" :src="hoveredMember.photo" :alt="hoveredMember.firstName" />
+              <div v-else class="hc-sphere"></div>
+            </div>
+            <div class="hc-identity">
+              <div class="hc-name">{{ hoveredMember.fullName }}</div>
+              <div class="hc-role">{{ hoveredMember.roleLabel }}</div>
+            </div>
+          </div>
+          <div class="hc-skills" v-if="hoveredMember.skills && hoveredMember.skills.length">
+            <div class="hc-skills-label">Tech Stack</div>
+            <div class="hc-skills-list">
+              <span v-for="skill in hoveredMember.skills" :key="skill" class="hc-skill-badge">{{ skill }}</span>
+            </div>
+          </div>
+          <a v-if="hoveredMember.portfolio" :href="hoveredMember.portfolio" target="_blank" rel="noopener noreferrer" class="hc-portfolio-btn" @click.stop>View Portfolio</a>
+          <span v-else class="hc-no-portfolio">No portfolio yet</span>
         </div>
 
         <div class="founder-header">
@@ -579,8 +596,7 @@ export default {
       activeTab: 'chart',
       searchQuery: '',
       hoveredMember: null,
-      tooltipX: 0,
-      tooltipY: 0,
+      hoverRect: null,
 
       svgWidth: 1000,
       svgHeight: 5000,
@@ -622,32 +638,32 @@ export default {
       ],
 
       orgMembers: {
-        sheenlee: { firstName: 'Sheenlee', portfolio: null },
-        armando:  { firstName: 'Armando',  portfolio: null },
-        juvelito: { firstName: 'Juvelito', portfolio: null },
-        mark:     { firstName: 'Mark',     portfolio: null },
-        whelster: { firstName: 'Whelster', portfolio: null },
-        henzon:   { firstName: 'Henzon',   portfolio: null },
-        june:     { firstName: 'June',     portfolio: null },
-        robert:   { firstName: 'Robert',   portfolio: null },
-        gehan:    { firstName: 'Gehan',    portfolio: null },
-        marklan:  { firstName: 'Marklan',  portfolio: null },
-        raldin:   { firstName: 'Raldin',   portfolio: 'https://www.raldincasidar.studio/' },
-        stef:     { firstName: 'Stefhanie',portfolio: null },
-        ej:       { firstName: 'EJ',       portfolio: null },
-        nesfhe:   { firstName: 'Nesfhe',   portfolio: null },
-        kate:     { firstName: 'Kate',     portfolio: null },
-        mischi:   { firstName: 'Mischi',   portfolio: null },
-        peter:    { firstName: 'Peter',    portfolio: 'https://peter-ayono.vercel.app/' },
-        kenzen:   { firstName: 'Kenzen',   portfolio: 'https://kenm.vercel.app/' },
-        renz:     { firstName: 'Renz',     portfolio: null },
-        keith:    { firstName: 'Keith',    portfolio: 'https://keithlar.vercel.app/' },
-        jullan:   { firstName: 'Jullan',   portfolio: 'https://jullanmaglinte.site/' },
-        japhet:   { firstName: 'Japhet',   portfolio: 'https://japhet-bastillada.vercel.app/' },
-        cristoph: { firstName: 'Cristoph', portfolio: 'https://n91ives.vercel.app/' },
-        cyd:      { firstName: 'Cyd',      portfolio: null },
-        marc:     { firstName: 'Marc',     portfolio: 'https://memitsuki.vercel.app/' },
-        justine:  { firstName: 'Justine',  portfolio: 'https://justineeun.vercel.app/' },
+        sheenlee: { firstName: 'Sheenlee', fullName: 'SHEEN LEE S. EDIS',         roleLabel: 'Founder',         skills: [],       portfolio: null,                                    photo: sheen   },
+        armando:  { firstName: 'Armando',  fullName: 'ARMANDO T. SAGUIN, MSIT',   roleLabel: 'Adviser',         skills: [],       portfolio: null,                                    photo: armando },
+        juvelito: { firstName: 'Juvelito', fullName: 'JUVELITO MARTINEZ',         roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        mark:     { firstName: 'Mark',     fullName: 'MARK MASCARDO',             roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        whelster: { firstName: 'Whelster', fullName: 'WHELSTER R. ESMADE',        roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        henzon:   { firstName: 'Henzon',   fullName: 'HENZON DIONSAY',            roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        june:     { firstName: 'June',     fullName: 'JUNE A. JACINTO',           roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        robert:   { firstName: 'Robert',   fullName: 'ROBERT MAYO L. ELUMBA',     roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        gehan:    { firstName: 'Gehan',    fullName: 'GEHAN RESALUTE',            roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        marklan:  { firstName: 'Marklan',  fullName: 'MARKLAN A. HAMPAC',         roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
+        raldin:   { firstName: 'Raldin',   fullName: 'RALDIN C. DISOMIMBA',       roleLabel: 'Member / Mentor', skills: [],       portfolio: 'https://www.raldincasidar.studio/',     photo: raldin  },
+        stef:     { firstName: 'Stefhanie',fullName: 'STEFHANIE ANN V. BATUCAN',  roleLabel: 'President',       skills: [],       portfolio: null,                                    photo: stef    },
+        ej:       { firstName: 'EJ',       fullName: 'EJ A. VINCULADO',           roleLabel: 'Vice President',  skills: ['Vue'],  portfolio: null,                                    photo: ej      },
+        nesfhe:   { firstName: 'Nesfhe',   fullName: 'NESFHE NINA S. MAGSANAY',   roleLabel: 'Secretary',       skills: [],       portfolio: null,                                    photo: null    },
+        kate:     { firstName: 'Kate',     fullName: 'KATE NICOLE S. EDIS',       roleLabel: 'Asst. Secretary', skills: [],       portfolio: null,                                    photo: null    },
+        mischi:   { firstName: 'Mischi',   fullName: 'MISCHI JEDA J. ELUMBA',     roleLabel: 'Treasurer',       skills: [],       portfolio: null,                                    photo: null    },
+        peter:    { firstName: 'Peter',    fullName: 'PETER ROBERT C. AYONO',     roleLabel: 'Auditor',         skills: [],       portfolio: 'https://peter-ayono.vercel.app/',       photo: null    },
+        kenzen:   { firstName: 'Kenzen',   fullName: 'KENZEN L. MINAO',           roleLabel: 'P.I.O',           skills: ['Vue'],  portfolio: 'https://kenm.vercel.app/',              photo: kenzen  },
+        renz:     { firstName: 'Renz',     fullName: 'RENZ L. SANTIAGO',          roleLabel: 'Member',          skills: [],       portfolio: null,                                    photo: null    },
+        keith:    { firstName: 'Keith',    fullName: 'KEITH BRAIN B. LARANJO',    roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://keithlar.vercel.app/',          photo: keith   },
+        jullan:   { firstName: 'Jullan',   fullName: 'JULLAN CARL J. MAGLINTE',   roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://jullanmaglinte.site/',          photo: null    },
+        japhet:   { firstName: 'Japhet',   fullName: 'JAPHET V. BASTILLADA',      roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://japhet-bastillada.vercel.app/',photo: japhet  },
+        cristoph: { firstName: 'Cristoph', fullName: 'CRISTOPH B. BAGABUYO',      roleLabel: 'Member',          skills: [],       portfolio: 'https://n91ives.vercel.app/',           photo: null    },
+        cyd:      { firstName: 'Cyd',      fullName: 'CYD M. BALLON',             roleLabel: 'Member',          skills: [],       portfolio: null,                                    photo: null    },
+        marc:     { firstName: 'Marc',     fullName: 'MARC LESTER D. GUIDO',      roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://memitsuki.vercel.app/',         photo: marc    },
+        justine:  { firstName: 'Justine',  fullName: 'JUSTINE P. BUNCAG',         roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://justineeun.vercel.app/',        photo: justine },
       },
 
       tabs: [
@@ -747,8 +763,14 @@ export default {
       )
     },
     currentSlide() { return this.slides[this.slideIdx] },
-    tooltipStyle() {
-      return { left: this.tooltipX + 18 + 'px', top: this.tooltipY - 14 + 'px' }
+    hoverCardStyle() {
+      if (!this.hoverRect) return { display: 'none' }
+      const r = this.hoverRect
+      return {
+        left: (r.right + 16) + 'px',
+        top:  (r.top + r.height / 2) + 'px',
+        transform: 'translateY(-50%)',
+      }
     },
   },
 
@@ -820,14 +842,20 @@ export default {
       if (member?.portfolio) window.open(member.portfolio, '_blank', 'noopener,noreferrer')
     },
     onHover(member, event) {
-      if (member?.portfolio) {
-        this.hoveredMember = member.firstName
-        this.tooltipX = event.clientX
-        this.tooltipY = event.clientY
-      }
+      clearTimeout(this._leaveTimer)
+      this.hoveredMember = member
+      const r = event.currentTarget.getBoundingClientRect()
+      this.hoverRect = { top: r.top, right: r.right, height: r.height }
     },
-    onMove(event) { this.tooltipX = event.clientX; this.tooltipY = event.clientY },
-    onLeave() { this.hoveredMember = null },
+    onMove() {},
+    onLeave() {
+      this._leaveTimer = setTimeout(() => {
+        this.hoveredMember = null
+        this.hoverRect = null
+      }, 120)
+    },
+    onCardEnter() { clearTimeout(this._leaveTimer) },
+    onCardLeave() { this.hoveredMember = null; this.hoverRect = null },
     nextSlide() { this.slideIdx = (this.slideIdx + 1) % this.slides.length },
     prevSlide()  { this.slideIdx = (this.slideIdx - 1 + this.slides.length) % this.slides.length },
   },
@@ -943,12 +971,26 @@ export default {
 .profile-circle.sphere { background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e5e7eb 25%, #9ca3af 60%, #4b5563 100%); border-color: #f3f4f6; }
 .portfolio-overlay { position: absolute; inset: 0; z-index: 2; border-radius: 50%; background: rgba(27,31,54,0.80); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; }
 .portfolio-overlay span { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #fff; text-align: center; line-height: 1.35; padding: 0 8px; }
-.profile-circle.has-portfolio { cursor: pointer; }
+.profile-circle { cursor: pointer; }
+.profile-circle:hover { transform: scale(1.08); box-shadow: 0 12px 28px rgba(15,23,42,0.22); }
 .profile-circle.has-portfolio:hover { transform: scale(1.12); box-shadow: 0 14px 36px rgba(179,11,28,0.28); border-color: #b30b1c; }
 .profile-circle.has-portfolio:hover .portfolio-overlay { opacity: 1; }
 
-.portfolio-tooltip { position: fixed; z-index: 9999; background: #1b1f36; color: #fff; font-size: 11px; font-weight: 600; padding: 6px 13px; border-radius: 8px; pointer-events: none; white-space: nowrap; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.22); letter-spacing: 0.2px; }
-.tooltip-icon { font-size: 12px; }
+.member-hover-card { position: fixed; z-index: 9999; width: 230px; background: linear-gradient(180deg, #d9dade 0%, #5d5f66 100%); border-radius: 18px; padding: 16px; box-shadow: 0 16px 48px rgba(0,0,0,0.30); }
+.hc-top { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
+.hc-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.5); flex-shrink: 0; }
+.hc-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.hc-sphere { width: 100%; height: 100%; background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e5e7eb 25%, #9ca3af 60%, #4b5563 100%); }
+.hc-identity { flex: 1; min-width: 0; }
+.hc-name { font-size: 11px; font-weight: 700; color: #111827; line-height: 1.3; margin-bottom: 2px; }
+.hc-role { font-size: 11px; color: #374151; font-weight: 500; }
+.hc-skills { margin-bottom: 12px; }
+.hc-skills-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #374151; margin-bottom: 5px; }
+.hc-skills-list { display: flex; flex-wrap: wrap; gap: 4px; }
+.hc-skill-badge { background: rgba(255,255,255,0.55); color: #1f2937; padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); }
+.hc-portfolio-btn { display: block; text-align: center; background: #1b1f36; color: #fff; padding: 9px 0; border-radius: 10px; font-size: 11px; font-weight: 700; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; }
+.hc-portfolio-btn:hover { background: #2d3561; }
+.hc-no-portfolio { display: block; text-align: center; color: rgba(0,0,0,0.35); font-size: 10px; font-style: italic; padding-top: 2px; }
 
 .role-tag               { margin-top: 8px; font-size: 11px; letter-spacing: 0.8px; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: #d1fae5; color: #065f46; }
 .role-tag--founder      { background: #fde8ea; color: #9b0a19; }
@@ -998,6 +1040,6 @@ export default {
   .note-card.note-left::after, .note-card.note-right::after { display: none; }
   .profile-circle { width: 80px; height: 80px; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .portfolio-tooltip { display: none; }
+  .member-hover-card { display: none; }
 }
 </style>

@@ -30,7 +30,7 @@ app.get('/api/members', (req, res) => {
 })
 
 app.post('/api/members', (req, res) => {
-  const { name, role, description, skills, imageUrl } = req.body
+  const { name, role, description, skills, imageUrl, portfolio } = req.body
   if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
   const members = loadMembers()
   const member = {
@@ -40,6 +40,7 @@ app.post('/api/members', (req, res) => {
     description: description || '',
     skills: skills || [],
     imageUrl: imageUrl || null,
+    portfolio: portfolio || null,
   }
   members.push(member)
   saveMembers(members)
@@ -47,12 +48,12 @@ app.post('/api/members', (req, res) => {
 })
 
 app.put('/api/members/:id', (req, res) => {
-  const { name, role, description, skills, imageUrl } = req.body
+  const { name, role, description, skills, imageUrl, portfolio } = req.body
   if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
   const members = loadMembers()
   const index = members.findIndex(m => m._id === req.params.id)
   if (index === -1) return res.status(404).json({ error: 'Member not found' })
-  members[index] = { ...members[index], name, role, description: description || '', skills: skills || [], imageUrl: imageUrl || null }
+  members[index] = { ...members[index], name, role, description: description || '', skills: skills || [], imageUrl: imageUrl || null, portfolio: portfolio || null }
   saveMembers(members)
   res.json(members[index])
 })
