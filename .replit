@@ -55,6 +55,7 @@ localPort = 5000
 externalPort = 80
 
 [deployment]
-deploymentTarget = "static"
-build = ["sh", "-c", "cd client && npm install && npm run build"]
+deploymentTarget = "autoscale"
+build = ["sh", "-c", "cd client && npm install && npm run build && cd ../server && npm install"]
 publicDir = "client/dist"
+run = ["sh", "-c", "cd server && node server.js"]

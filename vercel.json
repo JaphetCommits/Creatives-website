@@ -1,0 +1,10 @@
+{
+  "installCommand": "npm install",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": null,
+  "rewrites": [
+    { "source": "/api/members/:id", "destination": "/api/members/[id]" },
+    { "source": "/api/members", "destination": "/api/members/index" }
+  ]
+}
