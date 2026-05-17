@@ -101,6 +101,8 @@
                 <div class="hc-role">{{ displayedMember.roleLabel }}</div>
               </div>
             </div>
+            <div class="hc-desc">{{ displayedMember.pronoun }} is the {{ displayedMember.roleLabel }} of this organization.</div>
+            <div class="hc-divider"></div>
             <div class="hc-skills" v-if="displayedMember.skills && displayedMember.skills.length">
               <div class="hc-skills-label">Tech Stack</div>
               <div class="hc-skills-list">
@@ -618,32 +620,32 @@ export default {
       ],
 
       orgMembers: {
-        sheenlee: { firstName: 'Sheenlee', fullName: 'SHEEN LEE S. EDIS',         roleLabel: 'Founder',         skills: [],       portfolio: null,                                    photo: sheen   },
-        armando:  { firstName: 'Armando',  fullName: 'ARMANDO T. SAGUIN, MSIT',   roleLabel: 'Adviser',         skills: [],       portfolio: null,                                    photo: armando },
-        juvelito: { firstName: 'Juvelito', fullName: 'JUVELITO MARTINEZ',         roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        mark:     { firstName: 'Mark',     fullName: 'MARK MASCARDO',             roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        whelster: { firstName: 'Whelster', fullName: 'WHELSTER R. ESMADE',        roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        henzon:   { firstName: 'Henzon',   fullName: 'HENZON DIONSAY',            roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        june:     { firstName: 'June',     fullName: 'JUNE A. JACINTO',           roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        robert:   { firstName: 'Robert',   fullName: 'ROBERT MAYO L. ELUMBA',     roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        gehan:    { firstName: 'Gehan',    fullName: 'GEHAN RESALUTE',            roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        marklan:  { firstName: 'Marklan',  fullName: 'MARKLAN A. HAMPAC',         roleLabel: 'Mentor',          skills: [],       portfolio: null,                                    photo: null    },
-        raldin:   { firstName: 'Raldin',   fullName: 'RALDIN C. DISOMIMBA',       roleLabel: 'Member / Mentor', skills: [],       portfolio: 'https://www.raldincasidar.studio/',     photo: raldin  },
-        stef:     { firstName: 'Stefhanie',fullName: 'STEFHANIE ANN V. BATUCAN',  roleLabel: 'President',       skills: [],       portfolio: null,                                    photo: stef    },
-        ej:       { firstName: 'EJ',       fullName: 'EJ A. VINCULADO',           roleLabel: 'Vice President',  skills: ['Vue'],  portfolio: null,                                    photo: ej      },
-        nesfhe:   { firstName: 'Nesfhe',   fullName: 'NESFHE NINA S. MAGSANAY',   roleLabel: 'Secretary',       skills: [],       portfolio: null,                                    photo: null    },
-        kate:     { firstName: 'Kate',     fullName: 'KATE NICOLE S. EDIS',       roleLabel: 'Asst. Secretary', skills: [],       portfolio: null,                                    photo: null    },
-        mischi:   { firstName: 'Mischi',   fullName: 'MISCHI JEDA J. ELUMBA',     roleLabel: 'Treasurer',       skills: [],       portfolio: null,                                    photo: null    },
-        peter:    { firstName: 'Peter',    fullName: 'PETER ROBERT C. AYONO',     roleLabel: 'Auditor',         skills: [],       portfolio: 'https://peter-ayono.vercel.app/',       photo: null    },
-        kenzen:   { firstName: 'Kenzen',   fullName: 'KENZEN L. MINAO',           roleLabel: 'P.I.O',           skills: ['Vue'],  portfolio: 'https://kenm.vercel.app/',              photo: kenzen  },
-        renz:     { firstName: 'Renz',     fullName: 'RENZ L. SANTIAGO',          roleLabel: 'Member',          skills: [],       portfolio: null,                                    photo: null    },
-        keith:    { firstName: 'Keith',    fullName: 'KEITH BRAIN B. LARANJO',    roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://keithlar.vercel.app/',          photo: keith   },
-        jullan:   { firstName: 'Jullan',   fullName: 'JULLAN CARL J. MAGLINTE',   roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://jullanmaglinte.site/',          photo: null    },
-        japhet:   { firstName: 'Japhet',   fullName: 'JAPHET V. BASTILLADA',      roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://japhet-bastillada.vercel.app/',photo: japhet  },
-        cristoph: { firstName: 'Cristoph', fullName: 'CRISTOPH B. BAGABUYO',      roleLabel: 'Member',          skills: [],       portfolio: 'https://n91ives.vercel.app/',           photo: null    },
-        cyd:      { firstName: 'Cyd',      fullName: 'CYD M. BALLON',             roleLabel: 'Member',          skills: [],       portfolio: null,                                    photo: null    },
-        marc:     { firstName: 'Marc',     fullName: 'MARC LESTER D. GUIDO',      roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://memitsuki.vercel.app/',         photo: marc    },
-        justine:  { firstName: 'Justine',  fullName: 'JUSTINE P. BUNCAG',         roleLabel: 'Member',          skills: ['Vue'],  portfolio: 'https://justineeun.vercel.app/',        photo: justine },
+        sheenlee: { firstName: 'Sheenlee', fullName: 'SHEEN LEE S. EDIS',         roleLabel: 'Founder',         pronoun: 'She', skills: [],       portfolio: null,                                    photo: sheen   },
+        armando:  { firstName: 'Armando',  fullName: 'ARMANDO T. SAGUIN, MSIT',   roleLabel: 'Adviser',         pronoun: 'He',  skills: [],       portfolio: null,                                    photo: armando },
+        juvelito: { firstName: 'Juvelito', fullName: 'JUVELITO MARTINEZ',         roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        mark:     { firstName: 'Mark',     fullName: 'MARK MASCARDO',             roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        whelster: { firstName: 'Whelster', fullName: 'WHELSTER R. ESMADE',        roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        henzon:   { firstName: 'Henzon',   fullName: 'HENZON DIONSAY',            roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        june:     { firstName: 'June',     fullName: 'JUNE A. JACINTO',           roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        robert:   { firstName: 'Robert',   fullName: 'ROBERT MAYO L. ELUMBA',     roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        gehan:    { firstName: 'Gehan',    fullName: 'GEHAN RESALUTE',            roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        marklan:  { firstName: 'Marklan',  fullName: 'MARKLAN A. HAMPAC',         roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        raldin:   { firstName: 'Raldin',   fullName: 'RALDIN C. DISOMIMBA',       roleLabel: 'Member / Mentor', pronoun: 'He',  skills: [],       portfolio: 'https://www.raldincasidar.studio/',     photo: raldin  },
+        stef:     { firstName: 'Stefhanie',fullName: 'STEFHANIE ANN V. BATUCAN',  roleLabel: 'President',       pronoun: 'She', skills: [],       portfolio: null,                                    photo: stef    },
+        ej:       { firstName: 'EJ',       fullName: 'EJ A. VINCULADO',           roleLabel: 'Vice President',  pronoun: 'He',  skills: ['Vue'],  portfolio: null,                                    photo: ej      },
+        nesfhe:   { firstName: 'Nesfhe',   fullName: 'NESFHE NINA S. MAGSANAY',   roleLabel: 'Secretary',       pronoun: 'She', skills: [],       portfolio: null,                                    photo: null    },
+        kate:     { firstName: 'Kate',     fullName: 'KATE NICOLE S. EDIS',       roleLabel: 'Asst. Secretary', pronoun: 'She', skills: [],       portfolio: null,                                    photo: null    },
+        mischi:   { firstName: 'Mischi',   fullName: 'MISCHI JEDA J. ELUMBA',     roleLabel: 'Treasurer',       pronoun: 'She', skills: [],       portfolio: null,                                    photo: null    },
+        peter:    { firstName: 'Peter',    fullName: 'PETER ROBERT C. AYONO',     roleLabel: 'Auditor',         pronoun: 'He',  skills: [],       portfolio: 'https://peter-ayono.vercel.app/',       photo: null    },
+        kenzen:   { firstName: 'Kenzen',   fullName: 'KENZEN L. MINAO',           roleLabel: 'P.I.O',           pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://kenm.vercel.app/',              photo: kenzen  },
+        renz:     { firstName: 'Renz',     fullName: 'RENZ L. SANTIAGO',          roleLabel: 'Member',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        keith:    { firstName: 'Keith',    fullName: 'KEITH BRAIN B. LARANJO',    roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://keithlar.vercel.app/',          photo: keith   },
+        jullan:   { firstName: 'Jullan',   fullName: 'JULLAN CARL J. MAGLINTE',   roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://jullanmaglinte.site/',          photo: null    },
+        japhet:   { firstName: 'Japhet',   fullName: 'JAPHET V. BASTILLADA',      roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://japhet-bastillada.vercel.app/',photo: japhet  },
+        cristoph: { firstName: 'Cristoph', fullName: 'CRISTOPH B. BAGABUYO',      roleLabel: 'Member',          pronoun: 'He',  skills: [],       portfolio: 'https://n91ives.vercel.app/',           photo: null    },
+        cyd:      { firstName: 'Cyd',      fullName: 'CYD M. BALLON',             roleLabel: 'Member',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        marc:     { firstName: 'Marc',     fullName: 'MARC LESTER D. GUIDO',      roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://memitsuki.vercel.app/',         photo: marc    },
+        justine:  { firstName: 'Justine',  fullName: 'JUSTINE P. BUNCAG',         roleLabel: 'Member',          pronoun: 'She', skills: ['Vue'],  portfolio: 'https://justineeun.vercel.app/',        photo: justine },
       },
 
       tabs: [
@@ -1012,6 +1014,8 @@ export default {
 .hc-identity { flex: 1; min-width: 0; }
 .hc-name { font-size: 11px; font-weight: 700; color: #111827; line-height: 1.3; margin-bottom: 2px; }
 .hc-role { font-size: 11px; color: #374151; font-weight: 500; }
+.hc-desc { font-size: 11px; color: #374151; line-height: 1.5; margin-bottom: 10px; font-style: italic; }
+.hc-divider { height: 1px; background: rgba(0,0,0,0.10); margin-bottom: 10px; }
 .hc-skills { margin-bottom: 12px; }
 .hc-skills-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #374151; margin-bottom: 5px; }
 .hc-skills-list { display: flex; flex-wrap: wrap; gap: 4px; }
