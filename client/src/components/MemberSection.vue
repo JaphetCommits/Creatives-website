@@ -755,10 +755,11 @@ export default {
       const r = this.displayedRect
       if (!r) return { display: 'none' }
       const cardWidth = 246
-      const spaceOnRight = window.innerWidth - r.right
-      const left = spaceOnRight >= cardWidth + 16
-        ? r.right + 16
-        : r.left - cardWidth - 16
+      const circleCenter = (r.left + r.right) / 2
+      const isRightSide = circleCenter > window.innerWidth / 2
+      const left = isRightSide
+        ? r.left - cardWidth - 16
+        : r.right + 16
       return {
         left: Math.max(8, left) + 'px',
         top:  (r.top + r.height / 2) + 'px',
