@@ -87,27 +87,30 @@
     <transition name="fade">
       <div v-if="activeTab === 'chart'" key="chart">
 
-        <div class="member-hover-card" v-if="hoveredMember" :style="hoverCardStyle"
-          @mouseenter="onCardEnter" @mouseleave="onCardLeave">
-          <div class="hc-top">
-            <div class="hc-avatar">
-              <img v-if="hoveredMember.photo" :src="hoveredMember.photo" :alt="hoveredMember.firstName" />
-              <div v-else class="hc-sphere"></div>
+        <transition name="card-pop">
+          <div class="member-hover-card" v-if="displayedMember" :key="displayedMember.firstName" :style="cardStyle"
+            @mouseenter="onCardEnter" @mouseleave="onCardLeave">
+            <button v-if="pinnedMember" class="hc-close" @click="unpinCard" aria-label="Close">×</button>
+            <div class="hc-top">
+              <div class="hc-avatar">
+                <img v-if="displayedMember.photo" :src="displayedMember.photo" :alt="displayedMember.firstName" />
+                <div v-else class="hc-sphere"></div>
+              </div>
+              <div class="hc-identity">
+                <div class="hc-name">{{ displayedMember.fullName }}</div>
+                <div class="hc-role">{{ displayedMember.roleLabel }}</div>
+              </div>
             </div>
-            <div class="hc-identity">
-              <div class="hc-name">{{ hoveredMember.fullName }}</div>
-              <div class="hc-role">{{ hoveredMember.roleLabel }}</div>
+            <div class="hc-skills" v-if="displayedMember.skills && displayedMember.skills.length">
+              <div class="hc-skills-label">Tech Stack</div>
+              <div class="hc-skills-list">
+                <span v-for="skill in displayedMember.skills" :key="skill" class="hc-skill-badge">{{ skill }}</span>
+              </div>
             </div>
+            <a v-if="displayedMember.portfolio" :href="displayedMember.portfolio" target="_blank" rel="noopener noreferrer" class="hc-portfolio-btn" @click.stop>View Portfolio</a>
+            <span v-else class="hc-no-portfolio">No portfolio yet</span>
           </div>
-          <div class="hc-skills" v-if="hoveredMember.skills && hoveredMember.skills.length">
-            <div class="hc-skills-label">Tech Stack</div>
-            <div class="hc-skills-list">
-              <span v-for="skill in hoveredMember.skills" :key="skill" class="hc-skill-badge">{{ skill }}</span>
-            </div>
-          </div>
-          <a v-if="hoveredMember.portfolio" :href="hoveredMember.portfolio" target="_blank" rel="noopener noreferrer" class="hc-portfolio-btn" @click.stop>View Portfolio</a>
-          <span v-else class="hc-no-portfolio">No portfolio yet</span>
-        </div>
+        </transition>
 
         <div class="founder-header">
           <div class="founder-intro">
@@ -157,7 +160,7 @@
             <div class="slot slot-center">
               <div class="member-node" ref="node_sheenlee">
                 <div class="profile-circle has-photo" :class="{ 'has-portfolio': orgMembers.sheenlee.portfolio }"
-                  @click="goToPortfolio(orgMembers.sheenlee)" @mouseenter="onHover(orgMembers.sheenlee, $event)"
+                  @click="onClickFace(orgMembers.sheenlee)" @mouseenter="onHover(orgMembers.sheenlee, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="sheen" alt="Founder" />
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -173,7 +176,7 @@
           <div class="row row-center">
             <div class="member-node" ref="node_armando">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.armando.portfolio }"
-                @click="goToPortfolio(orgMembers.armando)" @mouseenter="onHover(orgMembers.armando, $event)"
+                @click="onClickFace(orgMembers.armando)" @mouseenter="onHover(orgMembers.armando, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="armando" alt="Adviser" />
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -192,7 +195,7 @@
           <div class="row row-center mentor-row">
             <div class="member-node" ref="node_juvelito">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.juvelito.portfolio }"
-                @click="goToPortfolio(orgMembers.juvelito)" @mouseenter="onHover(orgMembers.juvelito, $event)"
+                @click="onClickFace(orgMembers.juvelito)" @mouseenter="onHover(orgMembers.juvelito, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
@@ -206,7 +209,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_mark">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.mark.portfolio }"
-                  @click="goToPortfolio(orgMembers.mark)" @mouseenter="onHover(orgMembers.mark, $event)"
+                  @click="onClickFace(orgMembers.mark)" @mouseenter="onHover(orgMembers.mark, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -218,7 +221,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_whelster">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.whelster.portfolio }"
-                  @click="goToPortfolio(orgMembers.whelster)" @mouseenter="onHover(orgMembers.whelster, $event)"
+                  @click="onClickFace(orgMembers.whelster)" @mouseenter="onHover(orgMembers.whelster, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -232,7 +235,7 @@
           <div class="row row-center mentor-row">
             <div class="member-node" ref="node_henzon">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.henzon.portfolio }"
-                @click="goToPortfolio(orgMembers.henzon)" @mouseenter="onHover(orgMembers.henzon, $event)"
+                @click="onClickFace(orgMembers.henzon)" @mouseenter="onHover(orgMembers.henzon, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
@@ -246,7 +249,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_june">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.june.portfolio }"
-                  @click="goToPortfolio(orgMembers.june)" @mouseenter="onHover(orgMembers.june, $event)"
+                  @click="onClickFace(orgMembers.june)" @mouseenter="onHover(orgMembers.june, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -258,7 +261,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_robert">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.robert.portfolio }"
-                  @click="goToPortfolio(orgMembers.robert)" @mouseenter="onHover(orgMembers.robert, $event)"
+                  @click="onClickFace(orgMembers.robert)" @mouseenter="onHover(orgMembers.robert, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -272,7 +275,7 @@
           <div class="row row-center mentor-row">
             <div class="member-node" ref="node_gehan">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.gehan.portfolio }"
-                @click="goToPortfolio(orgMembers.gehan)" @mouseenter="onHover(orgMembers.gehan, $event)"
+                @click="onClickFace(orgMembers.gehan)" @mouseenter="onHover(orgMembers.gehan, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
@@ -286,7 +289,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_marklan">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.marklan.portfolio }"
-                  @click="goToPortfolio(orgMembers.marklan)" @mouseenter="onHover(orgMembers.marklan, $event)"
+                  @click="onClickFace(orgMembers.marklan)" @mouseenter="onHover(orgMembers.marklan, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -298,7 +301,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_raldins">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.raldin.portfolio }"
-                  @click="goToPortfolio(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
+                  @click="onClickFace(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="raldin" alt="Raldin" />
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -318,7 +321,7 @@
           <div class="row row-center">
             <div class="member-node" ref="node_stef">
               <div class="profile-circle has-photo" :class="{ 'has-portfolio': orgMembers.stef.portfolio }"
-                @click="goToPortfolio(orgMembers.stef)" @mouseenter="onHover(orgMembers.stef, $event)"
+                @click="onClickFace(orgMembers.stef)" @mouseenter="onHover(orgMembers.stef, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="stef" alt="Stefhanie" />
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -333,7 +336,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_ej">
                 <div class="profile-circle has-photo" :class="{ 'has-portfolio': orgMembers.ej.portfolio }"
-                  @click="goToPortfolio(orgMembers.ej)" @mouseenter="onHover(orgMembers.ej, $event)"
+                  @click="onClickFace(orgMembers.ej)" @mouseenter="onHover(orgMembers.ej, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="ej" alt="EJ" />
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -346,7 +349,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_nesfhe">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.nesfhe.portfolio }"
-                  @click="goToPortfolio(orgMembers.nesfhe)" @mouseenter="onHover(orgMembers.nesfhe, $event)"
+                  @click="onClickFace(orgMembers.nesfhe)" @mouseenter="onHover(orgMembers.nesfhe, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -360,7 +363,7 @@
           <div class="row row-center">
             <div class="member-node" ref="node_kate">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.kate.portfolio }"
-                @click="goToPortfolio(orgMembers.kate)" @mouseenter="onHover(orgMembers.kate, $event)"
+                @click="onClickFace(orgMembers.kate)" @mouseenter="onHover(orgMembers.kate, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
@@ -374,7 +377,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_mischi">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.mischi.portfolio }"
-                  @click="goToPortfolio(orgMembers.mischi)" @mouseenter="onHover(orgMembers.mischi, $event)"
+                  @click="onClickFace(orgMembers.mischi)" @mouseenter="onHover(orgMembers.mischi, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -386,7 +389,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_peter">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.peter.portfolio }"
-                  @click="goToPortfolio(orgMembers.peter)" @mouseenter="onHover(orgMembers.peter, $event)"
+                  @click="onClickFace(orgMembers.peter)" @mouseenter="onHover(orgMembers.peter, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -400,7 +403,7 @@
           <div class="row row-center">
             <div class="member-node" ref="node_kenzen">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.kenzen.portfolio }"
-                @click="goToPortfolio(orgMembers.kenzen)" @mouseenter="onHover(orgMembers.kenzen, $event)"
+                @click="onClickFace(orgMembers.kenzen)" @mouseenter="onHover(orgMembers.kenzen, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="kenzen" alt="Kenzen" />
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -420,7 +423,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_renz">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.renz.portfolio }"
-                  @click="goToPortfolio(orgMembers.renz)" @mouseenter="onHover(orgMembers.renz, $event)"
+                  @click="onClickFace(orgMembers.renz)" @mouseenter="onHover(orgMembers.renz, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -432,7 +435,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_raldin">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.raldin.portfolio }"
-                  @click="goToPortfolio(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
+                  @click="onClickFace(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="raldin" alt="Raldin" />
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -447,7 +450,7 @@
           <div class="row row-center">
             <div class="member-node" ref="node_keith">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.keith.portfolio }"
-                @click="goToPortfolio(orgMembers.keith)" @mouseenter="onHover(orgMembers.keith, $event)"
+                @click="onClickFace(orgMembers.keith)" @mouseenter="onHover(orgMembers.keith, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="keith" alt="Keith" />
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -462,7 +465,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_jullan">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.jullan.portfolio }"
-                  @click="goToPortfolio(orgMembers.jullan)" @mouseenter="onHover(orgMembers.jullan, $event)"
+                  @click="onClickFace(orgMembers.jullan)" @mouseenter="onHover(orgMembers.jullan, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -474,7 +477,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_japhet">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.japhet.portfolio }"
-                  @click="goToPortfolio(orgMembers.japhet)" @mouseenter="onHover(orgMembers.japhet, $event)"
+                  @click="onClickFace(orgMembers.japhet)" @mouseenter="onHover(orgMembers.japhet, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="japhet" alt="Japhet" />
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -489,7 +492,7 @@
           <div class="row row-center">
             <div class="member-node" ref="node_cristoph">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.cristoph.portfolio }"
-                @click="goToPortfolio(orgMembers.cristoph)" @mouseenter="onHover(orgMembers.cristoph, $event)"
+                @click="onClickFace(orgMembers.cristoph)" @mouseenter="onHover(orgMembers.cristoph, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
@@ -503,7 +506,7 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_cyd">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.cyd.portfolio }"
-                  @click="goToPortfolio(orgMembers.cyd)" @mouseenter="onHover(orgMembers.cyd, $event)"
+                  @click="onClickFace(orgMembers.cyd)" @mouseenter="onHover(orgMembers.cyd, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
@@ -515,7 +518,7 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_marc">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.marc.portfolio }"
-                  @click="goToPortfolio(orgMembers.marc)" @mouseenter="onHover(orgMembers.marc, $event)"
+                  @click="onClickFace(orgMembers.marc)" @mouseenter="onHover(orgMembers.marc, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="marc" alt="Marc" />
                   <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -530,7 +533,7 @@
           <div class="row row-center">
             <div class="member-node" ref="node_justine">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.justine.portfolio }"
-                @click="goToPortfolio(orgMembers.justine)" @mouseenter="onHover(orgMembers.justine, $event)"
+                @click="onClickFace(orgMembers.justine)" @mouseenter="onHover(orgMembers.justine, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="justine" alt="Justine" />
                 <div class="portfolio-overlay"><span>View Portfolio</span></div>
@@ -597,6 +600,8 @@ export default {
       searchQuery: '',
       hoveredMember: null,
       hoverRect: null,
+      pinnedMember: null,
+      pinnedRect: null,
 
       svgWidth: 1000,
       svgHeight: 5000,
@@ -763,9 +768,15 @@ export default {
       )
     },
     currentSlide() { return this.slides[this.slideIdx] },
-    hoverCardStyle() {
-      if (!this.hoverRect) return { display: 'none' }
-      const r = this.hoverRect
+    displayedMember() {
+      return this.pinnedMember || this.hoveredMember
+    },
+    displayedRect() {
+      return this.pinnedRect || this.hoverRect
+    },
+    cardStyle() {
+      const r = this.displayedRect
+      if (!r) return { display: 'none' }
       return {
         left: (r.right + 16) + 'px',
         top:  (r.top + r.height / 2) + 'px',
@@ -841,21 +852,43 @@ export default {
     goToPortfolio(member) {
       if (member?.portfolio) window.open(member.portfolio, '_blank', 'noopener,noreferrer')
     },
+    onClickFace(member) {
+      if (this.pinnedMember === member) {
+        this.pinnedMember = null
+        this.pinnedRect = null
+      } else {
+        this.pinnedMember = member
+        this.pinnedRect = this.hoverRect
+      }
+    },
+    unpinCard() {
+      this.pinnedMember = null
+      this.pinnedRect = null
+    },
     onHover(member, event) {
       clearTimeout(this._leaveTimer)
-      this.hoveredMember = member
-      const r = event.currentTarget.getBoundingClientRect()
-      this.hoverRect = { top: r.top, right: r.right, height: r.height }
+      if (!this.pinnedMember) {
+        this.hoveredMember = member
+        const r = event.currentTarget.getBoundingClientRect()
+        this.hoverRect = { top: r.top, right: r.right, height: r.height }
+      }
     },
     onMove() {},
     onLeave() {
-      this._leaveTimer = setTimeout(() => {
-        this.hoveredMember = null
-        this.hoverRect = null
-      }, 120)
+      if (!this.pinnedMember) {
+        this._leaveTimer = setTimeout(() => {
+          this.hoveredMember = null
+          this.hoverRect = null
+        }, 120)
+      }
     },
     onCardEnter() { clearTimeout(this._leaveTimer) },
-    onCardLeave() { this.hoveredMember = null; this.hoverRect = null },
+    onCardLeave() {
+      if (!this.pinnedMember) {
+        this.hoveredMember = null
+        this.hoverRect = null
+      }
+    },
     nextSlide() { this.slideIdx = (this.slideIdx + 1) % this.slides.length },
     prevSlide()  { this.slideIdx = (this.slideIdx - 1 + this.slides.length) % this.slides.length },
   },
@@ -976,7 +1009,13 @@ export default {
 .profile-circle.has-portfolio:hover { transform: scale(1.12); box-shadow: 0 14px 36px rgba(179,11,28,0.28); border-color: #b30b1c; }
 .profile-circle.has-portfolio:hover .portfolio-overlay { opacity: 1; }
 
-.member-hover-card { position: fixed; z-index: 9999; width: 230px; background: linear-gradient(180deg, #d9dade 0%, #5d5f66 100%); border-radius: 18px; padding: 16px; box-shadow: 0 16px 48px rgba(0,0,0,0.30); }
+.card-pop-enter-active { transition: opacity 0.18s ease, transform 0.18s ease; }
+.card-pop-leave-active { transition: opacity 0.13s ease, transform 0.13s ease; }
+.card-pop-enter-from  { opacity: 0; transform: translateY(-50%) scale(0.93); }
+.card-pop-leave-to    { opacity: 0; transform: translateY(-50%) scale(0.93); }
+.member-hover-card { position: fixed; z-index: 9999; width: 230px; background: linear-gradient(180deg, #d9dade 0%, #5d5f66 100%); border-radius: 18px; padding: 16px; box-shadow: 0 16px 48px rgba(0,0,0,0.30); isolation: isolate; }
+.hc-close { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 18px; line-height: 1; color: rgba(0,0,0,0.35); cursor: pointer; padding: 0; transition: color 0.15s; }
+.hc-close:hover { color: rgba(0,0,0,0.7); }
 .hc-top { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
 .hc-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.5); flex-shrink: 0; }
 .hc-avatar img { width: 100%; height: 100%; object-fit: cover; }
