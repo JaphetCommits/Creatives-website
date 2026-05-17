@@ -754,8 +754,13 @@ export default {
     cardStyle() {
       const r = this.displayedRect
       if (!r) return { display: 'none' }
+      const cardWidth = 246
+      const spaceOnRight = window.innerWidth - r.right
+      const left = spaceOnRight >= cardWidth + 16
+        ? r.right + 16
+        : r.left - cardWidth - 16
       return {
-        left: (r.right + 16) + 'px',
+        left: Math.max(8, left) + 'px',
         top:  (r.top + r.height / 2) + 'px',
         transform: 'translateY(-50%)',
       }
