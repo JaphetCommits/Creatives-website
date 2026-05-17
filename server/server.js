@@ -1,8 +1,6 @@
 const express = require('express')
-const mongoose = require('mongoose')
 const cors = require('cors')
 const path = require('path')
-const Member = require('./models/Member')
 
 const app = express()
 app.use(cors())
@@ -11,98 +9,70 @@ app.use(express.json())
 const distPath = path.join(__dirname, '../client/dist')
 app.use(express.static(distPath))
 
-const dbURI = process.env.MONGO_URI
-if (!dbURI) {
-  console.error('MONGO_URI is not set')
-  process.exit(1)
-}
-mongoose.connect(dbURI)
-  .then(() => console.log('Connected to MongoDB'))
-  .catch((err) => console.error('MongoDB connection error:', err))
-
-const defaultMembers = [
-  { name: 'SHEEN LEE S. EDIS',        role: 'Founder' },
-  { name: 'ARMANDO T. SAGUIN, MSIT',  role: 'Adviser' },
-  { name: 'JUVELITO MARTINEZ',        role: 'Mentor' },
-  { name: 'MARK MASCARDO',            role: 'Mentor' },
-  { name: 'WHELSTER R. ESMADE',       role: 'Mentor' },
-  { name: 'HENZON DIONSAY',           role: 'Mentor' },
-  { name: 'JUNE A. JACINTO',          role: 'Mentor' },
-  { name: 'ROBERT MAYO L. ELUMBA',    role: 'Mentor' },
-  { name: 'GEHAN RESALUTE',           role: 'Mentor' },
-  { name: 'MARKLAN A. HAMPAC',        role: 'Mentor' },
-  { name: 'RALDIN C. DISOMIMBA',      role: 'Member / Mentor' },
-  { name: 'STEFHANIE ANN V. BATUCAN', role: 'President' },
-  { name: 'EJ A. VINCULADO',          role: 'Vice President' },
-  { name: 'NESFHE NINA S. MAGSANAY',  role: 'Secretary' },
-  { name: 'KATE NICOLE S. EDIS',      role: 'Asst. Secretary' },
-  { name: 'MISCHI JEDA J. ELUMBA',    role: 'Treasurer' },
-  { name: 'PETER ROBERT C. AYONO',    role: 'Auditor' },
-  { name: 'KENZEN L. MINAO',          role: 'P.I.O' },
-  { name: 'RENZ L. SANTIAGO',         role: 'Member' },
-  { name: 'KEITH BRAIN B. LARANJO',   role: 'Member' },
-  { name: 'JULLAN CARL J. MAGLINTE',  role: 'Member' },
-  { name: 'JAPHET V. BASTILLADA',     role: 'Member' },
-  { name: 'CRISTOPH B. BAGABUYO',     role: 'Member' },
-  { name: 'CYD M. BALLON',            role: 'Member' },
-  { name: 'MARC LESTER D. GUIDO',     role: 'Member' },
-  { name: 'JUSTINE P. BUNCAG',        role: 'Member' },
+let members = [
+  { _id: '1',  name: 'SHEEN LEE S. EDIS',        role: 'Founder',         description: '', skills: [], imageUrl: null },
+  { _id: '2',  name: 'ARMANDO T. SAGUIN, MSIT',  role: 'Adviser',         description: '', skills: [], imageUrl: null },
+  { _id: '3',  name: 'JUVELITO MARTINEZ',        role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '4',  name: 'MARK MASCARDO',            role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '5',  name: 'WHELSTER R. ESMADE',       role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '6',  name: 'HENZON DIONSAY',           role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '7',  name: 'JUNE A. JACINTO',          role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '8',  name: 'ROBERT MAYO L. ELUMBA',    role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '9',  name: 'GEHAN RESALUTE',           role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '10', name: 'MARKLAN A. HAMPAC',        role: 'Mentor',          description: '', skills: [], imageUrl: null },
+  { _id: '11', name: 'RALDIN C. DISOMIMBA',      role: 'Member / Mentor', description: '', skills: [], imageUrl: null },
+  { _id: '12', name: 'STEFHANIE ANN V. BATUCAN', role: 'President',       description: '', skills: [], imageUrl: null },
+  { _id: '13', name: 'EJ A. VINCULADO',          role: 'Vice President',  description: '', skills: [], imageUrl: null },
+  { _id: '14', name: 'NESFHE NINA S. MAGSANAY',  role: 'Secretary',       description: '', skills: [], imageUrl: null },
+  { _id: '15', name: 'KATE NICOLE S. EDIS',      role: 'Asst. Secretary', description: '', skills: [], imageUrl: null },
+  { _id: '16', name: 'MISCHI JEDA J. ELUMBA',    role: 'Treasurer',       description: '', skills: [], imageUrl: null },
+  { _id: '17', name: 'PETER ROBERT C. AYONO',    role: 'Auditor',         description: '', skills: [], imageUrl: null },
+  { _id: '18', name: 'KENZEN L. MINAO',          role: 'P.I.O',           description: '', skills: [], imageUrl: null },
+  { _id: '19', name: 'RENZ L. SANTIAGO',         role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '20', name: 'KEITH BRAIN B. LARANJO',   role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '21', name: 'JULLAN CARL J. MAGLINTE',  role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '22', name: 'JAPHET V. BASTILLADA',     role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '23', name: 'CRISTOPH B. BAGABUYO',     role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '24', name: 'CYD M. BALLON',            role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '25', name: 'MARC LESTER D. GUIDO',     role: 'Member',          description: '', skills: [], imageUrl: null },
+  { _id: '26', name: 'JUSTINE P. BUNCAG',        role: 'Member',          description: '', skills: [], imageUrl: null },
 ]
 
-async function seedIfEmpty() {
-  const count = await Member.countDocuments()
-  if (count === 0) {
-    await Member.insertMany(defaultMembers)
-    console.log('Seeded default members')
-  }
-}
+let nextId = members.length + 1
 
-mongoose.connection.once('open', seedIfEmpty)
-
-app.get('/api/members', async (req, res) => {
-  try {
-    const members = await Member.find().sort({ createdAt: 1 })
-    res.json(members)
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch members' })
-  }
+app.get('/api/members', (req, res) => {
+  res.json(members)
 })
 
-app.post('/api/members', async (req, res) => {
-  try {
-    const { name, role, description, skills, imageUrl } = req.body
-    if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
-    const member = await Member.create({ name, role, description, skills, imageUrl })
-    res.status(201).json(member)
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to create member' })
+app.post('/api/members', (req, res) => {
+  const { name, role, description, skills, imageUrl } = req.body
+  if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
+  const member = {
+    _id: String(nextId++),
+    name,
+    role,
+    description: description || '',
+    skills: skills || [],
+    imageUrl: imageUrl || null,
   }
+  members.push(member)
+  res.status(201).json(member)
 })
 
-app.put('/api/members/:id', async (req, res) => {
-  try {
-    const { name, role, description, skills, imageUrl } = req.body
-    if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
-    const member = await Member.findByIdAndUpdate(
-      req.params.id,
-      { name, role, description, skills, imageUrl },
-      { new: true }
-    )
-    if (!member) return res.status(404).json({ error: 'Member not found' })
-    res.json(member)
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to update member' })
-  }
+app.put('/api/members/:id', (req, res) => {
+  const { name, role, description, skills, imageUrl } = req.body
+  if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
+  const index = members.findIndex(m => m._id === req.params.id)
+  if (index === -1) return res.status(404).json({ error: 'Member not found' })
+  members[index] = { ...members[index], name, role, description: description || '', skills: skills || [], imageUrl: imageUrl || null }
+  res.json(members[index])
 })
 
-app.delete('/api/members/:id', async (req, res) => {
-  try {
-    const member = await Member.findByIdAndDelete(req.params.id)
-    if (!member) return res.status(404).json({ error: 'Member not found' })
-    res.json({ success: true })
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to delete member' })
-  }
+app.delete('/api/members/:id', (req, res) => {
+  const index = members.findIndex(m => m._id === req.params.id)
+  if (index === -1) return res.status(404).json({ error: 'Member not found' })
+  members.splice(index, 1)
+  res.json({ success: true })
 })
 
 app.get('/{*path}', (req, res) => {
