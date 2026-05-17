@@ -65,6 +65,7 @@ export async function addMember(member) {
       description: member.description || '',
       skills:      member.skills || [],
       imageUrl:    member.image || null,
+      portfolio:   member.portfolio || null,
     }),
   })
   if (!res.ok) throw new Error('Failed to add member')

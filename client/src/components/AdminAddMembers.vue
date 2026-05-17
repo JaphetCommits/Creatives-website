@@ -54,6 +54,12 @@
           <span class="field-hint">Leave blank to use a placeholder</span>
         </div>
 
+        <div class="field">
+          <label>Portfolio Link</label>
+          <input v-model="form.portfolio" type="url" placeholder="https://yourportfolio.com" />
+          <span class="field-hint">Personal website or portfolio URL</span>
+        </div>
+
       </div>
 
       <div class="form-actions">
@@ -83,7 +89,8 @@ const emptyForm = () => ({
   role: '',
   description: '',
   skillsRaw: '',
-  image: ''
+  image: '',
+  portfolio: ''
 })
 
 const form = reactive(emptyForm())
@@ -107,7 +114,8 @@ const handleSubmit = async () => {
       role: form.role.trim(),
       description: form.description.trim(),
       skills,
-      image: form.image.trim() || null
+      image: form.image.trim() || null,
+      portfolio: form.portfolio.trim() || null
     })
     successMsg.value = `${form.name} has been added successfully!`
     resetForm()

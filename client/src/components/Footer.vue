@@ -222,7 +222,7 @@ const passwordInput = ref(null)
 const router = useRouter()
 
 onMounted(() => {
-  isAdmin.value = localStorage.getItem(ADMIN_STORAGE_KEY) === 'true'
+  isAdmin.value = sessionStorage.getItem(ADMIN_STORAGE_KEY) === 'true'
 })
 
 const goToAdminDashboard = () => {
@@ -256,7 +256,7 @@ const closeAdminLogin = () => {
 const submitAdminLogin = () => {
   if (adminPassword.value === ADMIN_PASSWORD) {
     isAdmin.value = true
-    localStorage.setItem(ADMIN_STORAGE_KEY, 'true')
+    sessionStorage.setItem(ADMIN_STORAGE_KEY, 'true')
     closeAdminLogin()
   } else {
     loginError.value = 'Incorrect password. Please try again.'
@@ -266,7 +266,7 @@ const submitAdminLogin = () => {
 
 const signOutAdmin = () => {
   isAdmin.value = false
-  localStorage.removeItem(ADMIN_STORAGE_KEY)
+  sessionStorage.removeItem(ADMIN_STORAGE_KEY)
 }
 
 watch(showAdminLogin, async (open) => {

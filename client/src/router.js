@@ -36,7 +36,7 @@ const router = createRouter({
 
 router.beforeEach((to, from) => {
   if (to.meta?.requiresAdmin) {
-    const isAdmin = localStorage.getItem('cs_is_admin') === 'true'
+    const isAdmin = sessionStorage.getItem('cs_is_admin') === 'true'
     if (!isAdmin) {
       return { path: '/' }
     }

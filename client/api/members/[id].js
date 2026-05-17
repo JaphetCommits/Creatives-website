@@ -1,22 +1,4 @@
-import mongoose from 'mongoose'
-
-const memberSchema = new mongoose.Schema({
-  name:        { type: String, required: true },
-  role:        { type: String, required: true },
-  description: { type: String, default: '' },
-  skills:      { type: [String], default: [] },
-  imageUrl:    { type: String, default: null },
-}, { timestamps: true })
-
-const Member = mongoose.models.Member || mongoose.model('Member', memberSchema)
-
-let isConnected = false
-
-async function connectDB() {
-  if (isConnected) return
-  await mongoose.connect(process.env.MONGO_URI)
-  isConnected = true
-}
+import members from './index.js'
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*')
@@ -27,29 +9,21 @@ export default async function handler(req, res) {
 
   const { id } = req.query
 
-  try {
-    await connectDB()
-
-    if (req.method === 'PUT') {
-      const { name, role, description, skills, imageUrl } = req.body
-      if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
-      const member = await Member.findByIdAndUpdate(
-        id,
-        { name, role, description, skills, imageUrl },
-        { new: true }
-      )
-      if (!member) return res.status(404).json({ error: 'Member not found' })
-      return res.json(member)
-    }
-
-    if (req.method === 'DELETE') {
-      const member = await Member.findByIdAndDelete(id)
-      if (!member) return res.status(404).json({ error: 'Member not found' })
-      return res.json({ success: true })
-    }
-
-    return res.status(405).json({ error: 'Method not allowed' })
-  } catch (err) {
-    return res.status(500).json({ error: err.message })
+  if (req.method === 'PUT') {
+    const { name, role, description, skills, imageUrl } = req.body
+    if (!name || !role) return res.status(400).json({ error: 'Name and role are required' })
+    const index = members.findIndex(m => m._id === id)
+    if (index === -1) return res.status(404).json({ error: 'Member not found' })
+    members[index] = { ...members[index], name, role, description: description || '', skills: skills || [], imageUrl: imageUrl || null }
+    return res.json(members[index])
   }
+
+  if (req.method === 'DELETE') {
+    const index = members.findIndex(m => m._id === id)
+    if (index === -1) return res.status(404).json({ error: 'Member not found' })
+    members.splice(index, 1)
+    return res.json({ success: true })
+  }
+
+  return res.status(405).json({ error: 'Method not allowed' })
 }

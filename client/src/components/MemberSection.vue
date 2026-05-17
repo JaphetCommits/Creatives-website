@@ -87,10 +87,32 @@
     <transition name="fade">
       <div v-if="activeTab === 'chart'" key="chart">
 
-        <div class="portfolio-tooltip" v-if="hoveredMember" :style="tooltipStyle">
-          <span class="tooltip-icon">🔗</span>
-          <span>View {{ hoveredMember }}'s portfolio</span>
-        </div>
+        <transition name="card-pop">
+          <div class="member-hover-card" v-if="displayedMember" :key="displayedMember.firstName" :style="cardStyle"
+            @mouseenter="onCardEnter" @mouseleave="onCardLeave">
+            <button v-if="pinnedMember" class="hc-close" @click="unpinCard" aria-label="Close">×</button>
+            <div class="hc-top">
+              <div class="hc-avatar">
+                <img v-if="displayedMember.photo" :src="displayedMember.photo" :alt="displayedMember.firstName" />
+                <div v-else class="hc-sphere"></div>
+              </div>
+              <div class="hc-identity">
+                <div class="hc-name">{{ displayedMember.fullName }}</div>
+                <div class="hc-role">{{ displayedMember.roleLabel }}</div>
+              </div>
+            </div>
+            <div class="hc-desc">{{ displayedMember.pronoun }} is the {{ displayedMember.roleLabel }} of this organization.</div>
+            <div class="hc-divider"></div>
+            <div class="hc-skills" v-if="displayedMember.skills && displayedMember.skills.length">
+              <div class="hc-skills-label">Tech Stack</div>
+              <div class="hc-skills-list">
+                <span v-for="skill in displayedMember.skills" :key="skill" class="hc-skill-badge">{{ skill }}</span>
+              </div>
+            </div>
+            <a v-if="displayedMember.portfolio" :href="displayedMember.portfolio" target="_blank" rel="noopener noreferrer" class="hc-portfolio-btn" @click.stop>View Portfolio</a>
+            <span v-else class="hc-no-portfolio">No portfolio yet</span>
+          </div>
+        </transition>
 
         <div class="founder-header">
           <div class="founder-intro">
@@ -140,10 +162,9 @@
             <div class="slot slot-center">
               <div class="member-node" ref="node_sheenlee">
                 <div class="profile-circle has-photo" :class="{ 'has-portfolio': orgMembers.sheenlee.portfolio }"
-                  @click="goToPortfolio(orgMembers.sheenlee)" @mouseenter="onHover(orgMembers.sheenlee, $event)"
+                  @click="onClickFace(orgMembers.sheenlee)" @mouseenter="onHover(orgMembers.sheenlee, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="sheen" alt="Founder" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--founder">FOUNDER</div>
                 <div class="org-name">SHEEN LEE S. EDIS</div>
@@ -156,10 +177,9 @@
           <div class="row row-center">
             <div class="member-node" ref="node_armando">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.armando.portfolio }"
-                @click="goToPortfolio(orgMembers.armando)" @mouseenter="onHover(orgMembers.armando, $event)"
+                @click="onClickFace(orgMembers.armando)" @mouseenter="onHover(orgMembers.armando, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="armando" alt="Adviser" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Adviser</div>
               <div class="org-name">ARMANDO T. SAGUIN, MSIT</div>
@@ -175,9 +195,8 @@
           <div class="row row-center mentor-row">
             <div class="member-node" ref="node_juvelito">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.juvelito.portfolio }"
-                @click="goToPortfolio(orgMembers.juvelito)" @mouseenter="onHover(orgMembers.juvelito, $event)"
+                @click="onClickFace(orgMembers.juvelito)" @mouseenter="onHover(orgMembers.juvelito, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Mentor</div>
               <div class="org-name">JUVELITO MARTINEZ</div>
@@ -189,9 +208,8 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_mark">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.mark.portfolio }"
-                  @click="goToPortfolio(orgMembers.mark)" @mouseenter="onHover(orgMembers.mark, $event)"
+                  @click="onClickFace(orgMembers.mark)" @mouseenter="onHover(orgMembers.mark, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">MARK MASCARDO</div>
@@ -201,9 +219,8 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_whelster">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.whelster.portfolio }"
-                  @click="goToPortfolio(orgMembers.whelster)" @mouseenter="onHover(orgMembers.whelster, $event)"
+                  @click="onClickFace(orgMembers.whelster)" @mouseenter="onHover(orgMembers.whelster, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">WHELSTER R. ESMADE</div>
@@ -215,9 +232,8 @@
           <div class="row row-center mentor-row">
             <div class="member-node" ref="node_henzon">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.henzon.portfolio }"
-                @click="goToPortfolio(orgMembers.henzon)" @mouseenter="onHover(orgMembers.henzon, $event)"
+                @click="onClickFace(orgMembers.henzon)" @mouseenter="onHover(orgMembers.henzon, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Mentor</div>
               <div class="org-name">HENZON DIONSAY</div>
@@ -229,9 +245,8 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_june">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.june.portfolio }"
-                  @click="goToPortfolio(orgMembers.june)" @mouseenter="onHover(orgMembers.june, $event)"
+                  @click="onClickFace(orgMembers.june)" @mouseenter="onHover(orgMembers.june, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">JUNE A. JACINTO</div>
@@ -241,9 +256,8 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_robert">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.robert.portfolio }"
-                  @click="goToPortfolio(orgMembers.robert)" @mouseenter="onHover(orgMembers.robert, $event)"
+                  @click="onClickFace(orgMembers.robert)" @mouseenter="onHover(orgMembers.robert, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">ROBERT MAYO L. ELUMBA</div>
@@ -255,9 +269,8 @@
           <div class="row row-center mentor-row">
             <div class="member-node" ref="node_gehan">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.gehan.portfolio }"
-                @click="goToPortfolio(orgMembers.gehan)" @mouseenter="onHover(orgMembers.gehan, $event)"
+                @click="onClickFace(orgMembers.gehan)" @mouseenter="onHover(orgMembers.gehan, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--mentor">Mentor</div>
               <div class="org-name">GEHAN RESALUTE</div>
@@ -269,9 +282,8 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_marklan">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.marklan.portfolio }"
-                  @click="goToPortfolio(orgMembers.marklan)" @mouseenter="onHover(orgMembers.marklan, $event)"
+                  @click="onClickFace(orgMembers.marklan)" @mouseenter="onHover(orgMembers.marklan, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--mentor">Mentor</div>
                 <div class="org-name">MARKLAN A. HAMPAC</div>
@@ -281,10 +293,9 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_raldins">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.raldin.portfolio }"
-                  @click="goToPortfolio(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
+                  @click="onClickFace(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="raldin" alt="Raldin" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--member-mentor">Member / Mentor</div>
                 <div class="org-name">RALDIN C. DISOMIMBA</div>
@@ -301,10 +312,9 @@
           <div class="row row-center">
             <div class="member-node" ref="node_stef">
               <div class="profile-circle has-photo" :class="{ 'has-portfolio': orgMembers.stef.portfolio }"
-                @click="goToPortfolio(orgMembers.stef)" @mouseenter="onHover(orgMembers.stef, $event)"
+                @click="onClickFace(orgMembers.stef)" @mouseenter="onHover(orgMembers.stef, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="stef" alt="Stefhanie" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--officers">President</div>
               <div class="org-name">STEFHANIE ANN V. BATUCAN</div>
@@ -316,10 +326,9 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_ej">
                 <div class="profile-circle has-photo" :class="{ 'has-portfolio': orgMembers.ej.portfolio }"
-                  @click="goToPortfolio(orgMembers.ej)" @mouseenter="onHover(orgMembers.ej, $event)"
+                  @click="onClickFace(orgMembers.ej)" @mouseenter="onHover(orgMembers.ej, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="ej" alt="EJ" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Vice President</div>
                 <div class="org-name">EJ A. VINCULADO</div>
@@ -329,9 +338,8 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_nesfhe">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.nesfhe.portfolio }"
-                  @click="goToPortfolio(orgMembers.nesfhe)" @mouseenter="onHover(orgMembers.nesfhe, $event)"
+                  @click="onClickFace(orgMembers.nesfhe)" @mouseenter="onHover(orgMembers.nesfhe, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Secretary</div>
                 <div class="org-name">NESFHE NINA S. MAGSANAY</div>
@@ -343,9 +351,8 @@
           <div class="row row-center">
             <div class="member-node" ref="node_kate">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.kate.portfolio }"
-                @click="goToPortfolio(orgMembers.kate)" @mouseenter="onHover(orgMembers.kate, $event)"
+                @click="onClickFace(orgMembers.kate)" @mouseenter="onHover(orgMembers.kate, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--officers">Assistant Secretary</div>
               <div class="org-name">KATE NICOLE S. EDIS</div>
@@ -357,9 +364,8 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_mischi">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.mischi.portfolio }"
-                  @click="goToPortfolio(orgMembers.mischi)" @mouseenter="onHover(orgMembers.mischi, $event)"
+                  @click="onClickFace(orgMembers.mischi)" @mouseenter="onHover(orgMembers.mischi, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Treasurer</div>
                 <div class="org-name">MISCHI JEDA J. ELUMBA</div>
@@ -369,9 +375,8 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_peter">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.peter.portfolio }"
-                  @click="goToPortfolio(orgMembers.peter)" @mouseenter="onHover(orgMembers.peter, $event)"
+                  @click="onClickFace(orgMembers.peter)" @mouseenter="onHover(orgMembers.peter, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--officers">Auditor</div>
                 <div class="org-name">PETER ROBERT C. AYONO</div>
@@ -383,10 +388,9 @@
           <div class="row row-center">
             <div class="member-node" ref="node_kenzen">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.kenzen.portfolio }"
-                @click="goToPortfolio(orgMembers.kenzen)" @mouseenter="onHover(orgMembers.kenzen, $event)"
+                @click="onClickFace(orgMembers.kenzen)" @mouseenter="onHover(orgMembers.kenzen, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="kenzen" alt="Kenzen" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag role-tag--officers">P.I.O</div>
               <div class="org-name">KENZEN L. MINAO</div>
@@ -403,9 +407,8 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_renz">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.renz.portfolio }"
-                  @click="goToPortfolio(orgMembers.renz)" @mouseenter="onHover(orgMembers.renz, $event)"
+                  @click="onClickFace(orgMembers.renz)" @mouseenter="onHover(orgMembers.renz, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">RENZ L. SANTIAGO</div>
@@ -415,10 +418,9 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_raldin">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.raldin.portfolio }"
-                  @click="goToPortfolio(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
+                  @click="onClickFace(orgMembers.raldin)" @mouseenter="onHover(orgMembers.raldin, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="raldin" alt="Raldin" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag role-tag--member-mentor">Member / Mentor</div>
                 <div class="org-name">RALDIN C. DISOMIMBA</div>
@@ -430,10 +432,9 @@
           <div class="row row-center">
             <div class="member-node" ref="node_keith">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.keith.portfolio }"
-                @click="goToPortfolio(orgMembers.keith)" @mouseenter="onHover(orgMembers.keith, $event)"
+                @click="onClickFace(orgMembers.keith)" @mouseenter="onHover(orgMembers.keith, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="keith" alt="Keith" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag">Member</div>
               <div class="org-name">KEITH BRAIN B. LARANJO</div>
@@ -445,9 +446,8 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_jullan">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.jullan.portfolio }"
-                  @click="goToPortfolio(orgMembers.jullan)" @mouseenter="onHover(orgMembers.jullan, $event)"
+                  @click="onClickFace(orgMembers.jullan)" @mouseenter="onHover(orgMembers.jullan, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">JULLAN CARL J. MAGLINTE</div>
@@ -457,10 +457,9 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_japhet">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.japhet.portfolio }"
-                  @click="goToPortfolio(orgMembers.japhet)" @mouseenter="onHover(orgMembers.japhet, $event)"
+                  @click="onClickFace(orgMembers.japhet)" @mouseenter="onHover(orgMembers.japhet, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="japhet" alt="Japhet" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">JAPHET V. BASTILLADA</div>
@@ -472,9 +471,8 @@
           <div class="row row-center">
             <div class="member-node" ref="node_cristoph">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.cristoph.portfolio }"
-                @click="goToPortfolio(orgMembers.cristoph)" @mouseenter="onHover(orgMembers.cristoph, $event)"
+                @click="onClickFace(orgMembers.cristoph)" @mouseenter="onHover(orgMembers.cristoph, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag">Member</div>
               <div class="org-name">CRISTOPH B. BAGABUYO</div>
@@ -486,9 +484,8 @@
             <div class="slot slot-left">
               <div class="member-node" ref="node_cyd">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.cyd.portfolio }"
-                  @click="goToPortfolio(orgMembers.cyd)" @mouseenter="onHover(orgMembers.cyd, $event)"
+                  @click="onClickFace(orgMembers.cyd)" @mouseenter="onHover(orgMembers.cyd, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">CYD M. BALLON</div>
@@ -498,10 +495,9 @@
             <div class="slot slot-right">
               <div class="member-node" ref="node_marc">
                 <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.marc.portfolio }"
-                  @click="goToPortfolio(orgMembers.marc)" @mouseenter="onHover(orgMembers.marc, $event)"
+                  @click="onClickFace(orgMembers.marc)" @mouseenter="onHover(orgMembers.marc, $event)"
                   @mousemove="onMove($event)" @mouseleave="onLeave">
                   <img :src="marc" alt="Marc" />
-                  <div class="portfolio-overlay"><span>View Portfolio</span></div>
                 </div>
                 <div class="role-tag">Member</div>
                 <div class="org-name">MARC LESTER D. GUIDO</div>
@@ -513,10 +509,9 @@
           <div class="row row-center">
             <div class="member-node" ref="node_justine">
               <div class="profile-circle sphere" :class="{ 'has-portfolio': orgMembers.justine.portfolio }"
-                @click="goToPortfolio(orgMembers.justine)" @mouseenter="onHover(orgMembers.justine, $event)"
+                @click="onClickFace(orgMembers.justine)" @mouseenter="onHover(orgMembers.justine, $event)"
                 @mousemove="onMove($event)" @mouseleave="onLeave">
                 <img :src="justine" alt="Justine" />
-                <div class="portfolio-overlay"><span>View Portfolio</span></div>
               </div>
               <div class="role-tag">Member</div>
               <div class="org-name">JUSTINE P. BUNCAG</div>
@@ -579,8 +574,11 @@ export default {
       activeTab: 'chart',
       searchQuery: '',
       hoveredMember: null,
-      tooltipX: 0,
-      tooltipY: 0,
+      hoverRect: null,
+      pinnedMember: null,
+      pinnedRect: null,
+      pinnedElement: null,
+      hoveredElement: null,
 
       svgWidth: 1000,
       svgHeight: 5000,
@@ -622,32 +620,32 @@ export default {
       ],
 
       orgMembers: {
-        sheenlee: { firstName: 'Sheenlee', portfolio: null },
-        armando:  { firstName: 'Armando',  portfolio: null },
-        juvelito: { firstName: 'Juvelito', portfolio: null },
-        mark:     { firstName: 'Mark',     portfolio: null },
-        whelster: { firstName: 'Whelster', portfolio: null },
-        henzon:   { firstName: 'Henzon',   portfolio: null },
-        june:     { firstName: 'June',     portfolio: null },
-        robert:   { firstName: 'Robert',   portfolio: null },
-        gehan:    { firstName: 'Gehan',    portfolio: null },
-        marklan:  { firstName: 'Marklan',  portfolio: null },
-        raldin:   { firstName: 'Raldin',   portfolio: 'https://www.raldincasidar.studio/' },
-        stef:     { firstName: 'Stefhanie',portfolio: null },
-        ej:       { firstName: 'EJ',       portfolio: null },
-        nesfhe:   { firstName: 'Nesfhe',   portfolio: null },
-        kate:     { firstName: 'Kate',     portfolio: null },
-        mischi:   { firstName: 'Mischi',   portfolio: null },
-        peter:    { firstName: 'Peter',    portfolio: 'https://peter-ayono.vercel.app/' },
-        kenzen:   { firstName: 'Kenzen',   portfolio: 'https://kenm.vercel.app/' },
-        renz:     { firstName: 'Renz',     portfolio: null },
-        keith:    { firstName: 'Keith',    portfolio: 'https://keithlar.vercel.app/' },
-        jullan:   { firstName: 'Jullan',   portfolio: 'https://jullanmaglinte.site/' },
-        japhet:   { firstName: 'Japhet',   portfolio: 'https://japhet-bastillada.vercel.app/' },
-        cristoph: { firstName: 'Cristoph', portfolio: 'https://n91ives.vercel.app/' },
-        cyd:      { firstName: 'Cyd',      portfolio: null },
-        marc:     { firstName: 'Marc',     portfolio: 'https://memitsuki.vercel.app/' },
-        justine:  { firstName: 'Justine',  portfolio: 'https://justineeun.vercel.app/' },
+        sheenlee: { firstName: 'Sheenlee', fullName: 'SHEEN LEE S. EDIS',         roleLabel: 'Founder',         pronoun: 'She', skills: [],       portfolio: null,                                    photo: sheen   },
+        armando:  { firstName: 'Armando',  fullName: 'ARMANDO T. SAGUIN, MSIT',   roleLabel: 'Adviser',         pronoun: 'He',  skills: [],       portfolio: null,                                    photo: armando },
+        juvelito: { firstName: 'Juvelito', fullName: 'JUVELITO MARTINEZ',         roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        mark:     { firstName: 'Mark',     fullName: 'MARK MASCARDO',             roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        whelster: { firstName: 'Whelster', fullName: 'WHELSTER R. ESMADE',        roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        henzon:   { firstName: 'Henzon',   fullName: 'HENZON DIONSAY',            roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        june:     { firstName: 'June',     fullName: 'JUNE A. JACINTO',           roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        robert:   { firstName: 'Robert',   fullName: 'ROBERT MAYO L. ELUMBA',     roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        gehan:    { firstName: 'Gehan',    fullName: 'GEHAN RESALUTE',            roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        marklan:  { firstName: 'Marklan',  fullName: 'MARKLAN A. HAMPAC',         roleLabel: 'Mentor',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        raldin:   { firstName: 'Raldin',   fullName: 'RALDIN C. DISOMIMBA',       roleLabel: 'Member / Mentor', pronoun: 'He',  skills: [],       portfolio: 'https://www.raldincasidar.studio/',     photo: raldin  },
+        stef:     { firstName: 'Stefhanie',fullName: 'STEFHANIE ANN V. BATUCAN',  roleLabel: 'President',       pronoun: 'She', skills: [],       portfolio: null,                                    photo: stef    },
+        ej:       { firstName: 'EJ',       fullName: 'EJ A. VINCULADO',           roleLabel: 'Vice President',  pronoun: 'He',  skills: ['Vue'],  portfolio: null,                                    photo: ej      },
+        nesfhe:   { firstName: 'Nesfhe',   fullName: 'NESFHE NINA S. MAGSANAY',   roleLabel: 'Secretary',       pronoun: 'She', skills: [],       portfolio: null,                                    photo: null    },
+        kate:     { firstName: 'Kate',     fullName: 'KATE NICOLE S. EDIS',       roleLabel: 'Asst. Secretary', pronoun: 'She', skills: [],       portfolio: null,                                    photo: null    },
+        mischi:   { firstName: 'Mischi',   fullName: 'MISCHI JEDA J. ELUMBA',     roleLabel: 'Treasurer',       pronoun: 'She', skills: [],       portfolio: null,                                    photo: null    },
+        peter:    { firstName: 'Peter',    fullName: 'PETER ROBERT C. AYONO',     roleLabel: 'Auditor',         pronoun: 'He',  skills: [],       portfolio: 'https://peter-ayono.vercel.app/',       photo: null    },
+        kenzen:   { firstName: 'Kenzen',   fullName: 'KENZEN L. MINAO',           roleLabel: 'P.I.O',           pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://kenm.vercel.app/',              photo: kenzen  },
+        renz:     { firstName: 'Renz',     fullName: 'RENZ L. SANTIAGO',          roleLabel: 'Member',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        keith:    { firstName: 'Keith',    fullName: 'KEITH BRAIN B. LARANJO',    roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://keithlar.vercel.app/',          photo: keith   },
+        jullan:   { firstName: 'Jullan',   fullName: 'JULLAN CARL J. MAGLINTE',   roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://jullanmaglinte.site/',          photo: null    },
+        japhet:   { firstName: 'Japhet',   fullName: 'JAPHET V. BASTILLADA',      roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://japhet-bastillada.vercel.app/',photo: japhet  },
+        cristoph: { firstName: 'Cristoph', fullName: 'CRISTOPH B. BAGABUYO',      roleLabel: 'Member',          pronoun: 'He',  skills: [],       portfolio: 'https://n91ives.vercel.app/',           photo: null    },
+        cyd:      { firstName: 'Cyd',      fullName: 'CYD M. BALLON',             roleLabel: 'Member',          pronoun: 'He',  skills: [],       portfolio: null,                                    photo: null    },
+        marc:     { firstName: 'Marc',     fullName: 'MARC LESTER D. GUIDO',      roleLabel: 'Member',          pronoun: 'He',  skills: ['Vue'],  portfolio: 'https://memitsuki.vercel.app/',         photo: marc    },
+        justine:  { firstName: 'Justine',  fullName: 'JUSTINE P. BUNCAG',         roleLabel: 'Member',          pronoun: 'She', skills: ['Vue'],  portfolio: 'https://justineeun.vercel.app/',        photo: justine },
       },
 
       tabs: [
@@ -747,8 +745,26 @@ export default {
       )
     },
     currentSlide() { return this.slides[this.slideIdx] },
-    tooltipStyle() {
-      return { left: this.tooltipX + 18 + 'px', top: this.tooltipY - 14 + 'px' }
+    displayedMember() {
+      return this.pinnedMember || this.hoveredMember
+    },
+    displayedRect() {
+      return this.pinnedRect || this.hoverRect
+    },
+    cardStyle() {
+      const r = this.displayedRect
+      if (!r) return { display: 'none' }
+      const cardWidth = 246
+      const circleCenter = (r.left + r.right) / 2
+      const isRightSide = circleCenter > window.innerWidth / 2
+      const left = isRightSide
+        ? r.left - cardWidth - 16
+        : r.right + 16
+      return {
+        left: Math.max(8, left) + 'px',
+        top:  (r.top + r.height / 2) + 'px',
+        transform: 'translateY(-50%)',
+      }
     },
   },
 
@@ -764,10 +780,20 @@ export default {
   mounted() {
     this.$nextTick(() => this.computeConnections())
     window.addEventListener('resize', this.computeConnections)
+    this._updatePinnedPos = () => {
+      if (this.pinnedElement) {
+        const r = this.pinnedElement.getBoundingClientRect()
+        this.pinnedRect = { top: r.top, right: r.right, height: r.height }
+      }
+    }
+    window.addEventListener('scroll', this._updatePinnedPos, { passive: true })
+    window.addEventListener('resize', this._updatePinnedPos, { passive: true })
   },
 
   beforeUnmount() {
     window.removeEventListener('resize', this.computeConnections)
+    window.removeEventListener('scroll', this._updatePinnedPos)
+    window.removeEventListener('resize', this._updatePinnedPos)
   },
 
   methods: {
@@ -819,15 +845,50 @@ export default {
     goToPortfolio(member) {
       if (member?.portfolio) window.open(member.portfolio, '_blank', 'noopener,noreferrer')
     },
-    onHover(member, event) {
-      if (member?.portfolio) {
-        this.hoveredMember = member.firstName
-        this.tooltipX = event.clientX
-        this.tooltipY = event.clientY
+    onClickFace(member) {
+      if (this.pinnedMember === member) {
+        this.pinnedMember = null
+        this.pinnedRect = null
+        this.pinnedElement = null
+      } else {
+        this.pinnedMember = member
+        this.pinnedElement = this.hoveredElement
+        if (this.pinnedElement) {
+          const r = this.pinnedElement.getBoundingClientRect()
+          this.pinnedRect = { top: r.top, right: r.right, height: r.height }
+        }
       }
     },
-    onMove(event) { this.tooltipX = event.clientX; this.tooltipY = event.clientY },
-    onLeave() { this.hoveredMember = null },
+    unpinCard() {
+      this.pinnedMember = null
+      this.pinnedRect = null
+      this.pinnedElement = null
+    },
+    onHover(member, event) {
+      clearTimeout(this._leaveTimer)
+      this.hoveredElement = event.currentTarget
+      if (!this.pinnedMember) {
+        this.hoveredMember = member
+        const r = event.currentTarget.getBoundingClientRect()
+        this.hoverRect = { top: r.top, right: r.right, height: r.height }
+      }
+    },
+    onMove() {},
+    onLeave() {
+      if (!this.pinnedMember) {
+        this._leaveTimer = setTimeout(() => {
+          this.hoveredMember = null
+          this.hoverRect = null
+        }, 120)
+      }
+    },
+    onCardEnter() { clearTimeout(this._leaveTimer) },
+    onCardLeave() {
+      if (!this.pinnedMember) {
+        this.hoveredMember = null
+        this.hoverRect = null
+      }
+    },
     nextSlide() { this.slideIdx = (this.slideIdx + 1) % this.slides.length },
     prevSlide()  { this.slideIdx = (this.slideIdx - 1 + this.slides.length) % this.slides.length },
   },
@@ -941,14 +1002,33 @@ export default {
 .profile-circle { width: 92px; height: 92px; border-radius: 50%; overflow: hidden; border: 3px solid #fff; box-shadow: 0 8px 22px rgba(15,23,42,0.18); background: #fff; display: flex; align-items: center; justify-content: center; position: relative; transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease; cursor: default; }
 .profile-circle img { width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1; }
 .profile-circle.sphere { background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e5e7eb 25%, #9ca3af 60%, #4b5563 100%); border-color: #f3f4f6; }
-.portfolio-overlay { position: absolute; inset: 0; z-index: 2; border-radius: 50%; background: rgba(27,31,54,0.80); display: flex; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s ease; }
-.portfolio-overlay span { font-size: 9px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: #fff; text-align: center; line-height: 1.35; padding: 0 8px; }
-.profile-circle.has-portfolio { cursor: pointer; }
+.profile-circle { cursor: pointer; }
+.profile-circle:hover { transform: scale(1.08); box-shadow: 0 12px 28px rgba(15,23,42,0.22); }
 .profile-circle.has-portfolio:hover { transform: scale(1.12); box-shadow: 0 14px 36px rgba(179,11,28,0.28); border-color: #b30b1c; }
-.profile-circle.has-portfolio:hover .portfolio-overlay { opacity: 1; }
 
-.portfolio-tooltip { position: fixed; z-index: 9999; background: #1b1f36; color: #fff; font-size: 11px; font-weight: 600; padding: 6px 13px; border-radius: 8px; pointer-events: none; white-space: nowrap; display: flex; align-items: center; gap: 6px; box-shadow: 0 4px 16px rgba(0,0,0,0.22); letter-spacing: 0.2px; }
-.tooltip-icon { font-size: 12px; }
+.card-pop-enter-active { transition: opacity 0.18s ease, transform 0.18s ease; }
+.card-pop-leave-active { transition: opacity 0.13s ease, transform 0.13s ease; }
+.card-pop-enter-from  { opacity: 0; transform: translateY(-50%) scale(0.93); }
+.card-pop-leave-to    { opacity: 0; transform: translateY(-50%) scale(0.93); }
+.member-hover-card { position: fixed; z-index: 9999; width: 230px; background: linear-gradient(180deg, #d9dade 0%, #5d5f66 100%); border-radius: 18px; padding: 16px; box-shadow: 0 16px 48px rgba(0,0,0,0.30); isolation: isolate; }
+.hc-close { position: absolute; top: 10px; right: 12px; background: none; border: none; font-size: 18px; line-height: 1; color: rgba(0,0,0,0.35); cursor: pointer; padding: 0; transition: color 0.15s; }
+.hc-close:hover { color: rgba(0,0,0,0.7); }
+.hc-top { display: flex; align-items: center; gap: 11px; margin-bottom: 12px; }
+.hc-avatar { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; border: 2px solid rgba(255,255,255,0.5); flex-shrink: 0; }
+.hc-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.hc-sphere { width: 100%; height: 100%; background: radial-gradient(circle at 35% 30%, #ffffff 0%, #e5e7eb 25%, #9ca3af 60%, #4b5563 100%); }
+.hc-identity { flex: 1; min-width: 0; }
+.hc-name { font-size: 11px; font-weight: 700; color: #111827; line-height: 1.3; margin-bottom: 2px; }
+.hc-role { font-size: 11px; color: #374151; font-weight: 500; }
+.hc-desc { font-size: 11px; color: #374151; line-height: 1.5; margin-bottom: 10px; font-style: italic; }
+.hc-divider { height: 1px; background: rgba(0,0,0,0.10); margin-bottom: 10px; }
+.hc-skills { margin-bottom: 12px; }
+.hc-skills-label { font-size: 9px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #374151; margin-bottom: 5px; }
+.hc-skills-list { display: flex; flex-wrap: wrap; gap: 4px; }
+.hc-skill-badge { background: rgba(255,255,255,0.55); color: #1f2937; padding: 3px 9px; border-radius: 20px; font-size: 10px; font-weight: 600; border: 1px solid rgba(255,255,255,0.3); }
+.hc-portfolio-btn { display: block; text-align: center; background: #1b1f36; color: #fff; padding: 9px 0; border-radius: 10px; font-size: 11px; font-weight: 700; text-decoration: none; letter-spacing: 0.3px; transition: background 0.2s; }
+.hc-portfolio-btn:hover { background: #2d3561; }
+.hc-no-portfolio { display: block; text-align: center; color: rgba(0,0,0,0.35); font-size: 10px; font-style: italic; padding-top: 2px; }
 
 .role-tag               { margin-top: 8px; font-size: 11px; letter-spacing: 0.8px; font-weight: 600; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; background: #d1fae5; color: #065f46; }
 .role-tag--founder      { background: #fde8ea; color: #9b0a19; }
@@ -998,6 +1078,6 @@ export default {
   .note-card.note-left::after, .note-card.note-right::after { display: none; }
   .profile-circle { width: 80px; height: 80px; }
   .gallery-grid { grid-template-columns: repeat(2, 1fr); }
-  .portfolio-tooltip { display: none; }
+  .member-hover-card { display: none; }
 }
 </style>
